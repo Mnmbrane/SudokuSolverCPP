@@ -41,6 +41,7 @@
 		{
 			"type": "shell",
 			"label": "build",
+			"dependsOrder": "sequence",
 			"dependsOn":
 			[
 				"remove bin",

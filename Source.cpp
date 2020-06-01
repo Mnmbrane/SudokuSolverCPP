@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
+#include "SudokuUtilChecker.h"
 
 #define MAX_INDEX 80
 
@@ -33,101 +34,6 @@ const uint8_t puzzle[] =
     0, 0, 0,  8, 0, 0,  0, 0, 0
 };
 
-bool checkCol(uint8_t index, uint8_t val)
-{
-    bool retVal = true;
-
-    if(puzzle[index] != 0)
-    {
-        retVal = false;
-    }
-
-    // Check Above
-    // Subtract by 9 to go up
-    while( (index - 9) >= 0 && retVal == true )
-    {
-        index -= 9;
-        // If  there is a match
-        // value is invalid
-        if(val == puzzle[index])
-        {
-            printf("Match at index = [%u]\n", index);
-            retVal = false;
-        }
-    }
-
-    // Check down
-    // Add by 9 to go down
-    while( (index + 9) <= MAX_INDEX && retVal == true )
-    {
-        index += 9;
-        // If  there is a match
-        // value is invalid
-        if(val == puzzle[index])
-        {
-            printf("Match at index = [%u]\n", index);
-            retVal = false;
-        }
-    }
-    return retVal;
-}
-
-bool checkRow(uint8_t index, uint8_t val)
-{
-    bool retVal = true;
-
-    if(puzzle[index] != 0)
-    {
-        retVal = false;
-    }
-
-    // Lower check
-    // ex. index = 19,
-    // 19 - (19 % 9) = 19 - 1 = 18
-    uint8_t lowerIndex = index - (index % 9);
-
-    // Upper check
-    // ex. index = 19
-    // ((19 + 9) - (19 % 9)) - 1
-    // (28 - 1) - 1 = 26
-    uint8_t upperIndex = ((index + 9) - (index % 9)) - 1;
-
-    // Check Left
-    // Subtract by 1 to left
-    while( (index - 1) >= lowerIndex && retVal == true )
-    {
-        --index;
-        // If  there is a match
-        // value is invalid
-        if(val == puzzle[index])
-        {
-            printf("Match at index = [%u]\n", index);
-            retVal = false;
-        }
-    }
-
-    // Check down
-    // Add by 1 to go right
-    while( (index + 1) <= upperIndex && retVal == true )
-    {
-        ++index;
-
-        // If  there is a match
-        // value is invalid
-        if(val == puzzle[index])
-        {
-            printf("Match at index = [%u]\n", index);
-            retVal = false;
-        }
-    }
-    return retVal;
-}
-
-bool checkGroup(uint8_t index, uint8_t val)
-{
-
-}
-
 int main()
 {
     // printf("Check insert 8 into index 1 = [%s]\n",
@@ -135,6 +41,9 @@ int main()
 
     // printf("Check insert 8 into index 47 = [%s]\n",
     //     checkRow(47, 8) ? "SUCCESS" : "FAILED");
+
+    // printf("Check insert 8 into index 47 = [%s]\n",
+    //     checkGroup(puzzle, 47, 7) ? "SUCCESS" : "FAILED");
 
     return 0;
 }
