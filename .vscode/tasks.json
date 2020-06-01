@@ -26,9 +26,35 @@
 			"command": "/usr/bin/g++",
 			"args": [
 				"-g",
+				"-I${workspaceFolder}/include",
 				"${workspaceFolder}/*.cpp",
 				"-o",
-				"${workspaceFolder}/bin/sudoku.a"
+				"${workspaceFolder}/bin/sudoku.a",
+			],
+			"options": {
+				"cwd": "/usr/bin"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": "build"
+		},
+		{
+			"type": "shell",
+			"label": "build tests",
+			"command": "/usr/bin/g++",
+			"args": [
+				"-g",
+				"-I${workspaceFolder}/include",
+				"-I${workspaceFolder}/unittests/googletest",
+				"-I${workspaceFolder}/unittests/googletest/include",
+				"-I${workspaceFolder}/unittests/googletest/include/gtest",
+				"-I${workspaceFolder}/unittests/googletest/include/gmock",
+				"-L${workspaceFolder}/bin/",
+				"-L${workspaceFolder}/unittests/googletest/",
+				"${workspaceFolder}/unittests/*.cpp",
+				"-o",
+				"${workspaceFolder}/unittests/unittest.a"
 			],
 			"options": {
 				"cwd": "/usr/bin"
@@ -46,7 +72,8 @@
 			[
 				"remove bin",
 				"create bin",
-				"g++ build active file"
+				"g++ build active file",
+				"build tests"
 			],
 			"group": "build"
 		}
