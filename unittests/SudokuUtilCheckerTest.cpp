@@ -1,5 +1,5 @@
 #include "SudokuUtilChecker.h"
-#include "googletest/include/gtest/gtest.h"
+//#include "googletest/include/gtest/gtest.h"
 
 const uint8_t puzzle[] =
 {

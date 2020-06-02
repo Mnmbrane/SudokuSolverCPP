@@ -1,7 +1,8 @@
-INCLUDEDIRS:= \
-	-I./../include
+INCLUDEDIRS:=\
 
-SRCDIR:=./
+LIBDIRS:=\
+
+LDFLAGS:=\
 
 include ../MakeHelper/Makefile.extra
 include ../MakeHelper/Makefile.submake
