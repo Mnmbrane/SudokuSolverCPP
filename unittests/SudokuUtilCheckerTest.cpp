@@ -25,5 +25,5 @@ int main(int argc, char **argv)
 {
    //testing::InitGoogleTest(&argc, argv);
    //return RUN_ALL_TESTS();
-   //checkGroup(puzzle, 47, 7);
+   checkGroup(puzzle, 47, 7);
 }

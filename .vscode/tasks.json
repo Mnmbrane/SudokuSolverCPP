@@ -22,6 +22,25 @@
 		},
 		{
 			"type": "shell",
+			"label": "remove lib",
+			"command": "rm",
+			"args": [
+				"-rf",
+				"lib"
+			],
+			"group": "build"
+		},
+		{
+			"type": "shell",
+			"label": "create lib",
+			"command": "mkdir",
+			"args": [
+				"lib"
+			],
+			"group": "build"
+		},
+		{
+			"type": "shell",
 			"label": "g++ build active file",
 			"command": "/usr/bin/g++",
 			"args": [
@@ -29,7 +48,24 @@
 				"-I${workspaceFolder}/include",
 				"${workspaceFolder}/*.cpp",
 				"-o",
-				"${workspaceFolder}/bin/sudoku.a",
+				"${workspaceFolder}/bin/sudoku.o",
+			],
+			"options": {
+				"cwd": "/usr/bin"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": "build"
+		},
+		{
+			"type": "shell",
+			"label": "build lib",
+			"command": "ar",
+			"args": [
+				"-rcs",
+				"${workspaceFolder}/lib/libsudoku.a",
+				"${workspaceFolder}/bin/sudoku.o",
 			],
 			"options": {
 				"cwd": "/usr/bin"
@@ -46,15 +82,12 @@
 			"args": [
 				"-g",
 				"-I${workspaceFolder}/include",
-				"-I${workspaceFolder}/unittests/googletest",
-				"-I${workspaceFolder}/unittests/googletest/include",
-				"-I${workspaceFolder}/unittests/googletest/include/gtest",
-				"-I${workspaceFolder}/unittests/googletest/include/gmock",
-				"-L${workspaceFolder}/bin/",
+				"-L${workspaceFolder}/lib/",
 				"-L${workspaceFolder}/unittests/googletest/",
 				"${workspaceFolder}/unittests/*.cpp",
 				"-o",
-				"${workspaceFolder}/unittests/unittest.a"
+				"${workspaceFolder}/unittests/unittest.o",
+				"-lsudoku"
 			],
 			"options": {
 				"cwd": "/usr/bin"
@@ -72,7 +105,10 @@
 			[
 				"remove bin",
 				"create bin",
+				"remove lib",
+				"create lib",
 				"g++ build active file",
+				"build lib",
 				"build tests"
 			],
 			"group": "build"
