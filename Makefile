@@ -1,9 +1,10 @@
 SRCDIR:=src
 LIBDIRS:=-Llib/obj
 LDFLAGS:=-lsudoku
+MAIN_APP:=true
 
 .PHONY: all cleanall exe
-all: $(OBJDIR) mklib mksrc mkut
+all: $(OBJDIR) mklib mksrc mkut exe
 
 mklib:
 	@$(MAKE) --no-print-directory -C lib
@@ -13,11 +14,6 @@ mksrc:
 
 mkut:
 	@$(MAKE) --no-print-directory -C unittests
-
-
-#creates main application
-exe:
-	$(CC) $(CFLAGS) $(CXXFLAGS) $(LIBDIRS) -o $(OBJDIR)/sudoku.exe $(SRCDIR)/$(OBJDIR)/*.o $(LDFLAGS)
 
 cleanall:
 	@$(MAKE) --no-print-directory  clean -C lib

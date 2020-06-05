@@ -2,15 +2,18 @@
 #include "stdio.h"
 #include "common.h"
 
+bool initialCheck(const uint8_t* puzzle, uint8_t index, uint8_t val)
+{
+    return (index >= 0 && index < 81) &&
+           (puzzle[index] == 0) &&
+           (val > 0 && val < 10);
+}
 
 bool checkCol(const uint8_t* puzzle, uint8_t index, uint8_t val)
 {
     bool retVal = true;
 
-    if(puzzle[index] != 0)
-    {
-        retVal = false;
-    }
+    retVal = initialCheck(puzzle, index, val);
 
     // Check Above
     // Subtract by 9 to go up
@@ -46,10 +49,7 @@ bool checkRow(const uint8_t* puzzle, uint8_t index, uint8_t val)
 {
     bool retVal = true;
 
-    if(puzzle[index] != 0)
-    {
-        retVal = false;
-    }
+    retVal = initialCheck(puzzle, index, val);
 
     // Lower check
     // ex. index = 19,
@@ -96,10 +96,9 @@ bool checkRow(const uint8_t* puzzle, uint8_t index, uint8_t val)
 bool checkGroup(const uint8_t* puzzle, uint8_t index, uint8_t val)
 {
     bool retVal = true;
-    if(puzzle[index] != 0)
-    {
-        retVal = false;
-    }
+
+    retVal = initialCheck(puzzle, index, val);
+
     // TODO: Move these into description
     // Want to get the top left corner of the 3x3 grouping
     // Get the left most column in group by subtracting

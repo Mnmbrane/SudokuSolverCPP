@@ -42,8 +42,8 @@ int main()
     // printf("Check insert 8 into index 47 = [%s]\n",
     //     checkRow(47, 8) ? "SUCCESS" : "FAILED");
 
-    printf("Check insert 8 into index 47 = [%s]\n",
-        checkGroup(puzzle, 47, 7) ? "SUCCESS" : "FAILED");
+     printf("Check insert 8 into index 47 = [%s]\n",
+         checkGroup(puzzle, 47, 7) ? "SUCCESS" : "FAILED");
 
     return 0;
 }

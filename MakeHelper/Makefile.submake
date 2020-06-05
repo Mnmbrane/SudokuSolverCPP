@@ -40,6 +40,12 @@ $(OBJDIR)/$(MAKE_LIB): $(OBJS)
 	ar -rcs $(OBJDIR)/$(MAKE_LIB) $(OBJS)
 endif
 
+ifeq ($(MAIN_APP),true)
+#creates main application
+$(OBJDIR)/sudoku.exe: $(SRCDIR)/$(OBJDIR)/*.o
+	$(CC) $(CFLAGS) $(CXXFLAGS) $(LIBDIRS) -o $(OBJDIR)/sudoku.exe $(SRCDIR)/$(OBJDIR)/*.o $(LDFLAGS)
+endif
+
 .PHONY: clean
 clean:
 	rm -rf $(OBJDIR)/*.o $(OBJDIR)/*.a $(OBJDIR)/*.exe
