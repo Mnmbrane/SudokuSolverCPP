@@ -1,5 +1,5 @@
-INCLUDEDIRS:= \
-	-I./../include
+INCLUDES:= \
+	./../include
 
 SRCDIR:=./
 

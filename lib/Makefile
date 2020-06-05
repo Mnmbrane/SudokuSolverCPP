@@ -1,8 +1,7 @@
-INCLUDEDIRS:= \
-	-I./../include
+INCLUDES:= \
+	./../include
 
 SRCDIR:=./
-
 
 libsudoku.a: makeobj
 	ar -rcs $(OBJDIR)/libsudoku.a $(OBJS)

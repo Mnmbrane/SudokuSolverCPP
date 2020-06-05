@@ -1,21 +1,14 @@
-
-OBJDIR:=obj
-
-OBJS:=$(addprefix $(OBJDIR)/, $(patsubst %.cpp, %.o, $(wildcard *.cpp)))
-
+.PHONY: makeobj
 makeobj: $(OBJDIR) $(OBJS)
 
-.PHONY: clean exe
-
-#creates main application
-exe: $(SRCDIR)/obj/main.o
-	$(CC) $(CFLAGS) $(CXXFLAGS) $(LIBDIRS) -o bin/sudoku.exe $(SRCDIR)/obj/*.o $(LDFLAGS)
+INC_PARAMS:=$(INCLUDES:%=-I%)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
-	$(CC) $(CFLAGS) $(CXXFLAGS) $(LIBDIRS) $(INCLUDEDIRS) -c $< -o $@ $(LDFLAGS)
+	$(CC) $(CFLAGS) $(CXXFLAGS) $(LIBDIRS) $(INC_PARAMS) -c $< -o $@ $(LDFLAGS)
 
 $(OBJDIR):
-	mkdir -p obj
+	mkdir -p $(OBJDIR)
 
+.PHONY: clean
 clean:
-	rm -rf *.o $(OBJDIR)/*.o
+	rm -rf $(OBJDIR)/*.o $(OBJDIR)/*.a $(OBJDIR)/*.exe

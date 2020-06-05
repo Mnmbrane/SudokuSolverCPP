@@ -1,4 +1,4 @@
-INCLUDEDIRS:=\
+INCLUDES:=\
 
 LIBDIRS:=\
 
