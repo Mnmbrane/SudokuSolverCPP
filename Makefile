@@ -20,9 +20,9 @@ exe:
 	$(CC) $(CFLAGS) $(CXXFLAGS) $(LIBDIRS) -o $(OBJDIR)/sudoku.exe $(SRCDIR)/$(OBJDIR)/*.o $(LDFLAGS)
 
 cleanall:
-	@$(MAKE) clean -C lib
-	@$(MAKE) clean -C src
-	@$(MAKE) clean -C unittests
+	@$(MAKE) --no-print-directory  clean -C lib
+	@$(MAKE) --no-print-directory  clean -C src
+	@$(MAKE) --no-print-directory  clean -C unittests
 
 include MakeHelper/Makefile.extra
 include MakeHelper/Makefile.submake
