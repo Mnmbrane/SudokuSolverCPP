@@ -1,9 +1,6 @@
 INCLUDES:= \
 	./../include \
-	googletest/include \
-	googletest/include/gtest \
-	googletest/include/gtest/internal \
-	googletest/include/gtest/internal/custom \
+	googletest/include
 
 UTLIBDIRS:=\
 	./../lib/obj
