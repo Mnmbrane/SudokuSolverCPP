@@ -4,7 +4,7 @@
 
 bool initialCheck(const uint8_t* puzzle, uint8_t index, uint8_t val)
 {
-    return (index >= 0 && index < 81) &&
+    return (index >= 0 && index < MAX_ELEMENTS) &&
            (puzzle[index] == 0) &&
            (val > 0 && val < 10);
 }
