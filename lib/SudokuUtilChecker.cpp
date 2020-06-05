@@ -24,7 +24,6 @@ bool checkCol(const uint8_t* puzzle, uint8_t index, uint8_t val)
         // value is invalid
         if(val == puzzle[index])
         {
-            printf("Match at index = [%u]\n", index);
             retVal = false;
         }
     }
@@ -38,7 +37,6 @@ bool checkCol(const uint8_t* puzzle, uint8_t index, uint8_t val)
         // value is invalid
         if(val == puzzle[index])
         {
-            printf("Match at index = [%u]\n", index);
             retVal = false;
         }
     }
@@ -71,7 +69,6 @@ bool checkRow(const uint8_t* puzzle, uint8_t index, uint8_t val)
         // value is invalid
         if(val == puzzle[index])
         {
-            printf("Match at index = [%u]\n", index);
             retVal = false;
         }
     }
@@ -86,7 +83,6 @@ bool checkRow(const uint8_t* puzzle, uint8_t index, uint8_t val)
         // value is invalid
         if(val == puzzle[index])
         {
-            printf("Match at index = [%u]\n", index);
             retVal = false;
         }
     }
@@ -131,11 +127,24 @@ bool checkGroup(const uint8_t* puzzle, uint8_t index, uint8_t val)
         {
             if(puzzle[j] == val)
             {
-                printf("Match at index = [%u]\n", j);
                 retVal = false;
                 break;
             }
         }
     }
     return retVal;
+}
+
+bool checkAll(const uint8_t* puzzle, uint8_t index, uint8_t val)
+{
+    if(checkCol(puzzle, index, val) &&
+       checkRow(puzzle, index, val) &&
+       checkGroup(puzzle, index, val))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }

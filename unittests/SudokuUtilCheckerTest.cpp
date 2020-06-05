@@ -29,17 +29,116 @@ const uint8_t puzzle[] =
     0, 0, 0,  8, 0, 0,  0, 0, 0
 };
 
-TEST(ColumnTest, InRange) 
+TEST(ColumnTest, InRange)
 {
-   ASSERT_EQ(true, checkGroup(puzzle, 47, 8));
-   ASSERT_EQ(true, checkGroup(puzzle, 8, 3));
+   ASSERT_EQ(true, checkCol(puzzle, 47, 8));
+   ASSERT_EQ(true, checkCol(puzzle, 8, 3));
+   ASSERT_EQ(true, checkCol(puzzle, 80, 3));
 }
 
 TEST(ColumnTest, OutOfRange) 
 {
-   ASSERT_EQ(false, checkGroup(puzzle, 47, -20));
-   ASSERT_EQ(false, checkGroup(puzzle, -10, 2));
+   // Index out of range
+   ASSERT_EQ(false, checkCol(puzzle, -10, 2));
+   ASSERT_EQ(false, checkCol(puzzle, 81, 0));
+
+   // Val out of range
+   ASSERT_EQ(false, checkCol(puzzle, 47, -20));
+   ASSERT_EQ(false, checkCol(puzzle, 59, 10));
+   ASSERT_EQ(false, checkCol(puzzle, 0, 0));
+
+   // Val already in column
+   ASSERT_EQ(false, checkCol(puzzle, 0, 2));
+   ASSERT_EQ(false, checkCol(puzzle, 16, 1));
+   ASSERT_EQ(false, checkCol(puzzle, 77, 9));
+
 }
+
+TEST(RowTest, InRange)
+{
+   ASSERT_EQ(true, checkRow(puzzle, 47, 8));
+   ASSERT_EQ(true, checkRow(puzzle, 8, 3));
+   ASSERT_EQ(true, checkRow(puzzle, 80, 3));
+}
+
+TEST(RowTest, OutOfRange) 
+{
+   // Index out of range
+   ASSERT_EQ(false, checkRow(puzzle, -10, 2));
+   ASSERT_EQ(false, checkRow(puzzle, 81, 0));
+
+   // Val out of range
+   ASSERT_EQ(false, checkRow(puzzle, 47, -20));
+   ASSERT_EQ(false, checkRow(puzzle, 59, 10));
+   ASSERT_EQ(false, checkRow(puzzle, 0, 0));
+
+   // Val already in Row
+   ASSERT_EQ(false, checkRow(puzzle, 0, 9));
+   ASSERT_EQ(false, checkRow(puzzle, 16, 2));
+   ASSERT_EQ(false, checkRow(puzzle, 67, 5));
+
+}
+
+TEST(GroupTest, InRange)
+{
+   ASSERT_EQ(true, checkGroup(puzzle, 0, 1));
+   ASSERT_EQ(true, checkGroup(puzzle, 32, 9));
+   ASSERT_EQ(true, checkGroup(puzzle, 80, 9));
+}
+
+TEST(GroupTest, OutOfRange) 
+{
+   // Index out of range
+   ASSERT_EQ(false, checkGroup(puzzle, -10, 2));
+   ASSERT_EQ(false, checkGroup(puzzle, 81, 0));
+
+   // Val out of range
+   ASSERT_EQ(false, checkGroup(puzzle, 47, -20));
+   ASSERT_EQ(false, checkGroup(puzzle, 59, 10));
+   ASSERT_EQ(false, checkGroup(puzzle, 0, 0));
+
+   // Val already in Group
+   ASSERT_EQ(false, checkGroup(puzzle, 0, 5));
+   ASSERT_EQ(false, checkGroup(puzzle, 44, 6));
+   ASSERT_EQ(false, checkGroup(puzzle, 59, 2));
+
+}
+
+TEST(AllTest, InRange)
+{
+   ASSERT_EQ(true, checkAll(puzzle, 49, 1));
+   ASSERT_EQ(true, checkAll(puzzle, 32, 3));
+   ASSERT_EQ(true, checkAll(puzzle, 80, 3));
+}
+
+TEST(AllTest, OutOfRange) 
+{
+   // Index out of range
+   ASSERT_EQ(false, checkAll(puzzle, -10, 2));
+   ASSERT_EQ(false, checkAll(puzzle, 81, 0));
+
+   // Val out of range
+   ASSERT_EQ(false, checkAll(puzzle, 47, -20));
+   ASSERT_EQ(false, checkAll(puzzle, 59, 10));
+   ASSERT_EQ(false, checkAll(puzzle, 0, 0));
+
+   // Val already in column
+   ASSERT_EQ(false, checkAll(puzzle, 0, 2));
+   ASSERT_EQ(false, checkAll(puzzle, 16, 1));
+   ASSERT_EQ(false, checkAll(puzzle, 77, 9));
+
+   // Val already in Row
+   ASSERT_EQ(false, checkAll(puzzle, 0, 9));
+   ASSERT_EQ(false, checkAll(puzzle, 16, 2));
+   ASSERT_EQ(false, checkAll(puzzle, 67, 5));
+
+   // Val already in Group
+   ASSERT_EQ(false, checkAll(puzzle, 0, 5));
+   ASSERT_EQ(false, checkAll(puzzle, 44, 6));
+   ASSERT_EQ(false, checkAll(puzzle, 59, 2));
+
+}
+
 int main(int argc, char **argv) 
 {
    testing::InitGoogleTest(&argc, argv);

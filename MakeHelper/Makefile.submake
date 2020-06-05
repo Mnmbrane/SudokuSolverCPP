@@ -4,6 +4,7 @@ OBJS:=$(addprefix $(OBJDIR)/, $(patsubst %.cpp, %.o, $(wildcard *.cpp)))
 INC_PARAMS:=$(INCLUDES:%=-I%)
 LIB_PARAMS:=$(LIBDIRS:%=-L%)
 
+############################### UNITTEST ###############################
 ifeq ($(UNITTEST),true)
 EXEC:=test.exe
 
@@ -25,6 +26,7 @@ $(OBJDIR)/$(EXEC): $(OBJDIR) $(OBJS)
 	./$(OBJDIR)/$(EXEC)
 
 endif
+############################### END UNITTEST ###############################
 
 .PHONY: makeobj
 makeobj: $(OBJDIR) $(OBJS) $(OBJDIR)/$(MAKE_LIB)
@@ -35,16 +37,22 @@ $(OBJDIR)/%.o: $(SRC)
 $(OBJDIR):
 	mkdir -p $(OBJDIR)
 
+############################### SUDOKU LIBS ###############################
 ifdef MAKE_LIB
 $(OBJDIR)/$(MAKE_LIB): $(OBJS)
 	ar -rcs $(OBJDIR)/$(MAKE_LIB) $(OBJS)
 endif
+############################### END SUDOKU LIBS ###############################
 
+############################### MAIN APP ###############################
 ifeq ($(MAIN_APP),true)
 #creates main application
+exe: $(OBJDIR)/sudoku.exe
+
 $(OBJDIR)/sudoku.exe: $(SRCDIR)/$(OBJDIR)/*.o
 	$(CC) $(CFLAGS) $(CXXFLAGS) $(LIBDIRS) -o $(OBJDIR)/sudoku.exe $(SRCDIR)/$(OBJDIR)/*.o $(LDFLAGS)
 endif
+############################### END MAIN APP ###############################
 
 .PHONY: clean
 clean:
