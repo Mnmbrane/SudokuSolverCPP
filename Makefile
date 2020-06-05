@@ -3,16 +3,16 @@ LIBDIRS:=-Llib/obj
 LDFLAGS:=-lsudoku
 
 .PHONY: all cleanall exe
-all: $(OBJDIR) makelib makesrc makeut exe
+all: $(OBJDIR) mklib mksrc mkut
 
-makelib:
-	@$(MAKE) -C lib
+mklib:
+	@$(MAKE) --no-print-directory -C lib
 
-makesrc:
-	@$(MAKE) -C src
+mksrc:
+	@$(MAKE) --no-print-directory -C src
 
-makeut:
-	@$(MAKE) -C unittests
+mkut:
+	@$(MAKE) --no-print-directory -C unittests
 
 
 #creates main application

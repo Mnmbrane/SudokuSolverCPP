@@ -1,10 +1,10 @@
 INCLUDES:= \
 	./../include
 
-SRCDIR:=./
+SRC:=\
+	SudokuUtilChecker.cpp
 
-libsudoku.a: makeobj
-	ar -rcs $(OBJDIR)/libsudoku.a $(OBJS)
+MAKE_LIB:= libsudoku.a
 
 include ../MakeHelper/Makefile.extra
 include ../MakeHelper/Makefile.submake

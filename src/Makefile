@@ -1,7 +1,8 @@
 INCLUDES:= \
 	./../include
 
-SRCDIR:=./
+SRC:=\
+	main.cpp
 
 include ../MakeHelper/Makefile.extra
 include ../MakeHelper/Makefile.submake

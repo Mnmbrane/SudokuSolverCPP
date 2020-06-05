@@ -3,56 +3,23 @@
 	"tasks": [
 		{
 			"type": "shell",
-			"label": "remove bin",
-			"command": "rm",
+			"label": "build project",
+			"command": "make",
 			"args": [
-				"-rf",
-				"bin"
+				"all"
+			],
+			"problemMatcher": [
+				"$gcc"
 			],
 			"group": "build"
 		},
 		{
 			"type": "shell",
-			"label": "create bin",
-			"command": "mkdir",
+			"label": "build src",
+			"command": "make",
 			"args": [
-				"bin"
+				"mksrc"
 			],
-			"group": "build"
-		},
-		{
-			"type": "shell",
-			"label": "remove lib",
-			"command": "rm",
-			"args": [
-				"-rf",
-				"lib"
-			],
-			"group": "build"
-		},
-		{
-			"type": "shell",
-			"label": "create lib",
-			"command": "mkdir",
-			"args": [
-				"lib"
-			],
-			"group": "build"
-		},
-		{
-			"type": "shell",
-			"label": "g++ build active file",
-			"command": "/usr/bin/g++",
-			"args": [
-				"-g",
-				"-I${workspaceFolder}/include",
-				"${workspaceFolder}/*.cpp",
-				"-o",
-				"${workspaceFolder}/bin/sudoku.o",
-			],
-			"options": {
-				"cwd": "/usr/bin"
-			},
 			"problemMatcher": [
 				"$gcc"
 			],
@@ -61,15 +28,10 @@
 		{
 			"type": "shell",
 			"label": "build lib",
-			"command": "ar",
+			"command": "make",
 			"args": [
-				"-rcs",
-				"${workspaceFolder}/lib/libsudoku.a",
-				"${workspaceFolder}/bin/sudoku.o",
+				"mklib"
 			],
-			"options": {
-				"cwd": "/usr/bin"
-			},
 			"problemMatcher": [
 				"$gcc"
 			],
@@ -78,20 +40,10 @@
 		{
 			"type": "shell",
 			"label": "build tests",
-			"command": "/usr/bin/g++",
+			"command": "make",
 			"args": [
-				"-g",
-				"-I${workspaceFolder}/include",
-				"-L${workspaceFolder}/lib/",
-				"-L${workspaceFolder}/unittests/googletest/",
-				"${workspaceFolder}/unittests/*.cpp",
-				"-o",
-				"${workspaceFolder}/unittests/unittest.o",
-				"-lsudoku"
+				"mkut"
 			],
-			"options": {
-				"cwd": "/usr/bin"
-			},
 			"problemMatcher": [
 				"$gcc"
 			],
@@ -99,17 +51,13 @@
 		},
 		{
 			"type": "shell",
-			"label": "build",
-			"dependsOrder": "sequence",
-			"dependsOn":
-			[
-				"remove bin",
-				"create bin",
-				"remove lib",
-				"create lib",
-				"g++ build active file",
-				"build lib",
-				"build tests"
+			"label": "clean project",
+			"command": "make",
+			"args": [
+				"cleanall"
+			],
+			"problemMatcher": [
+				"$gcc"
 			],
 			"group": "build"
 		}

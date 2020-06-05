@@ -1,5 +1,5 @@
 #include "SudokuUtilChecker.h"
-//#include "googletest/include/gtest/gtest.h"
+#include "googletest/include/gtest/gtest.h"
 
 const uint8_t puzzle[] =
 {
@@ -16,14 +16,13 @@ const uint8_t puzzle[] =
     0, 0, 0,  8, 0, 0,  0, 0, 0
 };
 
-// TEST(ColumnTest, InRange) 
-// {
-//    ASSERT_EQ(6, checkGroup(puzzle, 47, 7));
-// }
+TEST(ColumnTest, InRange) 
+{
+   ASSERT_EQ(false, checkGroup(puzzle, 47, 7));
+}
 
 int main(int argc, char **argv) 
 {
-   //testing::InitGoogleTest(&argc, argv);
-   //return RUN_ALL_TESTS();
-   checkGroup(puzzle, 47, 7);
+   testing::InitGoogleTest(&argc, argv);
+   return RUN_ALL_TESTS();
 }

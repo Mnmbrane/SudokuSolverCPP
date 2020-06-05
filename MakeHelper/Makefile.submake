@@ -1,13 +1,44 @@
-.PHONY: makeobj
-makeobj: $(OBJDIR) $(OBJS)
+OBJDIR:=obj
+OBJS:=$(addprefix $(OBJDIR)/, $(patsubst %.cpp, %.o, $(wildcard *.cpp)))
 
 INC_PARAMS:=$(INCLUDES:%=-I%)
+LIB_PARAMS:=$(LIBDIRS:%=-L%)
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
+ifeq ($(UNITTEST),true)
+EXEC:=test.exe
+
+UTLDFLAGS+=\
+	-lstdc++ \
+	-lpthread \
+	-lgtest \
+	-lgmock \
+	-lgtest_main \
+	-lgmock_main
+
+UTLIBDIRS+=\
+	googletest
+
+UTLIB_PARAMS:=$(UTLIBDIRS:%=-L%)
+
+$(OBJDIR)/$(EXEC): $(OBJDIR) $(OBJS)
+	$(CC) $(CFLAGS) $(CXXFLAGS) $(UTLIB_PARAMS) $(INC_PARAMS) -o $(OBJDIR)/$(EXEC) $(OBJDIR)/*.o $(UTLDFLAGS)
+	./$(OBJDIR)/$(EXEC)
+
+endif
+
+.PHONY: makeobj
+makeobj: $(OBJDIR) $(OBJS) $(OBJDIR)/$(MAKE_LIB)
+
+$(OBJDIR)/%.o: $(SRC)
 	$(CC) $(CFLAGS) $(CXXFLAGS) $(LIBDIRS) $(INC_PARAMS) -c $< -o $@ $(LDFLAGS)
 
 $(OBJDIR):
 	mkdir -p $(OBJDIR)
+
+ifdef MAKE_LIB
+$(OBJDIR)/$(MAKE_LIB): $(OBJS)
+	ar -rcs $(OBJDIR)/$(MAKE_LIB) $(OBJS)
+endif
 
 .PHONY: clean
 clean:
