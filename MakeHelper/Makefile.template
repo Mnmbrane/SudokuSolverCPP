@@ -4,5 +4,8 @@ LIBDIRS:=\
 
 LDFLAGS:=\
 
+SRC:=\
+	main.cpp
+
 include ../MakeHelper/Makefile.extra
 include ../MakeHelper/Makefile.submake

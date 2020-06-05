@@ -4,7 +4,7 @@ INCLUDES:= \
 SRC:=\
 	SudokuUtilChecker.cpp
 
-MAKE_LIB:= libsudoku.a
+MAKE_LIB:=libsudoku.a
 
 include ../MakeHelper/Makefile.extra
 include ../MakeHelper/Makefile.submake
