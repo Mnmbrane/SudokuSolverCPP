@@ -5,10 +5,10 @@ INCLUDES:= \
 	include \
 	googletest/include
 
-UTLIBDIRS:=\
+LIBDIRS:=\
 	../lib/obj
 
-UTLDFLAGS:=\
+LDFLAGS:=\
 	-lsudoku
 
 SRC:=\

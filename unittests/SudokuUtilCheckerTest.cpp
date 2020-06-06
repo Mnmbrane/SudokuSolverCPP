@@ -1,5 +1,8 @@
 #include "SudokuUtilChecker.h"
 #include "SudokuUtilCheckerTest.h"
+#include "gtest/gtest.h"
+#include "common.h"
+//#include "SudokuUtilCheckerTest.h"
 
 
 TEST_F(SudokuUtilCheckerTest, ColInRange)
@@ -9,7 +12,7 @@ TEST_F(SudokuUtilCheckerTest, ColInRange)
    ASSERT_EQ(true, checkCol(m_puzzle, 80, 3));
 }
 
-TEST_F(SudokuUtilCheckerTest, OutOfRange) 
+TEST_F(SudokuUtilCheckerTest, ColOutOfRange) 
 {
    // Index out of range
    ASSERT_EQ(false, checkCol(m_puzzle, -10, 2));
@@ -27,14 +30,14 @@ TEST_F(SudokuUtilCheckerTest, OutOfRange)
 
 }
 
-TEST_F(SudokuUtilCheckerTest, InRange)
+TEST_F(SudokuUtilCheckerTest, RowInRange)
 {
    ASSERT_EQ(true, checkRow(m_puzzle, 47, 8));
    ASSERT_EQ(true, checkRow(m_puzzle, 8, 3));
    ASSERT_EQ(true, checkRow(m_puzzle, 80, 3));
 }
 
-TEST_F(SudokuUtilCheckerTest, OutOfRange) 
+TEST_F(SudokuUtilCheckerTest, RowOutOfRange) 
 {
    // Index out of range
    ASSERT_EQ(false, checkRow(m_puzzle, -10, 2));
@@ -52,14 +55,14 @@ TEST_F(SudokuUtilCheckerTest, OutOfRange)
 
 }
 
-TEST_F(SudokuUtilCheckerTest, InRange)
+TEST_F(SudokuUtilCheckerTest, GroupInRange)
 {
    ASSERT_EQ(true, checkGroup(m_puzzle, 0, 1));
    ASSERT_EQ(true, checkGroup(m_puzzle, 32, 9));
    ASSERT_EQ(true, checkGroup(m_puzzle, 80, 9));
 }
 
-TEST_F(SudokuUtilCheckerTest, OutOfRange) 
+TEST_F(SudokuUtilCheckerTest, GroupOutOfRange) 
 {
    // Index out of range
    ASSERT_EQ(false, checkGroup(m_puzzle, -10, 2));
@@ -77,14 +80,14 @@ TEST_F(SudokuUtilCheckerTest, OutOfRange)
 
 }
 
-TEST_F(SudokuUtilCheckerTest, InRange)
+TEST_F(SudokuUtilCheckerTest, AllInRange)
 {
    ASSERT_EQ(true, checkAll(m_puzzle, 49, 1));
    ASSERT_EQ(true, checkAll(m_puzzle, 32, 3));
    ASSERT_EQ(true, checkAll(m_puzzle, 80, 3));
 }
 
-TEST_F(SudokuUtilCheckerTest, OutOfRange) 
+TEST_F(SudokuUtilCheckerTest, AllOutOfRange) 
 {
    // Index out of range
    ASSERT_EQ(false, checkAll(m_puzzle, -10, 2));

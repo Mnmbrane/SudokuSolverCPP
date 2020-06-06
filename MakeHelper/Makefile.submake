@@ -1,7 +1,6 @@
 OBJDIR:=obj
 OBJS:=$(addprefix $(OBJDIR)/, $(SRC:%.cpp=%.o))
-BIN_FILE:=$(OBJDIR)/$(PACKAGE_NAME).o
-EXEC_FILE:=$(OBJDIR)/$(PACKAGE_NAME).exe
+BIN_FILE:=$(OBJDIR)/$(PACKAGE_NAME)
 
 INC_PARAMS:=$(INCLUDES:%=-I%)
 LIB_PARAMS:=$(LIBDIRS:%=-L%)
@@ -9,7 +8,7 @@ LIB_PARAMS:=$(LIBDIRS:%=-L%)
 ############################### UNITTEST ###############################
 ifeq ($(UNITTEST),true)
 
-UTLDFLAGS+=\
+LDFLAGS+=\
 	-lstdc++ \
 	-lpthread \
 	-lgtest \
@@ -17,14 +16,14 @@ UTLDFLAGS+=\
 	-lgtest_main \
 	-lgmock_main
 
-UTLIBDIRS+=\
+LIBDIRS+=\
 	googletest
 
-UTLIB_PARAMS:=$(UTLIBDIRS:%=-L%)
+LIB_PARAMS:=$(LIBDIRS:%=-L%)
 
-$(EXEC_FILE): $(OBJDIR) $(BIN_FILE)
-	$(CC) $(CFLAGS) $(CXXFLAGS) $(UTLIB_PARAMS) $(INC_PARAMS) -o $(EXEC_FILE) $(BIN_FILE) $(UTLDFLAGS)
-	./$(EXEC_FILE)
+
+run: $(OBJDIR) $(BIN_FILE)
+	./$(BIN_FILE)
 
 endif
 ############################### END UNITTEST ###############################
@@ -32,8 +31,14 @@ endif
 .PHONY: makeobj
 makeobj: $(OBJDIR) $(BIN_FILE) $(OBJDIR)/$(MAKE_LIB)
 
-$(BIN_FILE): $(SRC)
-	$(CC) $(CFLAGS) $(CXXFLAGS) $(LIBDIRS) $(INC_PARAMS) -c $< -o $@ $(LDFLAGS)
+$(BIN_FILE): $(OBJS)
+	$(CC) $(CFLAGS) $(CXXFLAGS) $(LIB_PARAMS) $(INC_PARAMS) -o $(BIN_FILE) $(OBJS) $(LDFLAGS)
+
+obj/main.o: main.cpp
+	$(CC) $(CFLAGS) $(CXXFLAGS) $(INC_PARAMS) -c $< -o obj/main.o
+
+obj/SudokuUtilCheckerTest.o: SudokuUtilCheckerTest.cpp
+	$(CC) $(CFLAGS) $(CXXFLAGS) $(INC_PARAMS) -c $< -o obj/SudokuUtilCheckerTest.o
 
 ############################### SUDOKU LIBS ###############################
 ifdef MAKE_LIB
@@ -57,4 +62,4 @@ $(OBJDIR):
 
 .PHONY: clean
 clean:
-	rm -rf $(OBJDIR)/*.o $(OBJDIR)/*.a $(OBJDIR)/*.exe
+	rm -rf $(OBJDIR) $(OBJDIR) $(OBJDIR)

@@ -1,8 +1,6 @@
 #pragma once
 
 #include "gtest/gtest.h"
-
-#include "SudokuUtilChecker.h"
 #include "common.h"
 
 /* Index
@@ -53,10 +51,3 @@ protected:
     {
     }
 };
-
-TEST_F(SudokuUtilCheckerTest, ColInRange)
-{
-   ASSERT_EQ(true, checkCol(m_puzzle, 47, 8));
-   ASSERT_EQ(true, checkCol(m_puzzle, 8, 3));
-   ASSERT_EQ(true, checkCol(m_puzzle, 80, 3));
-}
