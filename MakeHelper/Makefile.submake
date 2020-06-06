@@ -1,12 +1,13 @@
 OBJDIR:=obj
-OBJS:=$(addprefix $(OBJDIR)/, $(patsubst %.cpp, %.o, $(wildcard *.cpp)))
+OBJS:=$(addprefix $(OBJDIR)/, $(SRC:%.cpp=%.o))
+BIN_FILE:=$(OBJDIR)/$(PACKAGE_NAME).o
+EXEC_FILE:=$(OBJDIR)/$(PACKAGE_NAME).exe
 
 INC_PARAMS:=$(INCLUDES:%=-I%)
 LIB_PARAMS:=$(LIBDIRS:%=-L%)
 
 ############################### UNITTEST ###############################
 ifeq ($(UNITTEST),true)
-EXEC:=test.exe
 
 UTLDFLAGS+=\
 	-lstdc++ \
@@ -21,38 +22,38 @@ UTLIBDIRS+=\
 
 UTLIB_PARAMS:=$(UTLIBDIRS:%=-L%)
 
-$(OBJDIR)/$(EXEC): $(OBJDIR) $(OBJS)
-	$(CC) $(CFLAGS) $(CXXFLAGS) $(UTLIB_PARAMS) $(INC_PARAMS) -o $(OBJDIR)/$(EXEC) $(OBJDIR)/*.o $(UTLDFLAGS)
-	./$(OBJDIR)/$(EXEC)
+$(EXEC_FILE): $(OBJDIR) $(BIN_FILE)
+	$(CC) $(CFLAGS) $(CXXFLAGS) $(UTLIB_PARAMS) $(INC_PARAMS) -o $(EXEC_FILE) $(BIN_FILE) $(UTLDFLAGS)
+	./$(EXEC_FILE)
 
 endif
 ############################### END UNITTEST ###############################
 
 .PHONY: makeobj
-makeobj: $(OBJDIR) $(OBJS) $(OBJDIR)/$(MAKE_LIB)
+makeobj: $(OBJDIR) $(BIN_FILE) $(OBJDIR)/$(MAKE_LIB)
 
-$(OBJDIR)/%.o: $(SRC)
+$(BIN_FILE): $(SRC)
 	$(CC) $(CFLAGS) $(CXXFLAGS) $(LIBDIRS) $(INC_PARAMS) -c $< -o $@ $(LDFLAGS)
-
-$(OBJDIR):
-	mkdir -p $(OBJDIR)
 
 ############################### SUDOKU LIBS ###############################
 ifdef MAKE_LIB
-$(OBJDIR)/$(MAKE_LIB): $(OBJS)
-	ar -rcs $(OBJDIR)/$(MAKE_LIB) $(OBJS)
+$(OBJDIR)/$(MAKE_LIB): $(BIN_FILE)
+	ar -rcs $(OBJDIR)/$(MAKE_LIB) $(BIN_FILE)
 endif
 ############################### END SUDOKU LIBS ###############################
 
 ############################### MAIN APP ###############################
 ifeq ($(MAIN_APP),true)
 #creates main application
-exe: $(OBJDIR)/sudoku.exe
+exe: $(OBJDIR) $(EXEC_FILE)
 
-$(OBJDIR)/sudoku.exe: $(SRCDIR)/$(OBJDIR)/*.o
-	$(CC) $(CFLAGS) $(CXXFLAGS) $(LIBDIRS) -o $(OBJDIR)/sudoku.exe $(SRCDIR)/$(OBJDIR)/*.o $(LDFLAGS)
+$(EXEC_FILE):
+	$(CC) $(CFLAGS) $(CXXFLAGS) $(LIBDIRS) -o $(EXEC_FILE) $(SRCDIR)/$(OBJDIR)/*.o $(LDFLAGS)
 endif
 ############################### END MAIN APP ###############################
+
+$(OBJDIR):
+	mkdir -p $(OBJDIR)
 
 .PHONY: clean
 clean:

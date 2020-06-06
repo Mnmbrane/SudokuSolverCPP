@@ -1,3 +1,5 @@
+PACKAGE_NAME:=sudoku
+
 INCLUDES:= \
 	./../include
 

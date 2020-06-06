@@ -1,15 +1,20 @@
+PACKAGE_NAME:=sudokutest
+
 INCLUDES:= \
-	./../include \
+	../include \
+	include \
 	googletest/include
 
 UTLIBDIRS:=\
-	./../lib/obj
+	../lib/obj
 
 UTLDFLAGS:=\
 	-lsudoku
 
 SRC:=\
+	main.cpp \
 	SudokuUtilCheckerTest.cpp
+	#SudokuPuzzleTest.cpp
 
 UNITTEST:=true
 
