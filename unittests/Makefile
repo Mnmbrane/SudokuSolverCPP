@@ -1,22 +1,43 @@
+include ../Makefile.extra
+
 PACKAGE_NAME:=sudokutest
 
-INCLUDES:= \
-	../include \
-	include \
-	googletest/include
+OBJ_DIR=obj
 
-LIBDIRS:=\
-	../lib/obj
+EXEC:=$(OBJ_DIR)/$(PACKAGE_NAME)
+
+INCLUDES:= \
+	-I../include \
+	-Iinclude \
+	-Igoogletest/include
+
+CXXFLAGS+=$(INCLUDES)
 
 LDFLAGS:=\
-	-lsudoku
+	-L../lib/obj \
+	-Lgoogletest
+
+LDLIBS:=\
+	-lsudoku \
+	-lstdc++ \
+	-lpthread \
+	-lgtest \
+	-lgmock \
+	-lgtest_main \
+	-lgmock_main
 
 SRC:=\
 	main.cpp \
 	SudokuUtilCheckerTest.cpp
 	#SudokuPuzzleTest.cpp
 
-UNITTEST:=true
+OBJ_DIR=obj
+OBJ:=$(SRC:%.cpp=%.o)
 
-include ../MakeHelper/Makefile.extra
-include ../MakeHelper/Makefile.submake
+$(EXEC): $(OBJ)
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(INCLUDES) -o $(EXEC) $(OBJ) $(LDLIBS)
+	./$(EXEC)
+
+.PHONY: clean
+clean:
+	$(RM) $(OBJ_DIR)/*.o $(OBJ_DIR)/*.a $(EXEC)

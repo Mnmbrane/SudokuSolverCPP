@@ -1,12 +1,26 @@
-PACKAGE_NAME:=sudoku
+include ../Makefile.extra
+
+LIBNAME:=sudoku
+
+OBJ_DIR:=obj
 
 INCLUDES:= \
-	./../include
+	-I./../include
+
+CXXFLAGS+=$(INCLUDES)
 
 SRC:=\
 	SudokuUtilChecker.cpp
 
-MAKE_LIB:=libsudoku.a
+OBJ:=$(SRC:%.cpp=%.o)
 
-include ../MakeHelper/Makefile.extra
-include ../MakeHelper/Makefile.submake
+#make the library
+$(OBJ_DIR)/lib$(LIBNAME).a: $(OBJ)
+	$(AR) $@ $(OBJ)
+
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
+
+.PHONY: clean
+clean:
+	$(RM) -r *.o $(OBJ_DIR)/*.o $(OBJ_DIR)/*.a

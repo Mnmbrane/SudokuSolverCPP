@@ -1,3 +1,0 @@
-CC:=gcc
-CXXFLAGS:=-O2
-CFLAGS:=-Wall -g
