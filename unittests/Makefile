@@ -40,4 +40,4 @@ $(EXEC): $(OBJ)
 
 .PHONY: clean
 clean:
-	$(RM) $(OBJ_DIR)/*.o $(OBJ_DIR)/*.a $(EXEC)
+	$(RM) *.o $(OBJ_DIR)/*.o $(OBJ_DIR)/*.a $(EXEC)
