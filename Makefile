@@ -1,9 +1,8 @@
 include Makefile.extra
 
 SRCDIR:=src
-LIBDIRS:=-Llib/obj
-LDFLAGS:=-lsudoku
-MAIN_APP:=true
+LIBDIRS:=lib
+UTDIR:=unittests
 PACKAGE_NAME:=sudokuapp
 OBJ_DIR:=obj
 
@@ -11,16 +10,16 @@ OBJ_DIR:=obj
 all: mklib mksrc mkut exe
 
 mklib:
-	@$(MAKE) --no-print-directory -C lib/
+	@$(MAKE) --no-print-directory -C $(LIBDIRS)
 mksrc:
-	@$(MAKE) --no-print-directory -C src
+	@$(MAKE) --no-print-directory -C $(SRCDIR)
 mkut:
-	@$(MAKE) --no-print-directory -C unittests
+	@$(MAKE) --no-print-directory -C $(UTDIR)
 
 clean:
-	@$(MAKE) --no-print-directory  clean -C lib
-	@$(MAKE) --no-print-directory  clean -C src
-	@$(MAKE) --no-print-directory  clean -C unittests
+	@$(MAKE) --no-print-directory  clean -C $(LIBDIRS)
+	@$(MAKE) --no-print-directory  clean -C $(SRCDIR)
+	@$(MAKE) --no-print-directory  clean -C $(UTDIR)
 	$(RM) $(OBJ_DIR)/*.a $(OBJ_DIR)/*.o $(OBJ_DIR)/$(PACKAGE_NAME)
 
 exe:$(OBJ_DIR)/$(PACKAGE_NAME)

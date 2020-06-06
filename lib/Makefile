@@ -5,18 +5,22 @@ LIBNAME:=sudoku
 OBJ_DIR:=obj
 
 INCLUDES:= \
-	-I./../include
+	./../include
 
-CXXFLAGS+=$(INCLUDES)
+CXXFLAGS+=$(addprefix -I,$(INCLUDES))
 
 SRC:=\
-	SudokuUtilChecker.cpp
+	SudokuUtilChecker.cpp \
+	SudokuPuzzle.cpp
 
-OBJ:=$(SRC:%.cpp=%.o)
+OBJ:=$(SRC:%.cpp=$(OBJ_DIR)/%.o)
 
 #make the library
 $(OBJ_DIR)/lib$(LIBNAME).a: $(OBJ)
 	$(AR) $@ $(OBJ)
+
+$(OBJ): $(OBJ_DIR)/%.o: %.cpp $(INCLUDES)/%.h
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)

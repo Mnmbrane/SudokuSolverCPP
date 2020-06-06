@@ -7,8 +7,8 @@ OBJ_DIR=obj
 EXEC:=$(OBJ_DIR)/$(PACKAGE_NAME)
 
 INCLUDES:= \
+	-I.\
 	-I../include \
-	-Iinclude \
 	-Igoogletest/include
 
 CXXFLAGS+=$(INCLUDES)
@@ -27,16 +27,22 @@ LDLIBS:=\
 	-lgmock_main
 
 SRC:=\
-	main.cpp \
-	SudokuUtilCheckerTest.cpp
-	#SudokuPuzzleTest.cpp
+	SudokuUtilCheckerTest.cpp \
+	# SudokuPuzzleTest.cpp
 
-OBJ_DIR=obj
-OBJ:=$(SRC:%.cpp=%.o)
+MAINOBJ:=$(OBJ_DIR)/main.o
+OBJ:=$(SRC:%.cpp=$(OBJ_DIR)/%.o)
 
-$(EXEC): $(OBJ)
+$(EXEC): $(OBJ) $(MAINOBJ)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(INCLUDES) -o $(EXEC) $(OBJ) $(LDLIBS)
 	./$(EXEC)
+
+#No header file for main
+$(MAINOBJ): $(OBJ_DIR)/%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+$(OBJ): $(OBJ_DIR)/%.o: %.cpp %.h
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 .PHONY: clean
 clean:

@@ -49,5 +49,7 @@ protected:
 
     virtual void TearDown()
     {
+        memset(m_puzzle, 0, sizeof(m_puzzle));
     }
+     
 };
