@@ -20,11 +20,10 @@
 class SudokuPuzzleTest : public ::testing::Test
 {
 protected:
-    uint8_t m_puzzle[MAX_ELEMENTS];
 
     virtual void SetUp()
     {
-       memset(m_puzzle, 0, sizeof(m_puzzle));
+
     }
 
     virtual void TearDown()

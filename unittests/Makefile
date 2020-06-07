@@ -26,9 +26,13 @@ LDLIBS:=\
 	-lgtest_main \
 	-lgmock_main
 
+LIB:=\
+	../lib/$(OBJ_DIR)/libsudoku.a
+
 SRC:=\
+	PuzzleList.cpp \
 	SudokuUtilCheckerTest.cpp \
-	 SudokuPuzzleTest.cpp
+	SudokuPuzzleTest.cpp
 
 MAINOBJ:=$(OBJ_DIR)/main.o
 OBJ:=$(SRC:%.cpp=$(OBJ_DIR)/%.o)
@@ -36,7 +40,7 @@ OBJ:=$(SRC:%.cpp=$(OBJ_DIR)/%.o)
 .PHONY: make_utest
 make_utest: $(OBJ_DIR) $(EXEC)
 
-$(EXEC): $(OBJ_DIR) $(OBJ) $(MAINOBJ)
+$(EXEC): $(OBJ_DIR) $(OBJ) $(MAINOBJ) $(LIB)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(INCLUDES) -o $(EXEC) $(OBJ) $(LDLIBS)
 	./$(EXEC)
 

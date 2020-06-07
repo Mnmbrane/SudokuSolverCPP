@@ -4,7 +4,7 @@
 
 bool initialCheck(const uint8_t* puzzle, uint8_t index, uint8_t val)
 {
-    return (index >= 0 && index < MAX_ELEMENTS) &&
+    return (index >= 0 && index < PUZZLE_MAX_ELEMENTS) &&
            (puzzle[index] == 0) &&
            (val > 0 && val < 10);
 }
@@ -30,7 +30,7 @@ bool checkCol(const uint8_t* puzzle, uint8_t index, uint8_t val)
 
     // Check down
     // Add by 9 to go down
-    while( (index + 9) <= MAX_INDEX && retVal == true )
+    while( (index + 9) <= PUZZLE_MAX_INDEX && retVal == true )
     {
         index += 9;
         // If  there is a match

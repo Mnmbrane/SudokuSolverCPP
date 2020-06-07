@@ -1,52 +1,102 @@
 #include "SudokuPuzzle.h"
 #include "SudokuPuzzleTest.h"
+#include "PuzzleList.h"
 #include "gtest/gtest.h"
 
 
-TEST_F(SudokuPuzzleTest, ExactValTest)
+TEST_F(SudokuPuzzleTest, GetExactValTest)
 {
    // Arrange
-   const uint8_t puzzle1[] =
-   {
-      0, 0, 0,  0, 0, 9,  0, 0, 0,
-      2, 8, 0,  3, 0, 0,  1, 0, 5,
-      3, 0, 5,  0, 8, 0,  7, 4, 6,
-
-      7, 0, 0,  0, 0, 0,  0, 6, 0,
-      0, 3, 0,  4, 2, 7,  0, 8, 0,
-      0, 2, 0,  0, 0, 0,  0, 0, 7,
-
-      8, 1, 3,  0, 5, 0,  6, 0, 2,
-      5, 0, 9,  0, 0, 2,  0, 1, 8,
-      0, 0, 0,  8, 0, 0,  0, 0, 0
-   };
    SudokuPuzzle sudokuPuzzle;
 
-   for(uint8_t i = 0; i < sizeof(puzzle1); i++)
+   uint8_t* unsolvedPuzzle = getPuzzle(PUZZLE_UNSOLVED);
+
+   for(uint8_t i = 0; i < PUZZLE_MAX_ELEMENTS; i++)
    {
-      // Act
-      ASSERT_EQ(true, sudokuPuzzle.setValAt(i / 9, i % 9, puzzle1[i]));
+      // Act/Assert
+      sudokuPuzzle.setValAt(INDEX_TO_ROW(i), INDEX_TO_COL(i), unsolvedPuzzle[i]);
 
       // Assert
-      ASSERT_EQ(sudokuPuzzle.getValAt(i / 9, i % 9), puzzle1[i]);
+      ASSERT_EQ(sudokuPuzzle.getValAt(INDEX_TO_ROW(i), INDEX_TO_COL(i)), unsolvedPuzzle[i]);
    }
 }
 
-TEST_F(SudokuPuzzleTest, OutOfRangeTest)
+TEST_F(SudokuPuzzleTest, SetAllValidTest)
 {
+   // Arrange
    SudokuPuzzle sudokuPuzzle;
-   for(uint8_t i = 0; i < MAX_ELEMENTS; i++)
+   uint8_t* solvedPuzzle = getPuzzle(PUZZLE_SOLVED);
+   for(uint8_t i = 0; i < PUZZLE_MAX_ELEMENTS; i++)
    {
       // Set all to 10
-      sudokuPuzzle.setValAt(i / 9, i % 9, 10);
+      // Act/Assert
+      ASSERT_EQ(true, sudokuPuzzle.setValAt(INDEX_TO_ROW(i), INDEX_TO_COL(i), solvedPuzzle[i]));
    }
-   // Arrange
+}
 
-   // Act
-   for(uint8_t i = 0; i < sizeof(m_puzzle); i++)
+TEST_F(SudokuPuzzleTest, SetInvalidTest)
+{
+   // Arrange
+   SudokuPuzzle sudokuPuzzle;
+   uint8_t* invalidPuzzle = getPuzzle(PUZZLE_INVALID);
+   for(uint8_t i = 0; i < PUZZLE_MAX_ELEMENTS; i++)
    {
-      printf("%u\n", m_puzzle[i]);
-      // Assert
-      ASSERT_NE(sudokuPuzzle.getValAt(i / 9, i % 9), m_puzzle[i]);
+      // Set all to 10
+      // Act/Assert
+      ASSERT_EQ(false, sudokuPuzzle.setValAt(INDEX_TO_ROW(i), INDEX_TO_COL(i), invalidPuzzle[i]));
    }
+}
+
+TEST_F(SudokuPuzzleTest, SetEntirePuzzleValidTest)
+{
+   // Arrange
+   SudokuPuzzle sudokuPuzzle;
+   uint8_t* solvedPuzzle = getPuzzle(PUZZLE_SOLVED);
+
+   // Act/Assert
+   ASSERT_EQ(true, sudokuPuzzle.setPuzzle(solvedPuzzle));
+
+   for(uint8_t i = 0; i < PUZZLE_MAX_ELEMENTS; i++)
+   {
+      // Assert
+      ASSERT_EQ(sudokuPuzzle.getValAt(INDEX_TO_ROW(i), INDEX_TO_COL(i)), solvedPuzzle[i]);
+   }
+
+}
+
+TEST_F(SudokuPuzzleTest, SetEntirePuzzleInvalidTest)
+{
+   // Arrange
+   SudokuPuzzle sudokuPuzzle;
+   uint8_t* invalidAtIndex80Puzzle = getPuzzle(PUZZLE_INVALID_AT_INDEX_80);
+
+   // Act/Assert
+   ASSERT_EQ(false, sudokuPuzzle.setPuzzle(invalidAtIndex80Puzzle));
+
+   for(uint8_t i = 0; i < PUZZLE_MAX_ELEMENTS; i++)
+   {
+      // Assert
+      // Should had been reset, all elements are 0
+      ASSERT_EQ(sudokuPuzzle.getValAt(INDEX_TO_ROW(i), INDEX_TO_COL(i)), 0);
+   }
+
+}
+
+TEST_F(SudokuPuzzleTest, ResetTest)
+{
+   // Arrange
+   SudokuPuzzle sudokuPuzzle;
+   uint8_t* solvedPuzzle = getPuzzle(PUZZLE_SOLVED);
+
+   // Act/Assert
+   sudokuPuzzle.setPuzzle(solvedPuzzle);
+
+   sudokuPuzzle.resetPuzzle();
+   for(uint8_t i = 0; i < PUZZLE_MAX_ELEMENTS; i++)
+   {
+      // Assert
+      // Should had been reset, all elements are 0
+      ASSERT_EQ(sudokuPuzzle.getValAt(INDEX_TO_ROW(i), INDEX_TO_COL(i)), 0);
+   }
+
 }

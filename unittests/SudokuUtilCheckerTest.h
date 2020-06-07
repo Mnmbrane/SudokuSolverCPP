@@ -21,7 +21,7 @@ class SudokuUtilCheckerTest : public ::testing::Test
 {
 protected:
 
-    uint8_t m_puzzle[MAX_ELEMENTS];
+    uint8_t m_puzzle[PUZZLE_MAX_ELEMENTS];
 
     virtual void SetUp()
     {      
@@ -41,7 +41,7 @@ protected:
         };
 
         // copy over puzzle
-        for(uint8_t i = 0; i < MAX_ELEMENTS; i++)
+        for(uint8_t i = 0; i < PUZZLE_MAX_ELEMENTS; i++)
         {
             m_puzzle[i] = puzzle[i];
         }
