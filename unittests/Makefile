@@ -33,7 +33,10 @@ SRC:=\
 MAINOBJ:=$(OBJ_DIR)/main.o
 OBJ:=$(SRC:%.cpp=$(OBJ_DIR)/%.o)
 
-$(EXEC): $(OBJ) $(MAINOBJ)
+.PHONY: make_utest
+make_utest: $(OBJ_DIR) $(EXEC)
+
+$(EXEC): $(OBJ_DIR) $(OBJ) $(MAINOBJ)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(INCLUDES) -o $(EXEC) $(OBJ) $(LDLIBS)
 	./$(EXEC)
 
@@ -43,6 +46,9 @@ $(MAINOBJ): $(OBJ_DIR)/%.o: %.cpp
 
 $(OBJ): $(OBJ_DIR)/%.o: %.cpp %.h
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
 
 .PHONY: clean
 clean:

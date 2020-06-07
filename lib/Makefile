@@ -4,6 +4,8 @@ LIBNAME:=sudoku
 
 OBJ_DIR:=obj
 
+LIB:=$(OBJ_DIR)/lib$(LIBNAME).a 
+
 INCLUDES:= \
 	./../include
 
@@ -15,8 +17,11 @@ SRC:=\
 
 OBJ:=$(SRC:%.cpp=$(OBJ_DIR)/%.o)
 
+.PHONY: make_lib
+make_lib: $(OBJ_DIR) $(LIB)
+
 #make the library
-$(OBJ_DIR)/lib$(LIBNAME).a: $(OBJ)
+$(LIB): $(OBJ)
 	$(AR) $@ $(OBJ)
 
 $(OBJ): $(OBJ_DIR)/%.o: %.cpp $(INCLUDES)/%.h

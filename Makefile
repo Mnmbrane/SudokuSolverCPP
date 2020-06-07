@@ -17,12 +17,15 @@ mkut:
 	@$(MAKE) --no-print-directory -C $(UTDIR)
 
 clean:
-	@$(MAKE) --no-print-directory  clean -C $(LIBDIRS)
-	@$(MAKE) --no-print-directory  clean -C $(SRCDIR)
-	@$(MAKE) --no-print-directory  clean -C $(UTDIR)
+	@$(MAKE) --no-print-directory clean -C $(LIBDIRS)
+	@$(MAKE) --no-print-directory clean -C $(SRCDIR)
+	@$(MAKE) --no-print-directory clean -C $(UTDIR)
 	$(RM) $(OBJ_DIR)/*.a $(OBJ_DIR)/*.o $(OBJ_DIR)/$(PACKAGE_NAME)
 
-exe:$(OBJ_DIR)/$(PACKAGE_NAME)
+exe:$(OBJ_DIR) $(OBJ_DIR)/$(PACKAGE_NAME)
+
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
 
 $(OBJ_DIR)/$(PACKAGE_NAME): $(SRCDIR)/$(OBJ_DIR)/sudokumain
 	$(CP) $(SRCDIR)/$(OBJ_DIR)/sudokumain $(OBJ_DIR)/$(PACKAGE_NAME)
