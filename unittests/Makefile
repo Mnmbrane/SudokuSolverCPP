@@ -28,7 +28,7 @@ LDLIBS:=\
 
 SRC:=\
 	SudokuUtilCheckerTest.cpp \
-	# SudokuPuzzleTest.cpp
+	 SudokuPuzzleTest.cpp
 
 MAINOBJ:=$(OBJ_DIR)/main.o
 OBJ:=$(SRC:%.cpp=$(OBJ_DIR)/%.o)

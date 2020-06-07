@@ -1,13 +1,10 @@
 #include "SudokuPuzzle.h"
+#include "SudokuUtilChecker.h"
+#include "string.h"
 
-
-SudokuPuzzle::SudokuPuzzle(const uint8_t* puzzle)
+SudokuPuzzle::SudokuPuzzle()
 {
-   // Copy everything over to member variable puzzle
-   for(uint8_t i = 0; i < MAX_INDEX; i++)
-   {
-      m_puzzle[i] = puzzle[i];
-   }
+   memset(m_puzzle, 0, sizeof(m_puzzle));
 }
 
 // getters
@@ -17,7 +14,18 @@ uint8_t SudokuPuzzle::getValAt(uint8_t row, uint8_t col)
 }
 
 // setters
-void SudokuPuzzle::setValAt(uint8_t row, uint8_t col, uint8_t val)
+bool SudokuPuzzle::setValAt(uint8_t row, uint8_t col, uint8_t val)
 {
-   m_puzzle[(row * 9) + col] = val;
+   uint8_t index = (row * 9) + col;
+
+   if(checkAll(m_puzzle, index, val) == false)
+   {
+      m_puzzle[index] = 0;
+      return false;
+   }
+   else
+   {
+       m_puzzle[index] = val;
+       return true;
+   }
 }

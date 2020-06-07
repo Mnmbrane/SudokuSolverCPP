@@ -30,7 +30,7 @@
             "name": "gtest debug",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/unittests/obj/test.exe",
+            "program": "${workspaceFolder}/unittests/obj/sudokutest",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
