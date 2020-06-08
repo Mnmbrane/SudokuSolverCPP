@@ -10,18 +10,13 @@ namespace Sudoku
       SudokuCoord(SudokuIndex inIndex);
       SudokuCoord(const SudokuCoord&); // Copy Constructor
 
-      // Used to initialize
-      SudokuCoord& operator++();    //  Prefix ++
-      SudokuCoord operator++(int);  //  Postfix ++
-
-
       void setRow(RowType inRow);
       void setCol(ColType inCol);
       void setIndex(SudokuIndex inIndex);
 
-      RowType getRow();
-      ColType getCol();
-      SudokuIndex getIndex();
+      RowType getRow() const ;
+      ColType getCol() const ;
+      SudokuIndex getIndex() const ;
 
    private:
       SudokuIndex rowColToIndex(RowType inRow, ColType inCol);

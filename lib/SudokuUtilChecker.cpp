@@ -3,20 +3,19 @@
 
 namespace Sudoku
 {
-bool initialCheck(const PuzzlePtrType puzzle,
-                  SudokuIndex index,
+bool initialCheck(SudokuIndex index,
                   ValType val)
 {
     return (index >= 0 && index <= PUZZLE_MAX_INDEX) &&
-           (puzzle[index] == 0) &&
-           (val > 0 && val < 10);
+           (val > VAL_0 && val < VAL_MAX);
 }
 
 bool checkCol(const PuzzlePtrType puzzle, SudokuIndex index, ValType val)
 {
     bool retVal = true;
+    SudokuIndex saveIndex = index;
 
-    retVal = initialCheck(puzzle, index, val);
+    retVal = initialCheck(index, val);
 
     // Check Above
     // Subtract by 9 to go up
@@ -31,6 +30,7 @@ bool checkCol(const PuzzlePtrType puzzle, SudokuIndex index, ValType val)
         }
     }
 
+    index = saveIndex;
     // Check down
     // Add by 9 to go down
     while( (index + 9) <= PUZZLE_MAX_INDEX && retVal == true )
@@ -49,19 +49,21 @@ bool checkCol(const PuzzlePtrType puzzle, SudokuIndex index, ValType val)
 bool checkRow(const PuzzlePtrType puzzle, SudokuIndex index, ValType val)
 {
     bool retVal = true;
+    SudokuIndex saveIndex = index;
 
-    retVal = initialCheck(puzzle, index, val);
+    retVal = initialCheck(index, val);
+
 
     // Lower check
     // ex. index = 19,
     // 19 - (19 % 9) = 19 - 1 = 18
-    uint8_t lowerIndex = index - (index % 9);
+    SudokuIndex lowerIndex = index - (index % 9);
 
     // Upper check
     // ex. index = 19
     // ((19 + 9) - (19 % 9)) - 1
     // (28 - 1) - 1 = 26
-    uint8_t upperIndex = ((index + 9) - (index % 9)) - 1;
+    SudokuIndex upperIndex = ((index + 9) - (index % 9)) - 1;
 
     // Check Left
     // Subtract by 1 to left
@@ -76,6 +78,7 @@ bool checkRow(const PuzzlePtrType puzzle, SudokuIndex index, ValType val)
         }
     }
 
+    index = saveIndex;
     // Check down
     // Add by 1 to go right
     while( (index + 1) <= upperIndex && retVal == true )
@@ -96,7 +99,7 @@ bool checkGroup(const PuzzlePtrType puzzle, SudokuIndex index, ValType val)
 {
     bool retVal = true;
 
-    retVal = initialCheck(puzzle, index, val);
+    retVal = initialCheck(index, val);
 
     // TODO: Move these into description
     // Want to get the top left corner of the 3x3 grouping
@@ -124,11 +127,11 @@ bool checkGroup(const PuzzlePtrType puzzle, SudokuIndex index, ValType val)
     // TODO: remove magic numbers
     SudokuIndex startIndex = (index - (index % 3) ) - ( (index - (index % 9)) % 27 );
 
-    for(int i = startIndex; i <= (startIndex + 18) && retVal == true; i+=9)
+    for(SudokuIndex i = startIndex; i <= (startIndex + 18) && retVal == true; i+=9)
     {
-        for(int j = i; j < i + 3; j++)
+        for(SudokuIndex j = i; j < i + 3; j++)
         {
-            if(puzzle[j] == val)
+            if(j != index && puzzle[j] == val)
             {
                 retVal = false;
                 break;

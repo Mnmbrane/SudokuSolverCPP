@@ -19,7 +19,7 @@ SudokuCoord::SudokuCoord(SudokuIndex inIndex) :
    m_col(indexToCol(inIndex)),
    m_index(inIndex)
 {
-   if(inIndex >= PUZZLE_MAX_INDEX)
+   if(inIndex > PUZZLE_MAX_INDEX)
    {
       m_row = ROW_0;
       m_col = COL_0;
@@ -32,18 +32,6 @@ SudokuCoord::SudokuCoord(const SudokuCoord& rhs)
    m_row    = rhs.m_row;
    m_col    = rhs.m_col;
    m_index  = rhs.m_index;
-}
-
-SudokuCoord& SudokuCoord::operator++ ()
-{
-   setIndex(m_index+1);
-   return *this;
-}
-SudokuCoord SudokuCoord::operator++(int)
-{
-   SudokuCoord coord(m_index);
-   setIndex(m_index+1);
-   return coord;
 }
 
 SudokuIndex SudokuCoord::rowColToIndex(RowType inRow, ColType inCol)
@@ -95,19 +83,27 @@ void SudokuCoord::setIndex(SudokuIndex inIndex)
    }
 }
 
-RowType SudokuCoord::getRow()
+RowType SudokuCoord::getRow() const
 {
    return m_row;
 }
 
-ColType SudokuCoord::getCol()
+ColType SudokuCoord::getCol() const
 {
    return m_col;
 }
 
-SudokuIndex SudokuCoord::getIndex()
+SudokuIndex SudokuCoord::getIndex() const 
 {
    return m_index;
 }
 
+bool operator==(const SudokuCoord& lhs, const SudokuCoord& rhs)
+{
+   return (lhs.getIndex() == rhs.getIndex());
+}
+bool operator!=(const SudokuCoord& lhs, const SudokuCoord& rhs)
+{
+   return (lhs.getIndex() != rhs.getIndex());
+}
 }

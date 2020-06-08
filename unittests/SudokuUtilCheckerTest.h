@@ -3,6 +3,7 @@
 #include "gtest/gtest.h"
 
 #include "SudokuCommonTypes.h"
+#include "PuzzleList.h"
 
 /* Index
  0,  1,  2,   3,  4,  5,   6,  7,  8,
@@ -21,36 +22,12 @@
 class SudokuUtilCheckerTest : public ::testing::Test
 {
 protected:
-
-    Sudoku::ValType m_puzzle[Sudoku::PUZZLE_MAX_ELEMENTS];
-
     virtual void SetUp()
-    {      
-        const uint8_t puzzle[] =
-        {
-            0, 0, 0,  0, 0, 9,  0, 0, 0,
-            2, 8, 0,  3, 0, 0,  1, 0, 5,
-            3, 0, 5,  0, 8, 0,  7, 4, 6,
-
-            7, 0, 0,  0, 0, 0,  0, 6, 0,
-            0, 3, 0,  4, 2, 7,  0, 8, 0,
-            0, 2, 0,  0, 0, 0,  0, 0, 7,
-
-            8, 1, 3,  0, 5, 0,  6, 0, 2,
-            5, 0, 9,  0, 0, 2,  0, 1, 8,
-            0, 0, 0,  8, 0, 0,  0, 0, 0
-        };
-
-        // copy over puzzle
-        for(uint8_t i = 0; i < Sudoku::PUZZLE_MAX_ELEMENTS; i++)
-        {
-            m_puzzle[i] = (Sudoku::ValType)puzzle[i];
-        }
+    {
     }
 
     virtual void TearDown()
     {
-        memset(m_puzzle, 0, sizeof(m_puzzle));
     }
      
 };

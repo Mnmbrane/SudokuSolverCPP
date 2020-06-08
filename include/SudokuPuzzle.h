@@ -14,16 +14,19 @@ class SudokuPuzzle
 public:
 
    SudokuPuzzle();
+   ~SudokuPuzzle();
 
    void resetPuzzle();
 
    // getters
-   ValType getValAt(SudokuCoord coord);
+   ValType getValAt(const SudokuCoord& coord);
 
    const std::vector<SudokuCoord> getUnmarkedCoords() const;
 
+   bool isPuzzleInit();
+
    // setters
-   bool setValAt(SudokuCoord coord, ValType val);
+   bool setValAt(const SudokuCoord& coord, ValType val);
 
    bool initPuzzle(PuzzlePtrType inPuzzle);
 

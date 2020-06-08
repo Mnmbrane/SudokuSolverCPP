@@ -1,10 +1,11 @@
 #pragma once
+
+class SudokuCoord;
+
 namespace Sudoku
 {
-   typedef unsigned char uint8_t;
-
-   static const uint8_t PUZZLE_MAX_INDEX = 80;
-   static const uint8_t PUZZLE_MAX_ELEMENTS = (PUZZLE_MAX_INDEX + 1);
+   static const int PUZZLE_MAX_INDEX = 80;
+   static const int PUZZLE_MAX_ELEMENTS = (PUZZLE_MAX_INDEX + 1);
 
    typedef enum
    {
@@ -18,10 +19,12 @@ namespace Sudoku
 
    typedef enum
    {
-      VAL_0, VAL_1, VAL_2, VAL_3, VAL_4, VAL_5, VAL_6, VAL_7, VAL_8, VAL_MAX
+      VAL_0, VAL_1, VAL_2, VAL_3, VAL_4, VAL_5, VAL_6, VAL_7, VAL_8, VAL_9, VAL_MAX
    } ValType;
 
    typedef ValType* PuzzlePtrType;
-   typedef uint8_t SudokuIndex;
+   typedef int SudokuIndex;
 
+   bool operator==(const SudokuCoord& lhs, const SudokuCoord& rhs);
+   bool operator!=(const SudokuCoord& lhs, const SudokuCoord& rhs);
 }

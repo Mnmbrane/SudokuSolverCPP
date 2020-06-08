@@ -13,19 +13,26 @@ SudokuPuzzle::SudokuPuzzle() :
    resetPuzzle();
 }
 
+SudokuPuzzle::~SudokuPuzzle()
+{
+   resetPuzzle();
+   initFlag = false;
+}
+
 void SudokuPuzzle::resetPuzzle()
 {
    unmarkedCoordList.clear();
    memset(m_puzzle, 0, sizeof(m_puzzle));
 }
 
+// Getters
 const std::vector<SudokuCoord> SudokuPuzzle::getUnmarkedCoords() const
 {
    return unmarkedCoordList;
 }
 
-// getters
-ValType SudokuPuzzle::getValAt(SudokuCoord coord)
+
+ValType SudokuPuzzle::getValAt(const SudokuCoord& coord)
 {
    if(!initFlag)
    {
@@ -35,8 +42,13 @@ ValType SudokuPuzzle::getValAt(SudokuCoord coord)
    return m_puzzle[coord.getIndex()];
 }
 
+bool SudokuPuzzle::isPuzzleInit()
+{
+   return initFlag;
+}
+
 // setters
-bool SudokuPuzzle::setValAt(SudokuCoord coord, ValType val)
+bool SudokuPuzzle::setValAt(const SudokuCoord& coord, ValType val)
 {
    if(!initFlag)
    {
@@ -57,7 +69,25 @@ bool SudokuPuzzle::setValAt(SudokuCoord coord, ValType val)
 
 bool SudokuPuzzle::initPuzzle(PuzzlePtrType inPuzzle)
 {
-   for(uint8_t i = 0; i < PUZZLE_MAX_ELEMENTS; i++)
+   // Check Validity of the puzzle
+   for(Sudoku::SudokuIndex i = 0; i <= PUZZLE_MAX_INDEX; i++)
+   {
+      bool checkInPuzzle = checkAll(inPuzzle, i, inPuzzle[i]);
+
+      //printf("%d %d\n", inPuzzle[i], checkInPuzzle);
+      // Ignore 0's since we are init, check the rest
+      if(inPuzzle[i] != 0 && checkInPuzzle == false)
+      {
+         // Don't do anything just return false
+         // Still used the puzzle from before
+         return false;
+      }
+   }
+
+   // Clear everything out
+   resetPuzzle();
+   // Passes the validity test, set everything up
+   for(Sudoku::SudokuIndex i = 0; i <= PUZZLE_MAX_INDEX; i++)
    {
       // If it's a 0 this means it's unmarked
       if(inPuzzle[i] == 0)
@@ -68,12 +98,10 @@ bool SudokuPuzzle::initPuzzle(PuzzlePtrType inPuzzle)
          unmarkedCoordList.push_back(unmarkedCoord);
          m_puzzle[i] = VAL_0;
       }
-      else if(checkAll(m_puzzle, i, inPuzzle[i]) == false)
-      {
-         resetPuzzle();
-         return false;
-      }
+
+      m_puzzle[i] = inPuzzle[i];
    }
+
 
    initFlag = true;
 

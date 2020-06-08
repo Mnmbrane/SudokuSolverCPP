@@ -1,71 +1,71 @@
 #include "PuzzleList.h"
 
-uint8_t puzzleUnsolved[] =
+ValType puzzleUnsolved[] =
 {
-   0, 0, 0,  0, 0, 9,  0, 0, 0,
-   2, 8, 0,  3, 0, 0,  1, 0, 5,
-   3, 0, 5,  0, 8, 0,  7, 4, 6,
+   (ValType)0, (ValType)0, (ValType)0,  (ValType)0, (ValType)0, (ValType)9,  (ValType)0, (ValType)0, (ValType)0,
+   (ValType)2, (ValType)8, (ValType)0,  (ValType)3, (ValType)0, (ValType)0,  (ValType)1, (ValType)0, (ValType)5,
+   (ValType)3, (ValType)0, (ValType)5,  (ValType)0, (ValType)8, (ValType)0,  (ValType)7, (ValType)4, (ValType)6,
 
-   7, 0, 0,  0, 0, 0,  0, 6, 0,
-   0, 3, 0,  4, 2, 7,  0, 8, 0,
-   0, 2, 0,  0, 0, 0,  0, 0, 7,
+   (ValType)7, (ValType)0, (ValType)0,  (ValType)0, (ValType)0, (ValType)0,  (ValType)0, (ValType)6, (ValType)0,
+   (ValType)0, (ValType)3, (ValType)0,  (ValType)4, (ValType)2, (ValType)7,  (ValType)0, (ValType)8, (ValType)0,
+   (ValType)0, (ValType)2, (ValType)0,  (ValType)0, (ValType)0, (ValType)0,  (ValType)0, (ValType)0, (ValType)7,
 
-   8, 1, 3,  0, 5, 0,  6, 0, 2,
-   5, 0, 9,  0, 0, 2,  0, 1, 8,
-   0, 0, 0,  8, 0, 0,  0, 0, 0
+   (ValType)8, (ValType)1, (ValType)3,  (ValType)0, (ValType)5, (ValType)0,  (ValType)6, (ValType)0, (ValType)2,
+   (ValType)5, (ValType)0, (ValType)9,  (ValType)0, (ValType)0, (ValType)2,  (ValType)0, (ValType)1, (ValType)8,
+   (ValType)0, (ValType)0, (ValType)0,  (ValType)8, (ValType)0, (ValType)0,  (ValType)0, (ValType)0, (ValType)0
 };
 
-uint8_t puzzleSolved[] =
+ValType puzzleSolved[] =
 {
-   8, 2, 7,  1, 5, 4,  3, 9, 6,
-   9, 6, 5,  3, 2, 7,  1, 4, 8,
-   3, 4, 1,  6, 8, 9,  7, 5, 2,
+   (ValType)8, (ValType)2, (ValType)7,  (ValType)1, (ValType)5, (ValType)4,  (ValType)3, (ValType)9, (ValType)6,
+   (ValType)9, (ValType)6, (ValType)5,  (ValType)3, (ValType)2, (ValType)7,  (ValType)1, (ValType)4, (ValType)8,
+   (ValType)3, (ValType)4, (ValType)1,  (ValType)6, (ValType)8, (ValType)9,  (ValType)7, (ValType)5, (ValType)2,
 
-   5, 9, 3,  4, 6, 8,  2, 7, 1,
-   4, 7, 2,  5, 1, 3,  6, 8, 9,
-   6, 1, 8,  9, 7, 2,  4, 3, 5,
+   (ValType)5, (ValType)9, (ValType)3,  (ValType)4, (ValType)6, (ValType)8,  (ValType)2, (ValType)7, (ValType)1,
+   (ValType)4, (ValType)7, (ValType)2,  (ValType)5, (ValType)1, (ValType)3,  (ValType)6, (ValType)8, (ValType)9,
+   (ValType)6, (ValType)1, (ValType)8,  (ValType)9, (ValType)7, (ValType)2,  (ValType)4, (ValType)3, (ValType)5,
 
-   7, 8, 6,  2, 3, 5,  9, 1, 4,
-   1, 5, 4,  7, 9, 6,  8, 2, 3,
-   2, 3, 9,  8, 4, 1,  5, 6, 7
+   (ValType)7, (ValType)8, (ValType)6,  (ValType)2, (ValType)3, (ValType)5,  (ValType)9, (ValType)1, (ValType)4,
+   (ValType)1, (ValType)5, (ValType)4,  (ValType)7, (ValType)9, (ValType)6,  (ValType)8, (ValType)2, (ValType)3,
+   (ValType)2, (ValType)3, (ValType)9,  (ValType)8, (ValType)4, (ValType)1,  (ValType)5, (ValType)6, (ValType)7
 };
 
-uint8_t puzzleInvalid[] =
+ValType puzzleInvalid[] =
 {
-   10, 10, 10,  10, 10, 10,  10, 10, 10,
-   10, 10, 10,  10, 10, 10,  10, 10, 10,
-   10, 10, 10,  10, 10, 10,  10, 10, 10,
+   (ValType)10, (ValType)10, (ValType)10,  (ValType)10, (ValType)10, (ValType)10,  (ValType)10, (ValType)10, (ValType)10,
+   (ValType)10, (ValType)10, (ValType)10,  (ValType)10, (ValType)10, (ValType)10,  (ValType)10, (ValType)10, (ValType)10,
+   (ValType)10, (ValType)10, (ValType)10,  (ValType)10, (ValType)10, (ValType)10,  (ValType)10, (ValType)10, (ValType)10,
 
-   10, 10, 10,  10, 10, 10,  10, 10, 10,
-   10, 10, 10,  10, 10, 10,  10, 10, 10,
-   10, 10, 10,  10, 10, 10,  10, 10, 10,
+   (ValType)10, (ValType)10, (ValType)10,  (ValType)10, (ValType)10, (ValType)10,  (ValType)10, (ValType)10, (ValType)10,
+   (ValType)10, (ValType)10, (ValType)10,  (ValType)10, (ValType)10, (ValType)10,  (ValType)10, (ValType)10, (ValType)10,
+   (ValType)10, (ValType)10, (ValType)10,  (ValType)10, (ValType)10, (ValType)10,  (ValType)10, (ValType)10, (ValType)10,
 
-   10, 10, 10,  10, 10, 10,  10, 10, 10,
-   10, 10, 10,  10, 10, 10,  10, 10, 10,
-   10, 10, 10,  10, 10, 10,  10, 10, 10
+   (ValType)10, (ValType)10, (ValType)10,  (ValType)10, (ValType)10, (ValType)10,  (ValType)10, (ValType)10, (ValType)10,
+   (ValType)10, (ValType)10, (ValType)10,  (ValType)10, (ValType)10, (ValType)10,  (ValType)10, (ValType)10, (ValType)10,
+   (ValType)10, (ValType)10, (ValType)10,  (ValType)10, (ValType)10, (ValType)10,  (ValType)10, (ValType)10, (ValType)10
 };
 
-uint8_t puzzleInvalidAtIndex80[] =
+ValType puzzleInvalidAtIndex80[] =
 {
-   8, 2, 7,  1, 5, 4,  3, 9, 6,
-   9, 6, 5,  3, 2, 7,  1, 4, 8,
-   3, 4, 1,  6, 8, 9,  7, 5, 2,
+   (ValType)8, (ValType)2, (ValType)7,  (ValType)1, (ValType)5, (ValType)4,  (ValType)3, (ValType)9, (ValType)6,
+   (ValType)9, (ValType)6, (ValType)5,  (ValType)3, (ValType)2, (ValType)7,  (ValType)1, (ValType)4, (ValType)8,
+   (ValType)3, (ValType)4, (ValType)1,  (ValType)6, (ValType)8, (ValType)9,  (ValType)7, (ValType)5, (ValType)2,
 
-   5, 9, 3,  4, 6, 8,  2, 7, 1,
-   4, 7, 2,  5, 1, 3,  6, 8, 9,
-   6, 1, 8,  9, 7, 2,  4, 3, 5,
+   (ValType)5, (ValType)9, (ValType)3,  (ValType)4, (ValType)6, (ValType)8,  (ValType)2, (ValType)7, (ValType)1,
+   (ValType)4, (ValType)7, (ValType)2,  (ValType)5, (ValType)1, (ValType)3,  (ValType)6, (ValType)8, (ValType)9,
+   (ValType)6, (ValType)1, (ValType)8,  (ValType)9, (ValType)7, (ValType)2,  (ValType)4, (ValType)3, (ValType)5,
 
-   7, 8, 6,  2, 3, 5,  9, 1, 4,
-   1, 5, 4,  7, 9, 6,  8, 2, 3,
-   2, 3, 9,  8, 4, 1,  5, 6, 8
+   (ValType)7, (ValType)8, (ValType)6,  (ValType)2, (ValType)3, (ValType)5,  (ValType)9, (ValType)1, (ValType)4,
+   (ValType)1, (ValType)5, (ValType)4,  (ValType)7, (ValType)9, (ValType)6,  (ValType)8, (ValType)2, (ValType)3,
+   (ValType)2, (ValType)3, (ValType)9,  (ValType)8, (ValType)4, (ValType)1,  (ValType)5, (ValType)6, (ValType)8
 };
 
 PuzzlePtrType puzzles[MAX_NUM_PUZZLE] =
 {
-   (PuzzlePtrType)puzzleUnsolved,
-   (PuzzlePtrType)puzzleSolved,
-   (PuzzlePtrType)puzzleInvalid,
-   (PuzzlePtrType)puzzleInvalidAtIndex80
+   puzzleUnsolved,
+   puzzleSolved,
+   puzzleInvalid,
+   puzzleInvalidAtIndex80
 };
 
 PuzzlePtrType getPuzzle(e_Puzzle puzzleIndex)
