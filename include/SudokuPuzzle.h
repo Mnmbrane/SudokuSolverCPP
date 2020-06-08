@@ -4,12 +4,7 @@
 #include <vector>
 #include "SudokuCommonTypes.h"
 
-namespace Sudoku
-{
-
-class SudokuCoord;
-
-class SudokuPuzzle
+class Sudoku::SudokuPuzzle
 {
 public:
 
@@ -46,5 +41,3 @@ private:
    // List of uninitialized positions
    std::vector<SudokuCoord> unmarkedCoordList;
 };
-
-}

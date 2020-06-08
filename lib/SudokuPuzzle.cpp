@@ -4,8 +4,8 @@
 #include "string.h"
 #include "stdio.h"
 
-namespace Sudoku
-{
+using namespace Sudoku;
+
 SudokuPuzzle::SudokuPuzzle() :
    initFlag(false)
 {
@@ -257,5 +257,3 @@ bool SudokuPuzzle::checkAll(const PuzzlePtrType puzzle, SudokuIndex index, ValTy
         return false;
     }
 }
-}
-

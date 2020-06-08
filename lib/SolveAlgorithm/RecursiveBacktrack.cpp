@@ -1,10 +1,10 @@
 #include "RecursiveBacktrack.h"
 #include "SudokuPuzzle.h"
-#include "common.h"
-#include "stdint.h"
+
+using namespace Sudoku;
 
 // Solve using recursive backtracking
-bool Solve(SudokuPuzzle& puzzle)
+bool RecursiveBacktrack::Solve(SudokuPuzzle& puzzle)
 {
    uint8_t row = 0, col = 0;
 

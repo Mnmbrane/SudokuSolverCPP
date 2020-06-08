@@ -1,7 +1,7 @@
 #include "SudokuCoord.h"
 
-namespace Sudoku
-{
+using namespace Sudoku;
+
 SudokuCoord::SudokuCoord() :
    m_row(ROW_0),
    m_col(COL_0),
@@ -103,14 +103,4 @@ ColType SudokuCoord::getCol() const
 SudokuIndex SudokuCoord::getIndex() const 
 {
    return m_index;
-}
-
-bool operator==(const SudokuCoord& lhs, const SudokuCoord& rhs)
-{
-   return (lhs.getIndex() == rhs.getIndex());
-}
-bool operator!=(const SudokuCoord& lhs, const SudokuCoord& rhs)
-{
-   return (lhs.getIndex() != rhs.getIndex());
-}
 }
