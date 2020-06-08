@@ -20,7 +20,7 @@ namespace Sudoku
 
    typedef enum
    {
-      VAL_0, VAL_1, VAL_2, VAL_3, VAL_4, VAL_5, VAL_6, VAL_7, VAL_8, VAL_9, VAL_MAX
+      VAL_UNMARKED, VAL_1, VAL_2, VAL_3, VAL_4, VAL_5, VAL_6, VAL_7, VAL_8, VAL_9, VAL_MAX
    } ValType;
 
    typedef ValType* PuzzlePtrType;

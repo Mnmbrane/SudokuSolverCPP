@@ -9,6 +9,8 @@ public:
    SudokuCoord(SudokuIndex inIndex);
    SudokuCoord(const SudokuCoord&); // Copy Constructor
 
+   ~SudokuCoord(){}
+
    void setRow(RowType inRow);
    void setCol(ColType inCol);
    void setIndex(SudokuIndex inIndex);

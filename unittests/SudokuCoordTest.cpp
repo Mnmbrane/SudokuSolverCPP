@@ -7,7 +7,7 @@
 
 using namespace Sudoku;
 
-TEST_F(SudokuCoordTest, TestConstruction)
+TEST_F(SudokuCoordTest, TestValidConstruction)
 {
    // Arrange
 
@@ -18,6 +18,7 @@ TEST_F(SudokuCoordTest, TestConstruction)
    SudokuCoord coordValidRowCol(ROW_5, COL_2);
 
    // Assert
+   // Constructor
    ASSERT_EQ(coordNoParams.getRow(), 0);
    ASSERT_EQ(coordNoParams.getCol(), 0);
    ASSERT_EQ(coordNoParams.getIndex(), 0);
@@ -39,4 +40,23 @@ TEST_F(SudokuCoordTest, TestConstruction)
    ASSERT_EQ(coordNoParams2.getRow(), ROW_6);
    ASSERT_EQ(coordNoParams2.getCol(), COL_0);
    ASSERT_EQ(coordNoParams2.getIndex(), 54);
+}
+
+TEST_F(SudokuCoordTest, TestInvalidConstruction)
+{
+   SudokuCoord coordInalidIndex(-1);
+   SudokuCoord coordInalidIndex2(1000);
+   SudokuCoord coordValidRowCol((RowType)-5, (ColType)39);
+
+   ASSERT_EQ(coordInalidIndex.getRow(), ROW_0);
+   ASSERT_EQ(coordInalidIndex.getCol(), COL_0);
+   ASSERT_EQ(coordInalidIndex.getIndex(), 0);
+
+   ASSERT_EQ(coordInalidIndex2.getRow(), ROW_0);
+   ASSERT_EQ(coordInalidIndex2.getCol(), COL_0);
+   ASSERT_EQ(coordInalidIndex2.getIndex(), 0);
+
+   ASSERT_EQ(coordValidRowCol.getRow(), ROW_0);
+   ASSERT_EQ(coordValidRowCol.getCol(), COL_0);
+   ASSERT_EQ(coordValidRowCol.getIndex(), 0);
 }

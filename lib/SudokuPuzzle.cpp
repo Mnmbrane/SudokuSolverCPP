@@ -35,7 +35,7 @@ ValType SudokuPuzzle::getValAt(const SudokuCoord& coord)
 {
    if(!initFlag)
    {
-      return VAL_0;
+      return VAL_UNMARKED;
    }
 
    return m_puzzle[coord.getIndex()];
@@ -56,7 +56,7 @@ bool SudokuPuzzle::setValAt(const SudokuCoord& coord, ValType val)
    SudokuIndex index = coord.getIndex();
    if(checkAll(m_puzzle, index, val) == false)
    {
-      m_puzzle[index] = VAL_0;
+      m_puzzle[index] = VAL_UNMARKED;
       return false;
    }
    else
@@ -95,7 +95,7 @@ bool SudokuPuzzle::initPuzzle(PuzzlePtrType inPuzzle)
 
          // Add to the list
          unmarkedCoordList.push_back(unmarkedCoord);
-         m_puzzle[i] = VAL_0;
+         m_puzzle[i] = VAL_UNMARKED;
       }
 
       m_puzzle[i] = inPuzzle[i];
@@ -107,10 +107,12 @@ bool SudokuPuzzle::initPuzzle(PuzzlePtrType inPuzzle)
    return true;
 }
 
+// Private functions //
+
 bool SudokuPuzzle::initialCheck(SudokuIndex index, ValType val)
 {
     return (index >= 0 && index <= PUZZLE_MAX_INDEX) &&
-           (val > VAL_0 && val < VAL_MAX);
+           (val > VAL_UNMARKED && val < VAL_MAX);
 }
 
 bool SudokuPuzzle::checkCol(const PuzzlePtrType puzzle, SudokuIndex index, ValType val)

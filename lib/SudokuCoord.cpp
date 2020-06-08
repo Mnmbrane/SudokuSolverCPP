@@ -14,7 +14,8 @@ SudokuCoord::SudokuCoord(RowType inRow, ColType inCol) :
    m_col(inCol),
    m_index(rowColToIndex(inRow, inCol))
 {
-   if(inRow >= ROW_MAX || inCol >= COL_MAX)
+   if( inRow < ROW_0 || inRow >= ROW_MAX ||
+       inCol < COL_0 || inCol >= COL_MAX )
    {
       m_row = ROW_0;
       m_col = COL_0;
@@ -26,7 +27,7 @@ SudokuCoord::SudokuCoord(SudokuIndex inIndex) :
    m_col(indexToCol(inIndex)),
    m_index(inIndex)
 {
-   if(inIndex > PUZZLE_MAX_INDEX)
+   if(inIndex < 0 || inIndex > PUZZLE_MAX_INDEX)
    {
       m_row = ROW_0;
       m_col = COL_0;
