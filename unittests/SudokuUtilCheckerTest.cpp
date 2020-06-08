@@ -105,7 +105,7 @@ TEST_F(SudokuUtilCheckerTest, AllOutOfRangeTest)
 
    // Val already in Row
    ASSERT_EQ(false, checkAll(m_puzzle, 0, (ValType)9));
-   ASSERT_EQ(false, checkAll(m_puzzle, 16,(ValType) 2));
+   ASSERT_EQ(false, checkAll(m_puzzle, 16, (ValType)2));
    ASSERT_EQ(false, checkAll(m_puzzle, 67, (ValType)5));
 
    // Val already in Group

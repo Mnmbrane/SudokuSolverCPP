@@ -2,10 +2,13 @@
 #include "stdint.h"
 #include "SudokuCommonTypes.h"
 
-bool checkCol(const Sudoku::PuzzlePtrType puzzle, Sudoku::SudokuIndex index, Sudoku::ValType val);
+namespace Sudoku
+{
+bool checkCol(const PuzzlePtrType puzzle, SudokuIndex index, ValType val);
 
-bool checkRow(const Sudoku::PuzzlePtrType puzzle, Sudoku::SudokuIndex index, Sudoku::ValType val);
+bool checkRow(const PuzzlePtrType puzzle, SudokuIndex index, ValType val);
 
-bool checkGroup(const Sudoku::PuzzlePtrType puzzle, Sudoku::SudokuIndex index, Sudoku::ValType val);
+bool checkGroup(const PuzzlePtrType puzzle, SudokuIndex index, ValType val);
 
-bool checkAll(const Sudoku::PuzzlePtrType puzzle, Sudoku::SudokuIndex index, Sudoku::ValType val);
+bool checkAll(const PuzzlePtrType puzzle, SudokuIndex index, ValType val);
+}

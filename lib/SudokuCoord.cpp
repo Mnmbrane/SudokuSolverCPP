@@ -1,7 +1,7 @@
 #include "SudokuCoord.h"
 
-using namespace Sudoku;
-
+namespace Sudoku
+{
 SudokuCoord::SudokuCoord(RowType inRow, ColType inCol) :
    m_row(inRow),
    m_col(inCol),
@@ -74,7 +74,7 @@ void SudokuCoord::setRow(RowType inRow)
 }
 void SudokuCoord::setCol(ColType inCol)
 {
-   if(inCol < COL_MAX && inCol >= ROW_0)
+   if(inCol < COL_MAX && inCol >= COL_0)
    {
       m_col = inCol;
 
@@ -108,4 +108,6 @@ ColType SudokuCoord::getCol()
 SudokuIndex SudokuCoord::getIndex()
 {
    return m_index;
+}
+
 }

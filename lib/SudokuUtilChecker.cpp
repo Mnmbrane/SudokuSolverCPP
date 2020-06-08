@@ -1,8 +1,8 @@
 #include "SudokuUtilChecker.h"
 #include "stdio.h"
 
-using namespace Sudoku;
-
+namespace Sudoku
+{
 bool initialCheck(const PuzzlePtrType puzzle,
                   SudokuIndex index,
                   ValType val)
@@ -151,3 +151,5 @@ bool checkAll(const PuzzlePtrType puzzle, SudokuIndex index, ValType val)
         return false;
     }
 }
+}
+

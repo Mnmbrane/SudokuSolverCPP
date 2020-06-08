@@ -5,8 +5,8 @@
 #include "string.h"
 #include "stdio.h"
 
-using namespace Sudoku;
-
+namespace Sudoku
+{
 SudokuPuzzle::SudokuPuzzle() :
    initFlag(false)
 {
@@ -79,3 +79,5 @@ bool SudokuPuzzle::initPuzzle(PuzzlePtrType inPuzzle)
 
    return true;
 }
+}
+
