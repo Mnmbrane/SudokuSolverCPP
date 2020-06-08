@@ -11,7 +11,11 @@ INCLUDES:= \
 	-I../include \
 	-Igoogletest/include
 
-CXXFLAGS+=$(INCLUDES)
+# don't turn on stack protect
+# always stack smashing when lib has
+# std container(vector, list)
+CXXFLAGS+=$(INCLUDES)\
+	-fno-stack-protector
 
 LDFLAGS:=\
 	-L../lib/obj \
@@ -42,6 +46,10 @@ make_utest: $(OBJ_DIR) $(EXEC)
 
 $(EXEC): $(OBJ_DIR) $(OBJ) $(MAINOBJ) $(LIB)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(INCLUDES) -o $(EXEC) $(OBJ) $(LDLIBS)
+	./$(EXEC)
+
+.PHONY: run
+run:
 	./$(EXEC)
 
 #No header file for main

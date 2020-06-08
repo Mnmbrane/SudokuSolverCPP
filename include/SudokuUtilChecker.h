@@ -1,11 +1,11 @@
 #pragma once
 #include "stdint.h"
+#include "SudokuCommonTypes.h"
 
+bool checkCol(const Sudoku::PuzzlePtrType puzzle, Sudoku::SudokuIndex index, Sudoku::ValType val);
 
-bool checkCol(const uint8_t* puzzle, uint8_t index, uint8_t val);
+bool checkRow(const Sudoku::PuzzlePtrType puzzle, Sudoku::SudokuIndex index, Sudoku::ValType val);
 
-bool checkRow(const uint8_t* puzzle, uint8_t index, uint8_t val);
+bool checkGroup(const Sudoku::PuzzlePtrType puzzle, Sudoku::SudokuIndex index, Sudoku::ValType val);
 
-bool checkGroup(const uint8_t* puzzle, uint8_t index, uint8_t val);
-
-bool checkAll(const uint8_t* puzzle, uint8_t index, uint8_t val);
+bool checkAll(const Sudoku::PuzzlePtrType puzzle, Sudoku::SudokuIndex index, Sudoku::ValType val);

@@ -1,26 +1,41 @@
 #pragma once
 
-#include "common.h"
 #include <stdint.h>
+#include <vector>
+#include "SudokuCommonTypes.h"
+
+namespace Sudoku
+{
+
+class SudokuCoord;
 
 class SudokuPuzzle
 {
 public:
+
    SudokuPuzzle();
 
    void resetPuzzle();
 
    // getters
-   uint8_t getValAt(uint8_t row, uint8_t col);
+   ValType getValAt(SudokuCoord coord);
+
+   const std::vector<SudokuCoord> getUnmarkedCoords() const;
 
    // setters
-   bool setValAt(uint8_t row, uint8_t col, uint8_t val);
+   bool setValAt(SudokuCoord coord, ValType val);
 
-   bool setPuzzle(uint8_t* inPuzzle);
+   bool initPuzzle(PuzzlePtrType inPuzzle);
 
 private:
-
+   
+   bool initFlag;
+   
    // The puzzle in array format
-   uint8_t m_puzzle[PUZZLE_MAX_ELEMENTS];
+   ValType m_puzzle[PUZZLE_MAX_ELEMENTS];
 
+   // List of uninitialized positions
+   std::vector<SudokuCoord> unmarkedCoordList;
 };
+
+}

@@ -1,7 +1,8 @@
 #pragma once
 
 #include "gtest/gtest.h"
-#include "common.h"
+
+#include "SudokuCommonTypes.h"
 
 /* Index
  0,  1,  2,   3,  4,  5,   6,  7,  8,
@@ -21,7 +22,7 @@ class SudokuUtilCheckerTest : public ::testing::Test
 {
 protected:
 
-    uint8_t m_puzzle[PUZZLE_MAX_ELEMENTS];
+    Sudoku::ValType m_puzzle[Sudoku::PUZZLE_MAX_ELEMENTS];
 
     virtual void SetUp()
     {      
@@ -41,9 +42,9 @@ protected:
         };
 
         // copy over puzzle
-        for(uint8_t i = 0; i < PUZZLE_MAX_ELEMENTS; i++)
+        for(uint8_t i = 0; i < Sudoku::PUZZLE_MAX_ELEMENTS; i++)
         {
-            m_puzzle[i] = puzzle[i];
+            m_puzzle[i] = (Sudoku::ValType)puzzle[i];
         }
     }
 

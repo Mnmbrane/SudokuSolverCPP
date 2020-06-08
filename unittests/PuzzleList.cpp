@@ -60,15 +60,15 @@ uint8_t puzzleInvalidAtIndex80[] =
    2, 3, 9,  8, 4, 1,  5, 6, 8
 };
 
-uint8_t* puzzles[MAX_NUM_PUZZLE] =
+PuzzlePtrType puzzles[MAX_NUM_PUZZLE] =
 {
-   puzzleUnsolved,
-   puzzleSolved,
-   puzzleInvalid,
-   puzzleInvalidAtIndex80
+   (PuzzlePtrType)puzzleUnsolved,
+   (PuzzlePtrType)puzzleSolved,
+   (PuzzlePtrType)puzzleInvalid,
+   (PuzzlePtrType)puzzleInvalidAtIndex80
 };
 
-uint8_t* getPuzzle(e_Puzzle puzzleIndex)
+PuzzlePtrType getPuzzle(e_Puzzle puzzleIndex)
 {
    return puzzles[puzzleIndex];
 }

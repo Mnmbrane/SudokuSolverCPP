@@ -1,15 +1,18 @@
 #include "SudokuUtilChecker.h"
 #include "stdio.h"
-#include "common.h"
 
-bool initialCheck(const uint8_t* puzzle, uint8_t index, uint8_t val)
+using namespace Sudoku;
+
+bool initialCheck(const PuzzlePtrType puzzle,
+                  SudokuIndex index,
+                  ValType val)
 {
-    return (index >= 0 && index < PUZZLE_MAX_ELEMENTS) &&
+    return (index >= 0 && index <= PUZZLE_MAX_INDEX) &&
            (puzzle[index] == 0) &&
            (val > 0 && val < 10);
 }
 
-bool checkCol(const uint8_t* puzzle, uint8_t index, uint8_t val)
+bool checkCol(const PuzzlePtrType puzzle, SudokuIndex index, ValType val)
 {
     bool retVal = true;
 
@@ -43,7 +46,7 @@ bool checkCol(const uint8_t* puzzle, uint8_t index, uint8_t val)
     return retVal;
 }
 
-bool checkRow(const uint8_t* puzzle, uint8_t index, uint8_t val)
+bool checkRow(const PuzzlePtrType puzzle, SudokuIndex index, ValType val)
 {
     bool retVal = true;
 
@@ -89,7 +92,7 @@ bool checkRow(const uint8_t* puzzle, uint8_t index, uint8_t val)
     return retVal;
 }
 
-bool checkGroup(const uint8_t* puzzle, uint8_t index, uint8_t val)
+bool checkGroup(const PuzzlePtrType puzzle, SudokuIndex index, ValType val)
 {
     bool retVal = true;
 
@@ -119,7 +122,7 @@ bool checkGroup(const uint8_t* puzzle, uint8_t index, uint8_t val)
     // (69) - (63 % 27)
     // 69 - 9 = 60
     // TODO: remove magic numbers
-    uint8_t startIndex = (index - (index % 3) ) - ( (index - (index % 9)) % 27 );
+    SudokuIndex startIndex = (index - (index % 3) ) - ( (index - (index % 9)) % 27 );
 
     for(int i = startIndex; i <= (startIndex + 18) && retVal == true; i+=9)
     {
@@ -135,7 +138,7 @@ bool checkGroup(const uint8_t* puzzle, uint8_t index, uint8_t val)
     return retVal;
 }
 
-bool checkAll(const uint8_t* puzzle, uint8_t index, uint8_t val)
+bool checkAll(const PuzzlePtrType puzzle, SudokuIndex index, ValType val)
 {
     if(checkCol(puzzle, index, val) &&
        checkRow(puzzle, index, val) &&

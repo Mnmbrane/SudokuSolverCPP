@@ -1,6 +1,8 @@
 #pragma once
 #include <stdint.h>
-#include "common.h"
+#include "SudokuPuzzle.h"
+
+using namespace Sudoku;
 
 enum e_Puzzle
 {
@@ -11,4 +13,4 @@ enum e_Puzzle
 
    MAX_NUM_PUZZLE
 };
-uint8_t* getPuzzle(e_Puzzle puzzleIndex);
+PuzzlePtrType getPuzzle(e_Puzzle puzzleIndex);
