@@ -24,7 +24,4 @@ namespace Sudoku
 
    typedef ValType* PuzzlePtrType;
    typedef int SudokuIndex;
-
-   bool operator==(const SudokuCoord& lhs, const SudokuCoord& rhs);
-   bool operator!=(const SudokuCoord& lhs, const SudokuCoord& rhs);
 }

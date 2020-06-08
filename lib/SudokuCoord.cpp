@@ -2,6 +2,13 @@
 
 namespace Sudoku
 {
+SudokuCoord::SudokuCoord() :
+   m_row(ROW_0),
+   m_col(COL_0),
+   m_index(0)
+{
+}
+
 SudokuCoord::SudokuCoord(RowType inRow, ColType inCol) :
    m_row(inRow),
    m_col(inCol),

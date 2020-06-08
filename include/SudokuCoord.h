@@ -6,6 +6,7 @@ namespace Sudoku
    class SudokuCoord
    {
    public:
+      SudokuCoord();
       SudokuCoord(RowType inRow, ColType inCol);
       SudokuCoord(SudokuIndex inIndex);
       SudokuCoord(const SudokuCoord&); // Copy Constructor
@@ -18,6 +19,9 @@ namespace Sudoku
       ColType getCol() const ;
       SudokuIndex getIndex() const ;
 
+   friend bool operator==(const SudokuCoord& lhs, const SudokuCoord& rhs);
+   friend bool operator!=(const SudokuCoord& lhs, const SudokuCoord& rhs);
+
    private:
       SudokuIndex rowColToIndex(RowType inRow, ColType inCol);
       RowType indexToRow(SudokuIndex inIndex);
@@ -29,5 +33,4 @@ namespace Sudoku
       SudokuIndex m_index;
 
    };
-
 }

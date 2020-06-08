@@ -13,7 +13,6 @@ CXXFLAGS+=$(addprefix -I,$(INCLUDES))
 
 SRC:=\
 	SudokuCoord.cpp \
-	SudokuUtilChecker.cpp \
 	SudokuPuzzle.cpp
 
 OBJ:=$(SRC:%.cpp=$(OBJ_DIR)/%.o)

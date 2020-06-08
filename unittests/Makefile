@@ -35,7 +35,6 @@ LIB:=\
 
 SRC:=\
 	PuzzleList.cpp \
-	SudokuUtilCheckerTest.cpp \
 	SudokuPuzzleTest.cpp
 
 MAINOBJ:=$(OBJ_DIR)/main.o
