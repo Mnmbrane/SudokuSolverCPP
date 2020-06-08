@@ -22,23 +22,6 @@ TEST_F(SudokuPuzzleTest, SetAllValidTest)
    }
 }
 
-TEST_F(SudokuPuzzleTest, GetExactValTest)
-{
-   // Arrange
-   SudokuPuzzle sudokuPuzzle;
-
-   PuzzlePtrType unsolvedPuzzle = getPuzzle(PUZZLE_UNSOLVED);
-
-   // Act/ Assert
-   ASSERT_EQ(true, sudokuPuzzle.initPuzzle(unsolvedPuzzle));
-
-   for(SudokuIndex i = 0; i <= PUZZLE_MAX_INDEX; i++)
-   {
-      // Assert
-      ASSERT_EQ(sudokuPuzzle.getValAt(i), unsolvedPuzzle[i]);
-   }
-}
-
 TEST_F(SudokuPuzzleTest, SetInvalidTest)
 {
    // Arrange
@@ -52,6 +35,23 @@ TEST_F(SudokuPuzzleTest, SetInvalidTest)
       // Set all to 10
       // Act/Assert
       ASSERT_EQ(false, sudokuPuzzle.setValAt(i, invalidPuzzle[i]));
+   }
+}
+
+TEST_F(SudokuPuzzleTest, RegularUnsolvedPuzzleTest)
+{
+   // Arrange
+   SudokuPuzzle sudokuPuzzle;
+
+   PuzzlePtrType unsolvedPuzzle = getPuzzle(PUZZLE_UNSOLVED);
+
+   // Act/ Assert
+   ASSERT_EQ(true, sudokuPuzzle.initPuzzle(unsolvedPuzzle));
+
+   for(SudokuIndex i = 0; i <= PUZZLE_MAX_INDEX; i++)
+   {
+      // Assert
+      ASSERT_EQ(sudokuPuzzle.getValAt(i), unsolvedPuzzle[i]);
    }
 }
 

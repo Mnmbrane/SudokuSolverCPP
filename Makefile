@@ -7,7 +7,7 @@ PACKAGE_NAME:=sudokuapp
 OBJ_DIR:=obj
 
 .PHONY: all clean exe
-all: mklib mksrc mkut exe
+all: mklib mksrc exe mkut
 
 mklib:
 	@$(MAKE) --no-print-directory -C $(LIBDIRS)
