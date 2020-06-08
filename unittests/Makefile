@@ -35,7 +35,8 @@ LIB:=\
 
 SRC:=\
 	PuzzleList.cpp \
-	SudokuPuzzleTest.cpp
+	SudokuPuzzleTest.cpp \
+	SudokuCoordTest.cpp
 
 MAINOBJ:=$(OBJ_DIR)/main.o
 OBJ:=$(SRC:%.cpp=$(OBJ_DIR)/%.o)

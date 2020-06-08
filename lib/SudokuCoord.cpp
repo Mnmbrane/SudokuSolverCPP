@@ -1,5 +1,5 @@
 #include "SudokuCoord.h"
-
+#include "stdio.h"
 using namespace Sudoku;
 
 SudokuCoord::SudokuCoord() :
@@ -43,7 +43,7 @@ SudokuCoord::SudokuCoord(const SudokuCoord& rhs)
 
 SudokuIndex SudokuCoord::rowColToIndex(RowType inRow, ColType inCol)
 {
-   return ((inRow * 9) + inCol);
+   return (SudokuIndex)((inRow * 9) + inCol);
 }
 
 RowType SudokuCoord::indexToRow(SudokuIndex inIndex)

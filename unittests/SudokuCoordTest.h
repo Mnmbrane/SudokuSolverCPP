@@ -2,7 +2,7 @@
 
 #include "gtest/gtest.h"
 
-class SudokuPuzzleTest : public ::testing::Test
+class SudokuCoordTest : public ::testing::Test
 {
 protected:
 

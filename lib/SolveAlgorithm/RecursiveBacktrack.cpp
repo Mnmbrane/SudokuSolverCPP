@@ -4,7 +4,7 @@
 using namespace Sudoku;
 
 // Solve using recursive backtracking
-bool RecursiveBacktrack::Solve(SudokuPuzzle& puzzle)
+bool RecursiveBacktrack::Solve(Sudoku::SudokuPuzzle& puzzle)
 {
    uint8_t row = 0, col = 0;
 
