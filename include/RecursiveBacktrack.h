@@ -2,10 +2,10 @@
 #include "AlgorithmInterface.h"
 #include "SudokuCommonTypes.h"
 
-class RecursiveBacktrack : public virtual AlgorithmInterface
+class Sudoku::RecursiveBacktrack : public virtual Sudoku::AlgorithmInterface
 {
 public:
-   virtual bool Solve(Sudoku::SudokuPuzzle& puzzle);
+   virtual bool Solve(Sudoku::Puzzle& puzzle);
 
 private:
 

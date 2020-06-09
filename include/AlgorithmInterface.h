@@ -1,11 +1,9 @@
 #pragma once
 
 #include "SudokuCommonTypes.h"
-// Forward Declare
-class SudokuPuzzle;
 
-class AlgorithmInterface
+class Sudoku::AlgorithmInterface
 {
 protected:
-   virtual bool Solve(Sudoku::SudokuPuzzle& puzzle) = 0;
+   virtual bool Solve(Sudoku::Puzzle& puzzle) = 0;
 };

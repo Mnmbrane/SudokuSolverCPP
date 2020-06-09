@@ -7,27 +7,53 @@ using namespace Sudoku;
 TEST_F(SudokuCommonTypesTest, ValTypeOverloadOp)
 {
    ValType val = VAL_UNMARKED;
-   for(int i = 0; i < 100; ++i)
-   {
-      ASSERT_EQ((i+1) % (VAL_MAX+1), ++val);
-   }
+   ASSERT_EQ(val++, VAL_UNMARKED);
+   ASSERT_EQ(val++, VAL_1);
+   ASSERT_EQ(val++, VAL_2);
+   ASSERT_EQ(val++, VAL_3);
+   ASSERT_EQ(val++, VAL_4);
+   ASSERT_EQ(val++, VAL_5);
+   ASSERT_EQ(val++, VAL_6);
+   ASSERT_EQ(val++, VAL_7);
+   ASSERT_EQ(val++, VAL_8);
+   ASSERT_EQ(val++, VAL_9);
+   ASSERT_EQ(val++, VAL_MAX);
+   ASSERT_EQ(val, VAL_UNMARKED);
 
-   val = VAL_UNMARKED;
-   for(int i = 0; i < 100; ++i)
-   {
-      ASSERT_EQ(i % (VAL_MAX+1), val++);
-   }
-   // TODO
-   // val = VAL_UNMARKED;
-   // for(int i = 100; i >= 0; --i)
-   // {
-   //    printf("[%d] [%d]", (i-1) % (VAL_MAX+1), val - 1);
-   //    ASSERT_EQ((i-1) % (VAL_MAX+1), --val);
-   // }
+   ASSERT_EQ(++val, VAL_1);
+   ASSERT_EQ(++val, VAL_2);
+   ASSERT_EQ(++val, VAL_3);
+   ASSERT_EQ(++val, VAL_4);
+   ASSERT_EQ(++val, VAL_5);
+   ASSERT_EQ(++val, VAL_6);
+   ASSERT_EQ(++val, VAL_7);
+   ASSERT_EQ(++val, VAL_8);
+   ASSERT_EQ(++val, VAL_9);
+   ASSERT_EQ(++val, VAL_MAX);
+   ASSERT_EQ(++val, VAL_UNMARKED);
 
-   // val = VAL_UNMARKED;
-   // for(int i = 100; i >= 0; --i)
-   // {
-   //    ASSERT_EQ(i % (VAL_MAX+1), val--);
-   // }
+   ASSERT_EQ(val--, VAL_UNMARKED);
+   ASSERT_EQ(val--, VAL_MAX);
+   ASSERT_EQ(val--, VAL_9);
+   ASSERT_EQ(val--, VAL_8);
+   ASSERT_EQ(val--, VAL_7);
+   ASSERT_EQ(val--, VAL_6);
+   ASSERT_EQ(val--, VAL_5);
+   ASSERT_EQ(val--, VAL_4);
+   ASSERT_EQ(val--, VAL_3);
+   ASSERT_EQ(val--, VAL_2);
+   ASSERT_EQ(val--, VAL_1);
+   ASSERT_EQ(val, VAL_UNMARKED);
+
+   ASSERT_EQ(--val, VAL_MAX);
+   ASSERT_EQ(--val, VAL_9);
+   ASSERT_EQ(--val, VAL_8);
+   ASSERT_EQ(--val, VAL_7);
+   ASSERT_EQ(--val, VAL_6);
+   ASSERT_EQ(--val, VAL_5);
+   ASSERT_EQ(--val, VAL_4);
+   ASSERT_EQ(--val, VAL_3);
+   ASSERT_EQ(--val, VAL_2);
+   ASSERT_EQ(--val, VAL_1);
+   ASSERT_EQ(--val, VAL_UNMARKED);
 }

@@ -6,32 +6,32 @@
 
 using namespace Sudoku;
 
-SudokuPuzzle::SudokuPuzzle() :
+Puzzle::Puzzle() :
    initFlag(false)
 {
    resetPuzzle();
 }
 
-SudokuPuzzle::~SudokuPuzzle()
+Puzzle::~Puzzle()
 {
    resetPuzzle();
    initFlag = false;
 }
 
-void SudokuPuzzle::resetPuzzle()
+void Puzzle::resetPuzzle()
 {
    unmarkedCoordList.clear();
    memset(m_puzzle, 0, sizeof(m_puzzle));
 }
 
 // Getters
-const std::vector<SudokuCoord> SudokuPuzzle::getUnmarkedCoords() const
+const std::vector<Coord> Puzzle::getUnmarkedCoords() const
 {
    return unmarkedCoordList;
 }
 
 
-ValType SudokuPuzzle::getValAt(const SudokuCoord& coord)
+ValType Puzzle::getValAt(const Coord& coord) const
 {
    if(!initFlag)
    {
@@ -41,19 +41,19 @@ ValType SudokuPuzzle::getValAt(const SudokuCoord& coord)
    return m_puzzle[coord.getIndex()];
 }
 
-bool SudokuPuzzle::isPuzzleInit()
+bool Puzzle::isPuzzleInit()
 {
    return initFlag;
 }
 
 // setters
-bool SudokuPuzzle::setValAt(const SudokuCoord& coord, ValType val)
+bool Puzzle::setValAt(const Coord& coord, ValType val)
 {
    if(!initFlag)
    {
       return false;
    }
-   SudokuIndex index = coord.getIndex();
+   Index index = coord.getIndex();
    if(checkAll(m_puzzle, index, val) == false)
    {
       m_puzzle[index] = VAL_UNMARKED;
@@ -66,10 +66,10 @@ bool SudokuPuzzle::setValAt(const SudokuCoord& coord, ValType val)
    }
 }
 
-bool SudokuPuzzle::initPuzzle(PuzzlePtrType inPuzzle)
+bool Puzzle::initPuzzle(PuzzlePtrType inPuzzle)
 {
    // Check Validity of the puzzle
-   for(Sudoku::SudokuIndex i = 0; i <= PUZZLE_MAX_INDEX; i++)
+   for(Sudoku::Index i = 0; i <= PUZZLE_MAX_INDEX; i++)
    {
       bool checkInPuzzle = checkAll(inPuzzle, i, inPuzzle[i]);
 
@@ -86,19 +86,19 @@ bool SudokuPuzzle::initPuzzle(PuzzlePtrType inPuzzle)
    // Clear everything out
    resetPuzzle();
    // Passes the validity test, set everything up
-   for(Sudoku::SudokuIndex i = 0; i <= PUZZLE_MAX_INDEX; i++)
-   {
-      // If it's a 0 this means it's unmarked
-      if(inPuzzle[i] == 0)
-      {
-         SudokuCoord unmarkedCoord(i);
+   for(Sudoku::Index i = 0; i <= PUZZLE_MAX_INDEX; i++)
+    {
+        // If it's a 0 this means it's unmarked
+        if(inPuzzle[i] == 0)
+        {
+            Coord unmarkedCoord(i);
 
-         // Add to the list
-         unmarkedCoordList.push_back(unmarkedCoord);
-         m_puzzle[i] = VAL_UNMARKED;
-      }
+            // Add to the list
+            unmarkedCoordList.push_back(unmarkedCoord);
+            m_puzzle[i] = VAL_UNMARKED;
+        }
 
-      m_puzzle[i] = inPuzzle[i];
+        m_puzzle[i] = inPuzzle[i];
    }
 
 
@@ -109,16 +109,16 @@ bool SudokuPuzzle::initPuzzle(PuzzlePtrType inPuzzle)
 
 // Private functions //
 
-bool SudokuPuzzle::initialCheck(SudokuIndex index, ValType val)
+bool Puzzle::initialCheck(Index index, ValType val)
 {
     return (index >= 0 && index <= PUZZLE_MAX_INDEX) &&
            (val > VAL_UNMARKED && val < VAL_MAX);
 }
 
-bool SudokuPuzzle::checkCol(const PuzzlePtrType puzzle, SudokuIndex index, ValType val)
+bool Puzzle::checkCol(const PuzzlePtrType puzzle, Index index, ValType val)
 {
     bool retVal = true;
-    SudokuIndex saveIndex = index;
+    Index saveIndex = index;
 
     retVal = initialCheck(index, val);
 
@@ -151,10 +151,10 @@ bool SudokuPuzzle::checkCol(const PuzzlePtrType puzzle, SudokuIndex index, ValTy
     return retVal;
 }
 
-bool SudokuPuzzle::checkRow(const PuzzlePtrType puzzle, SudokuIndex index, ValType val)
+bool Puzzle::checkRow(const PuzzlePtrType puzzle, Index index, ValType val)
 {
     bool retVal = true;
-    SudokuIndex saveIndex = index;
+    Index saveIndex = index;
 
     retVal = initialCheck(index, val);
 
@@ -162,13 +162,13 @@ bool SudokuPuzzle::checkRow(const PuzzlePtrType puzzle, SudokuIndex index, ValTy
     // Lower check
     // ex. index = 19,
     // 19 - (19 % 9) = 19 - 1 = 18
-    SudokuIndex lowerIndex = index - (index % 9);
+    Index lowerIndex = index - (index % 9);
 
     // Upper check
     // ex. index = 19
     // ((19 + 9) - (19 % 9)) - 1
     // (28 - 1) - 1 = 26
-    SudokuIndex upperIndex = ((index + 9) - (index % 9)) - 1;
+    Index upperIndex = ((index + 9) - (index % 9)) - 1;
 
     // Check Left
     // Subtract by 1 to left
@@ -200,7 +200,7 @@ bool SudokuPuzzle::checkRow(const PuzzlePtrType puzzle, SudokuIndex index, ValTy
     return retVal;
 }
 
-bool SudokuPuzzle::checkGroup(const PuzzlePtrType puzzle, SudokuIndex index, ValType val)
+bool Puzzle::checkGroup(const PuzzlePtrType puzzle, Index index, ValType val)
 {
     bool retVal = true;
 
@@ -230,11 +230,11 @@ bool SudokuPuzzle::checkGroup(const PuzzlePtrType puzzle, SudokuIndex index, Val
     // (69) - (63 % 27)
     // 69 - 9 = 60
     // TODO: remove magic numbers
-    SudokuIndex startIndex = (index - (index % 3) ) - ( (index - (index % 9)) % 27 );
+    Index startIndex = (index - (index % 3) ) - ( (index - (index % 9)) % 27 );
 
-    for(SudokuIndex i = startIndex; i <= (startIndex + 18) && retVal == true; i+=9)
+    for(Index i = startIndex; i <= (startIndex + 18) && retVal == true; i+=9)
     {
-        for(SudokuIndex j = i; j < i + 3; j++)
+        for(Index j = i; j < i + 3; j++)
         {
             if(j != index && puzzle[j] == val)
             {
@@ -246,11 +246,11 @@ bool SudokuPuzzle::checkGroup(const PuzzlePtrType puzzle, SudokuIndex index, Val
     return retVal;
 }
 
-bool SudokuPuzzle::checkAll(const PuzzlePtrType puzzle, SudokuIndex index, ValType val)
+bool Puzzle::checkAll(const PuzzlePtrType puzzle, Index index, ValType val)
 {
     if(checkCol(puzzle, index, val) &&
-       checkRow(puzzle, index, val) &&
-       checkGroup(puzzle, index, val))
+        checkRow(puzzle, index, val) &&
+        checkGroup(puzzle, index, val))
     {
         return true;
     }
@@ -258,4 +258,14 @@ bool SudokuPuzzle::checkAll(const PuzzlePtrType puzzle, SudokuIndex index, ValTy
     {
         return false;
     }
+}
+
+bool operator==(const Sudoku::Puzzle& lhs, const Sudoku::Puzzle& rhs)
+{
+    bool retBool = true;
+    for(Sudoku::Index i = 0; i <= PUZZLE_MAX_INDEX && retBool==true; i++)
+    {
+        retBool = lhs.getValAt(i) == rhs.getValAt(i);
+    }
+    return retBool;
 }

@@ -5,10 +5,10 @@
 
 using namespace Sudoku;
 
-void SudokuCoordTest::testRowColIndex(SudokuCoord coord,
+void SudokuCoordTest::testRowColIndex(Coord coord,
                                     RowType row,
                                     ColType col,
-                                    SudokuIndex index)
+                                    Index index)
 {
    ASSERT_EQ(coord.getRow(), row);
    ASSERT_EQ(coord.getCol(), col);
@@ -16,7 +16,7 @@ void SudokuCoordTest::testRowColIndex(SudokuCoord coord,
 
 }
 
-void SudokuCoordTest::testCoordDefault(SudokuCoord coord)
+void SudokuCoordTest::testCoordDefault(Coord coord)
 {
    ASSERT_EQ(coord.getRow(), 0);
    ASSERT_EQ(coord.getCol(), 0);
@@ -28,10 +28,10 @@ TEST_F(SudokuCoordTest, TestValidConstruction)
    // Arrange
 
    // Act
-   SudokuCoord coordNoParams;
-   SudokuCoord coordNoParams2;
-   SudokuCoord coordValidIndex(54);
-   SudokuCoord coordValidRowCol(ROW_5, COL_2);
+   Coord coordNoParams;
+   Coord coordNoParams2;
+   Coord coordValidIndex(54);
+   Coord coordValidRowCol(ROW_5, COL_2);
 
    // Assert
    // Constructor
@@ -48,16 +48,16 @@ TEST_F(SudokuCoordTest, TestValidConstruction)
    testRowColIndex(coordNoParams2, ROW_6, COL_0, 54);
 
    // Destructor
-   coordValidRowCol.~SudokuCoord();
+   coordValidRowCol.~Coord();
    testRowColIndex(coordValidRowCol, ROW_5, COL_2, 47);
 }
 
 TEST_F(SudokuCoordTest, TestInvalidConstruction)
 {
    // Arrange/act
-   SudokuCoord coordInalidIndex(-1);
-   SudokuCoord coordInalidIndex2(1000);
-   SudokuCoord coordInvalidRowCol((RowType)-5, (ColType)39);
+   Coord coordInalidIndex(-1);
+   Coord coordInalidIndex2(1000);
+   Coord coordInvalidRowCol((RowType)-5, (ColType)39);
 
    // Assert
    testCoordDefault(coordInalidIndex);

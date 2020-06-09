@@ -2,14 +2,14 @@
 #include "stdio.h"
 using namespace Sudoku;
 
-SudokuCoord::SudokuCoord() :
+Coord::Coord() :
    m_row(ROW_0),
    m_col(COL_0),
    m_index(0)
 {
 }
 
-SudokuCoord::SudokuCoord(RowType inRow, ColType inCol) :
+Coord::Coord(RowType inRow, ColType inCol) :
    m_row(inRow),
    m_col(inCol),
    m_index(rowColToIndex(inRow, inCol))
@@ -22,7 +22,7 @@ SudokuCoord::SudokuCoord(RowType inRow, ColType inCol) :
       m_index = 0;
    }
 }
-SudokuCoord::SudokuCoord(SudokuIndex inIndex) :
+Coord::Coord(Index inIndex) :
    m_row(indexToRow(inIndex)),
    m_col(indexToCol(inIndex)),
    m_index(inIndex)
@@ -35,38 +35,47 @@ SudokuCoord::SudokuCoord(SudokuIndex inIndex) :
    }
 }
 
-SudokuCoord::SudokuCoord(const SudokuCoord& rhs)
+Coord::Coord(const Coord& rhs)
 {
    m_row    = rhs.m_row;
    m_col    = rhs.m_col;
    m_index  = rhs.m_index;
 }
 
-SudokuIndex SudokuCoord::rowColToIndex(RowType inRow, ColType inCol)
+Index Coord::rowColToIndex(RowType inRow, ColType inCol)
 {
-   return (SudokuIndex)((inRow * 9) + inCol);
+   return (Index)((inRow * 9) + inCol);
 }
 
-RowType SudokuCoord::indexToRow(SudokuIndex inIndex)
+RowType Coord::indexToRow(Index inIndex)
 {
    return (RowType)(inIndex / 9);
 }
-ColType SudokuCoord::indexToCol(SudokuIndex inIndex)
+ColType Coord::indexToCol(Index inIndex)
 {
    return (ColType)(inIndex % 9);
 }
 
-RowType SudokuCoord::getRow() const
+RowType Coord::getRow() const
 {
    return m_row;
 }
 
-ColType SudokuCoord::getCol() const
+ColType Coord::getCol() const
 {
    return m_col;
 }
 
-SudokuIndex SudokuCoord::getIndex() const 
+Index Coord::getIndex() const 
 {
    return m_index;
+}
+
+bool Coord::operator==(const Sudoku::Coord& rhs) const
+{
+   return (this->getIndex() == rhs.getIndex());
+}
+bool Coord::operator!=(const Sudoku::Coord& rhs) const
+{
+   return (this->getIndex() != rhs.getIndex());
 }

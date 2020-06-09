@@ -18,10 +18,10 @@ protected:
 
     }
 
-    void testRowColIndex( Sudoku::SudokuCoord coord,
+    void testRowColIndex( Sudoku::Coord coord,
                         Sudoku::RowType row,
                         Sudoku::ColType col,
-                        Sudoku::SudokuIndex index);
+                        Sudoku::Index index);
 
-    void testCoordDefault(Sudoku::SudokuCoord coord);
+    void testCoordDefault(Sudoku::Coord coord);
 };

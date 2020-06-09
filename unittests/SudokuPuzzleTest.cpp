@@ -11,12 +11,12 @@ using namespace Sudoku;
 TEST_F(SudokuPuzzleTest, SetAllValidTest)
 {
    // Arrange
-   SudokuPuzzle sudokuPuzzle;
+   Puzzle sudokuPuzzle;
    PuzzlePtrType solvedPuzzle = getPuzzle(PUZZLE_SOLVED);
 
    ASSERT_EQ(true, sudokuPuzzle.initPuzzle(solvedPuzzle));
 
-   for(SudokuIndex i = 0; i <= PUZZLE_MAX_INDEX; i++)
+   for(Index  i = 0; i <= PUZZLE_MAX_INDEX; i++)
    {
       // Act/Assert
       ASSERT_EQ(sudokuPuzzle.getValAt(i), solvedPuzzle[i]);
@@ -26,12 +26,12 @@ TEST_F(SudokuPuzzleTest, SetAllValidTest)
 TEST_F(SudokuPuzzleTest, SetInvalidTest)
 {
    // Arrange
-   SudokuPuzzle sudokuPuzzle;
+   Puzzle sudokuPuzzle;
    PuzzlePtrType invalidPuzzle = getPuzzle(PUZZLE_INVALID);
 
    ASSERT_EQ(false, sudokuPuzzle.initPuzzle(invalidPuzzle));
 
-   for(SudokuIndex i = 0; i < PUZZLE_MAX_ELEMENTS; i++)
+   for(Index  i = 0; i < PUZZLE_MAX_ELEMENTS; i++)
    {
       // Set all to 10
       // Act/Assert
@@ -42,14 +42,14 @@ TEST_F(SudokuPuzzleTest, SetInvalidTest)
 TEST_F(SudokuPuzzleTest, RegularUnsolvedPuzzleTest)
 {
    // Arrange
-   SudokuPuzzle sudokuPuzzle;
+   Puzzle sudokuPuzzle;
 
    PuzzlePtrType unsolvedPuzzle = getPuzzle(PUZZLE_UNSOLVED);
 
    // Act/ Assert
    ASSERT_EQ(true, sudokuPuzzle.initPuzzle(unsolvedPuzzle));
 
-   for(SudokuIndex i = 0; i <= PUZZLE_MAX_INDEX; i++)
+   for(Index  i = 0; i <= PUZZLE_MAX_INDEX; i++)
    {
       // Assert
       ASSERT_EQ(sudokuPuzzle.getValAt(i), unsolvedPuzzle[i]);
@@ -59,13 +59,13 @@ TEST_F(SudokuPuzzleTest, RegularUnsolvedPuzzleTest)
 TEST_F(SudokuPuzzleTest, LastIndexInvalidTest)
 {
    // Arrange
-   SudokuPuzzle sudokuPuzzle;
+   Puzzle sudokuPuzzle;
    PuzzlePtrType lastIndexInvalidPuzzle = getPuzzle(PUZZLE_INVALID_AT_INDEX_80);
 
    // Act/Assert
    ASSERT_EQ(false, sudokuPuzzle.initPuzzle(lastIndexInvalidPuzzle));
 
-   for(SudokuIndex i = 0; i < PUZZLE_MAX_ELEMENTS; i++)
+   for(Index  i = 0; i < PUZZLE_MAX_ELEMENTS; i++)
    {
       // Assert
       // Should had been reset, all elements are 0
@@ -77,14 +77,14 @@ TEST_F(SudokuPuzzleTest, LastIndexInvalidTest)
 TEST_F(SudokuPuzzleTest, ResetTest)
 {
    // Arrange
-   SudokuPuzzle sudokuPuzzle;
+   Puzzle sudokuPuzzle;
    PuzzlePtrType solvedPuzzle = getPuzzle(PUZZLE_SOLVED);
 
    // Act/Assert
    sudokuPuzzle.initPuzzle(solvedPuzzle);
 
    sudokuPuzzle.resetPuzzle();
-   for(SudokuIndex i = 0; i < PUZZLE_MAX_ELEMENTS; i++)
+   for(Index  i = 0; i < PUZZLE_MAX_ELEMENTS; i++)
    {
       // Assert
       // Should had been reset, all elements are 0
@@ -96,7 +96,7 @@ TEST_F(SudokuPuzzleTest, ResetTest)
 TEST_F(SudokuPuzzleTest, InitTest)
 {
    // Arrange
-   SudokuPuzzle sudokuPuzzle;
+   Puzzle sudokuPuzzle;
    PuzzlePtrType solvedPuzzle = getPuzzle(PUZZLE_SOLVED);
    PuzzlePtrType invalidPuzzle = getPuzzle(PUZZLE_INVALID);
 
@@ -107,7 +107,7 @@ TEST_F(SudokuPuzzleTest, InitTest)
    ASSERT_EQ(false, sudokuPuzzle.initPuzzle(invalidPuzzle));
    ASSERT_EQ(true, sudokuPuzzle.isPuzzleInit());
 
-   for(SudokuIndex i = 0; i < PUZZLE_MAX_ELEMENTS; i++)
+   for(Index  i = 0; i < PUZZLE_MAX_ELEMENTS; i++)
    {
       // Should still be using solvedPuzzle index, because
       // of the invalid init
@@ -115,10 +115,10 @@ TEST_F(SudokuPuzzleTest, InitTest)
    }
 
    // Destroy
-   sudokuPuzzle.~SudokuPuzzle();
+   sudokuPuzzle.~Puzzle();
    ASSERT_EQ(false, sudokuPuzzle.isPuzzleInit());
 
-   for(SudokuIndex i = 0; i < PUZZLE_MAX_ELEMENTS; i++)
+   for(Index  i = 0; i < PUZZLE_MAX_ELEMENTS; i++)
    {
       // Should still be using solvedPuzzle index, because
       // of the invalid init
@@ -144,14 +144,14 @@ TEST_F(SudokuPuzzleTest, InitTest)
 TEST_F(SudokuPuzzleTest, UnmarkedPositionTest)
 {
    // Arrange
-   SudokuPuzzle sudokuPuzzle;
+   Puzzle sudokuPuzzle;
    PuzzlePtrType unsolvedPuzzle = getPuzzle(PUZZLE_UNSOLVED);
    PuzzlePtrType solvedPuzzle = getPuzzle(PUZZLE_SOLVED);
 
-   std::vector<Sudoku::SudokuCoord> unmarkedUnsolved;
-   std::vector<Sudoku::SudokuCoord> unmarkedSolved;
+   std::vector<Sudoku::Coord> unmarkedUnsolved;
+   std::vector<Sudoku::Coord> unmarkedSolved;
 
-   for(SudokuIndex i = 0; i < PUZZLE_MAX_ELEMENTS; i++)
+   for(Index  i = 0; i < PUZZLE_MAX_ELEMENTS; i++)
    {
       if(unsolvedPuzzle[i] == 0)
       {
@@ -167,7 +167,7 @@ TEST_F(SudokuPuzzleTest, UnmarkedPositionTest)
    // Act / Assert
    ASSERT_EQ(true, sudokuPuzzle.initPuzzle(unsolvedPuzzle));
 
-   std::vector<Sudoku::SudokuCoord> unsolvedPuzzleUnmarked = sudokuPuzzle.getUnmarkedCoords();
+   std::vector<Sudoku::Coord> unsolvedPuzzleUnmarked = sudokuPuzzle.getUnmarkedCoords();
    // Assert
    for(unsigned int i = 0; i < unsolvedPuzzleUnmarked.size(); i++)
    {
@@ -175,8 +175,20 @@ TEST_F(SudokuPuzzleTest, UnmarkedPositionTest)
    }
 
 
-   sudokuPuzzle.~SudokuPuzzle();
+   sudokuPuzzle.~Puzzle();
 
-   std::vector<Sudoku::SudokuCoord> solvedPuzzleUnmarked = sudokuPuzzle.getUnmarkedCoords();
+   std::vector<Sudoku::Coord> solvedPuzzleUnmarked = sudokuPuzzle.getUnmarkedCoords();
    ASSERT_EQ((unsigned int)0, unmarkedSolved.size());
+}
+
+TEST_F(SudokuPuzzleTest, OperatorOverloadEqTest)
+{
+   // Arrange
+   Puzzle sudokuPuzzle1, sudokuPuzzle2;
+   PuzzlePtrType solvedPuzzle = getPuzzle(PUZZLE_SOLVED);
+
+   sudokuPuzzle1.initPuzzle(solvedPuzzle);
+   sudokuPuzzle2.initPuzzle(solvedPuzzle);
+
+   //ASSERT_EQ(true, sudokuPuzzle1==sudokuPuzzle2);
 }

@@ -4,34 +4,36 @@
 #include <vector>
 #include "SudokuCommonTypes.h"
 
-class Sudoku::SudokuPuzzle
+class Sudoku::Puzzle
 {
 public:
 
-   SudokuPuzzle();
-   ~SudokuPuzzle();
+   Puzzle();
+   ~Puzzle();
 
    void resetPuzzle();
 
    // getters
-   ValType getValAt(const SudokuCoord& coord);
+   ValType getValAt(const Coord& coord) const;
 
-   const std::vector<SudokuCoord> getUnmarkedCoords() const;
+   const std::vector<Coord> getUnmarkedCoords() const;
 
    bool isPuzzleInit();
 
    // setters
-   bool setValAt(const SudokuCoord& coord, ValType val);
+   bool setValAt(const Coord& coord, ValType val);
 
    bool initPuzzle(PuzzlePtrType inPuzzle);
 
+   friend bool operator==(const Puzzle& lhs, const Puzzle& rhs);
+
 private:
    // Checker
-   bool initialCheck(SudokuIndex index, ValType val);
-   bool checkCol(const PuzzlePtrType puzzle, SudokuIndex index, ValType val);
-   bool checkRow(const PuzzlePtrType puzzle, SudokuIndex index, ValType val);
-   bool checkGroup(const PuzzlePtrType puzzle, SudokuIndex index, ValType val);
-   bool checkAll(const PuzzlePtrType puzzle, SudokuIndex index, ValType val);
+   bool initialCheck(Index index, ValType val);
+   bool checkCol(const PuzzlePtrType puzzle, Index index, ValType val);
+   bool checkRow(const PuzzlePtrType puzzle, Index index, ValType val);
+   bool checkGroup(const PuzzlePtrType puzzle, Index index, ValType val);
+   bool checkAll(const PuzzlePtrType puzzle, Index index, ValType val);
    
    bool initFlag;
    
@@ -39,5 +41,7 @@ private:
    ValType m_puzzle[PUZZLE_MAX_ELEMENTS];
 
    // List of uninitialized positions
-   std::vector<SudokuCoord> unmarkedCoordList;
+   std::vector<Coord> unmarkedCoordList;
 };
+
+bool operator==(const Sudoku::Puzzle& lhs, const Sudoku::Puzzle& rhs);

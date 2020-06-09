@@ -1,37 +1,31 @@
 #pragma once
 #include "SudokuCommonTypes.h"
 
-class Sudoku::SudokuCoord
+class Sudoku::Coord
 {
 public:
-   SudokuCoord();
-   SudokuCoord(RowType inRow, ColType inCol);
-   SudokuCoord(SudokuIndex inIndex);
-   SudokuCoord(const SudokuCoord&); // Copy Constructor
+   Coord();
+   Coord(RowType inRow, ColType inCol);
+   Coord(Index inIndex);
+   Coord(const Coord&); // Copy Constructor
 
-   ~SudokuCoord(){}
+   ~Coord(){}
 
    RowType getRow() const ;
    ColType getCol() const ;
-   SudokuIndex getIndex() const ;
+   Index getIndex() const ;
 
-inline friend bool operator==(const SudokuCoord& lhs, const SudokuCoord& rhs)
-{
-   return (lhs.getIndex() == rhs.getIndex());
-}
-friend bool operator!=(const SudokuCoord& lhs, const SudokuCoord& rhs)
-{
-   return (lhs.getIndex() != rhs.getIndex());
-}
+   bool operator==(const Coord& rhs) const;
+   bool operator!=(const Coord& rhs) const;
 
 private:
-   SudokuIndex rowColToIndex(RowType inRow, ColType inCol);
-   RowType indexToRow(SudokuIndex inIndex);
+   Index rowColToIndex(RowType inRow, ColType inCol);
+   RowType indexToRow(Index inIndex);
 
-   ColType indexToCol(SudokuIndex inIndex);
+   ColType indexToCol(Index inIndex);
 
    RowType     m_row;
    ColType     m_col;
-   SudokuIndex m_index;
+   Index m_index;
 
 };
