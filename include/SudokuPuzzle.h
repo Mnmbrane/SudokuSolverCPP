@@ -25,7 +25,9 @@ public:
 
    bool initPuzzle(PuzzlePtrType inPuzzle);
 
-   friend bool operator==(const Puzzle& lhs, const Puzzle& rhs);
+   void printPuzzle();
+
+   bool operator==(const Puzzle& rhs);
 
 private:
    // Checker
@@ -43,5 +45,3 @@ private:
    // List of uninitialized positions
    std::vector<Coord> unmarkedCoordList;
 };
-
-bool operator==(const Sudoku::Puzzle& lhs, const Sudoku::Puzzle& rhs);

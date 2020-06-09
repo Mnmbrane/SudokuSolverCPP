@@ -14,8 +14,8 @@ Coord::Coord(RowType inRow, ColType inCol) :
    m_col(inCol),
    m_index(rowColToIndex(inRow, inCol))
 {
-   if( inRow < ROW_0 || inRow >= ROW_MAX ||
-       inCol < COL_0 || inCol >= COL_MAX )
+   if( inRow < ROW_0 || inRow >= ROW_8 ||
+       inCol < COL_0 || inCol >= COL_8 )
    {
       m_row = ROW_0;
       m_col = COL_0;

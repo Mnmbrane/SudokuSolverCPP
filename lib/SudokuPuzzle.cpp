@@ -107,12 +107,29 @@ bool Puzzle::initPuzzle(PuzzlePtrType inPuzzle)
    return true;
 }
 
+void Puzzle::printPuzzle()
+{
+   for(Sudoku::Index i = 0; i <= PUZZLE_MAX_INDEX; i++)
+   {
+       Coord coord(i);
+
+       if(coord.getCol()==COL_0)
+       {
+           printf("\n");
+       }
+       else
+       {
+           printf("%d ", m_puzzle[i]);
+       }
+   }
+}
+
 // Private functions //
 
 bool Puzzle::initialCheck(Index index, ValType val)
 {
     return (index >= 0 && index <= PUZZLE_MAX_INDEX) &&
-           (val > VAL_UNMARKED && val < VAL_MAX);
+           (val > VAL_UNMARKED && val <= VAL_9);
 }
 
 bool Puzzle::checkCol(const PuzzlePtrType puzzle, Index index, ValType val)
@@ -260,12 +277,12 @@ bool Puzzle::checkAll(const PuzzlePtrType puzzle, Index index, ValType val)
     }
 }
 
-bool operator==(const Sudoku::Puzzle& lhs, const Sudoku::Puzzle& rhs)
+bool Puzzle::operator==(const Sudoku::Puzzle& rhs)
 {
     bool retBool = true;
     for(Sudoku::Index i = 0; i <= PUZZLE_MAX_INDEX && retBool==true; i++)
     {
-        retBool = lhs.getValAt(i) == rhs.getValAt(i);
+        retBool = this->getValAt(i) == rhs.getValAt(i);
     }
     return retBool;
 }

@@ -184,11 +184,14 @@ TEST_F(SudokuPuzzleTest, UnmarkedPositionTest)
 TEST_F(SudokuPuzzleTest, OperatorOverloadEqTest)
 {
    // Arrange
-   Puzzle sudokuPuzzle1, sudokuPuzzle2;
+   Puzzle sudokuPuzzle1, sudokuPuzzle2, sudokuPuzzle3;
    PuzzlePtrType solvedPuzzle = getPuzzle(PUZZLE_SOLVED);
+   PuzzlePtrType unsolvedPuzzle = getPuzzle(PUZZLE_UNSOLVED);
 
    sudokuPuzzle1.initPuzzle(solvedPuzzle);
    sudokuPuzzle2.initPuzzle(solvedPuzzle);
+   sudokuPuzzle3.initPuzzle(unsolvedPuzzle);
 
-   //ASSERT_EQ(true, sudokuPuzzle1==sudokuPuzzle2);
+   ASSERT_EQ(true, sudokuPuzzle1==sudokuPuzzle2);
+   ASSERT_EQ(false, sudokuPuzzle1==sudokuPuzzle3);
 }

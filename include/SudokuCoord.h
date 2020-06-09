@@ -19,6 +19,7 @@ public:
    bool operator!=(const Coord& rhs) const;
 
 private:
+
    Index rowColToIndex(RowType inRow, ColType inCol);
    RowType indexToRow(Index inIndex);
 
