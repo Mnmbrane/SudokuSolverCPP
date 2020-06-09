@@ -11,10 +11,6 @@ public:
 
    ~SudokuCoord(){}
 
-   void setRow(RowType inRow);
-   void setCol(ColType inCol);
-   void setIndex(SudokuIndex inIndex);
-
    RowType getRow() const ;
    ColType getCol() const ;
    SudokuIndex getIndex() const ;

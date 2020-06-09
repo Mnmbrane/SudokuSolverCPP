@@ -56,41 +56,6 @@ ColType SudokuCoord::indexToCol(SudokuIndex inIndex)
    return (ColType)(inIndex % 9);
 }
 
-
-void SudokuCoord::setRow(RowType inRow)
-{
-   if(inRow < ROW_MAX && inRow >= ROW_0)
-   {
-      m_row = inRow;
-
-      // Recalculate index
-      m_index = rowColToIndex(inRow, m_col);
-   }
-   // else do nothing
-}
-void SudokuCoord::setCol(ColType inCol)
-{
-   if(inCol < COL_MAX && inCol >= COL_0)
-   {
-      m_col = inCol;
-
-      // Recalculate index
-      m_index = rowColToIndex(m_row, inCol);
-   }
-   // else do nothing
-}
-void SudokuCoord::setIndex(SudokuIndex inIndex)
-{
-   if(inIndex <= PUZZLE_MAX_INDEX && inIndex >= 0)
-   {
-      m_index = inIndex;
-
-      // Recalculate row and col
-      m_row = indexToRow(inIndex);
-      m_col = indexToCol(inIndex);
-   }
-}
-
 RowType SudokuCoord::getRow() const
 {
    return m_row;

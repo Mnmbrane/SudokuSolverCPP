@@ -1,63 +1,68 @@
 #include "PuzzleList.h"
 
+using namespace Sudoku;
+
+ValType VAL_0 = VAL_UNMARKED; 
+
 ValType puzzleUnsolved[] =
 {
-   (ValType)0, (ValType)0, (ValType)0,  (ValType)0, (ValType)0, (ValType)9,  (ValType)0, (ValType)0, (ValType)0,
-   (ValType)2, (ValType)8, (ValType)0,  (ValType)3, (ValType)0, (ValType)0,  (ValType)1, (ValType)0, (ValType)5,
-   (ValType)3, (ValType)0, (ValType)5,  (ValType)0, (ValType)8, (ValType)0,  (ValType)7, (ValType)4, (ValType)6,
+   VAL_0, VAL_0, VAL_0,  VAL_0, VAL_0, VAL_9,  VAL_0, VAL_0, VAL_0,
+   VAL_2, VAL_8, VAL_0,  VAL_3, VAL_0, VAL_0,  VAL_1, VAL_0, VAL_5,
+   VAL_3, VAL_0, VAL_5,  VAL_0, VAL_8, VAL_0,  VAL_7, VAL_4, VAL_6,
 
-   (ValType)7, (ValType)0, (ValType)0,  (ValType)0, (ValType)0, (ValType)0,  (ValType)0, (ValType)6, (ValType)0,
-   (ValType)0, (ValType)3, (ValType)0,  (ValType)4, (ValType)2, (ValType)7,  (ValType)0, (ValType)8, (ValType)0,
-   (ValType)0, (ValType)2, (ValType)0,  (ValType)0, (ValType)0, (ValType)0,  (ValType)0, (ValType)0, (ValType)7,
+   VAL_7, VAL_0, VAL_0,  VAL_0, VAL_0, VAL_0,  VAL_0, VAL_6, VAL_0,
+   VAL_0, VAL_3, VAL_0,  VAL_4, VAL_2, VAL_7,  VAL_0, VAL_8, VAL_0,
+   VAL_0, VAL_2, VAL_0,  VAL_0, VAL_0, VAL_0,  VAL_0, VAL_0, VAL_7,
 
-   (ValType)8, (ValType)1, (ValType)3,  (ValType)0, (ValType)5, (ValType)0,  (ValType)6, (ValType)0, (ValType)2,
-   (ValType)5, (ValType)0, (ValType)9,  (ValType)0, (ValType)0, (ValType)2,  (ValType)0, (ValType)1, (ValType)8,
-   (ValType)0, (ValType)0, (ValType)0,  (ValType)8, (ValType)0, (ValType)0,  (ValType)0, (ValType)0, (ValType)0
+   VAL_8, VAL_1, VAL_3,  VAL_0, VAL_5, VAL_0,  VAL_6, VAL_0, VAL_2,
+   VAL_5, VAL_0, VAL_9,  VAL_0, VAL_0, VAL_2,  VAL_0, VAL_1, VAL_8,
+   VAL_0, VAL_0, VAL_0,  VAL_8, VAL_0, VAL_0,  VAL_0, VAL_0, VAL_0
 };
 
 ValType puzzleSolved[] =
 {
-   (ValType)8, (ValType)2, (ValType)7,  (ValType)1, (ValType)5, (ValType)4,  (ValType)3, (ValType)9, (ValType)6,
-   (ValType)9, (ValType)6, (ValType)5,  (ValType)3, (ValType)2, (ValType)7,  (ValType)1, (ValType)4, (ValType)8,
-   (ValType)3, (ValType)4, (ValType)1,  (ValType)6, (ValType)8, (ValType)9,  (ValType)7, (ValType)5, (ValType)2,
+   VAL_8, VAL_2, VAL_7,  VAL_1, VAL_5, VAL_4,  VAL_3, VAL_9, VAL_6,
+   VAL_9, VAL_6, VAL_5,  VAL_3, VAL_2, VAL_7,  VAL_1, VAL_4, VAL_8,
+   VAL_3, VAL_4, VAL_1,  VAL_6, VAL_8, VAL_9,  VAL_7, VAL_5, VAL_2,
 
-   (ValType)5, (ValType)9, (ValType)3,  (ValType)4, (ValType)6, (ValType)8,  (ValType)2, (ValType)7, (ValType)1,
-   (ValType)4, (ValType)7, (ValType)2,  (ValType)5, (ValType)1, (ValType)3,  (ValType)6, (ValType)8, (ValType)9,
-   (ValType)6, (ValType)1, (ValType)8,  (ValType)9, (ValType)7, (ValType)2,  (ValType)4, (ValType)3, (ValType)5,
+   VAL_5, VAL_9, VAL_3,  VAL_4, VAL_6, VAL_8,  VAL_2, VAL_7, VAL_1,
+   VAL_4, VAL_7, VAL_2,  VAL_5, VAL_1, VAL_3,  VAL_6, VAL_8, VAL_9,
+   VAL_6, VAL_1, VAL_8,  VAL_9, VAL_7, VAL_2,  VAL_4, VAL_3, VAL_5,
 
-   (ValType)7, (ValType)8, (ValType)6,  (ValType)2, (ValType)3, (ValType)5,  (ValType)9, (ValType)1, (ValType)4,
-   (ValType)1, (ValType)5, (ValType)4,  (ValType)7, (ValType)9, (ValType)6,  (ValType)8, (ValType)2, (ValType)3,
-   (ValType)2, (ValType)3, (ValType)9,  (ValType)8, (ValType)4, (ValType)1,  (ValType)5, (ValType)6, (ValType)7
+   VAL_7, VAL_8, VAL_6,  VAL_2, VAL_3, VAL_5,  VAL_9, VAL_1, VAL_4,
+   VAL_1, VAL_5, VAL_4,  VAL_7, VAL_9, VAL_6,  VAL_8, VAL_2, VAL_3,
+   VAL_2, VAL_3, VAL_9,  VAL_8, VAL_4, VAL_1,  VAL_5, VAL_6, VAL_7
 };
 
+ValType VAL_10 = (ValType)10; 
 ValType puzzleInvalid[] =
 {
-   (ValType)10, (ValType)10, (ValType)10,  (ValType)10, (ValType)10, (ValType)10,  (ValType)10, (ValType)10, (ValType)10,
-   (ValType)10, (ValType)10, (ValType)10,  (ValType)10, (ValType)10, (ValType)10,  (ValType)10, (ValType)10, (ValType)10,
-   (ValType)10, (ValType)10, (ValType)10,  (ValType)10, (ValType)10, (ValType)10,  (ValType)10, (ValType)10, (ValType)10,
+   VAL_10, VAL_10, VAL_10,  VAL_10, VAL_10, VAL_10,  VAL_10, VAL_10, VAL_10,
+   VAL_10, VAL_10, VAL_10,  VAL_10, VAL_10, VAL_10,  VAL_10, VAL_10, VAL_10,
+   VAL_10, VAL_10, VAL_10,  VAL_10, VAL_10, VAL_10,  VAL_10, VAL_10, VAL_10,
 
-   (ValType)10, (ValType)10, (ValType)10,  (ValType)10, (ValType)10, (ValType)10,  (ValType)10, (ValType)10, (ValType)10,
-   (ValType)10, (ValType)10, (ValType)10,  (ValType)10, (ValType)10, (ValType)10,  (ValType)10, (ValType)10, (ValType)10,
-   (ValType)10, (ValType)10, (ValType)10,  (ValType)10, (ValType)10, (ValType)10,  (ValType)10, (ValType)10, (ValType)10,
+   VAL_10, VAL_10, VAL_10,  VAL_10, VAL_10, VAL_10,  VAL_10, VAL_10, VAL_10,
+   VAL_10, VAL_10, VAL_10,  VAL_10, VAL_10, VAL_10,  VAL_10, VAL_10, VAL_10,
+   VAL_10, VAL_10, VAL_10,  VAL_10, VAL_10, VAL_10,  VAL_10, VAL_10, VAL_10,
 
-   (ValType)10, (ValType)10, (ValType)10,  (ValType)10, (ValType)10, (ValType)10,  (ValType)10, (ValType)10, (ValType)10,
-   (ValType)10, (ValType)10, (ValType)10,  (ValType)10, (ValType)10, (ValType)10,  (ValType)10, (ValType)10, (ValType)10,
-   (ValType)10, (ValType)10, (ValType)10,  (ValType)10, (ValType)10, (ValType)10,  (ValType)10, (ValType)10, (ValType)10
+   VAL_10, VAL_10, VAL_10,  VAL_10, VAL_10, VAL_10,  VAL_10, VAL_10, VAL_10,
+   VAL_10, VAL_10, VAL_10,  VAL_10, VAL_10, VAL_10,  VAL_10, VAL_10, VAL_10,
+   VAL_10, VAL_10, VAL_10,  VAL_10, VAL_10, VAL_10,  VAL_10, VAL_10, VAL_10
 };
 
 ValType puzzleInvalidAtIndex80[] =
 {
-   (ValType)8, (ValType)2, (ValType)7,  (ValType)1, (ValType)5, (ValType)4,  (ValType)3, (ValType)9, (ValType)6,
-   (ValType)9, (ValType)6, (ValType)5,  (ValType)3, (ValType)2, (ValType)7,  (ValType)1, (ValType)4, (ValType)8,
-   (ValType)3, (ValType)4, (ValType)1,  (ValType)6, (ValType)8, (ValType)9,  (ValType)7, (ValType)5, (ValType)2,
+   VAL_8, VAL_2, VAL_7,  VAL_1, VAL_5, VAL_4,  VAL_3, VAL_9, VAL_6,
+   VAL_9, VAL_6, VAL_5,  VAL_3, VAL_2, VAL_7,  VAL_1, VAL_4, VAL_8,
+   VAL_3, VAL_4, VAL_1,  VAL_6, VAL_8, VAL_9,  VAL_7, VAL_5, VAL_2,
 
-   (ValType)5, (ValType)9, (ValType)3,  (ValType)4, (ValType)6, (ValType)8,  (ValType)2, (ValType)7, (ValType)1,
-   (ValType)4, (ValType)7, (ValType)2,  (ValType)5, (ValType)1, (ValType)3,  (ValType)6, (ValType)8, (ValType)9,
-   (ValType)6, (ValType)1, (ValType)8,  (ValType)9, (ValType)7, (ValType)2,  (ValType)4, (ValType)3, (ValType)5,
+   VAL_5, VAL_9, VAL_3,  VAL_4, VAL_6, VAL_8,  VAL_2, VAL_7, VAL_1,
+   VAL_4, VAL_7, VAL_2,  VAL_5, VAL_1, VAL_3,  VAL_6, VAL_8, VAL_9,
+   VAL_6, VAL_1, VAL_8,  VAL_9, VAL_7, VAL_2,  VAL_4, VAL_3, VAL_5,
 
-   (ValType)7, (ValType)8, (ValType)6,  (ValType)2, (ValType)3, (ValType)5,  (ValType)9, (ValType)1, (ValType)4,
-   (ValType)1, (ValType)5, (ValType)4,  (ValType)7, (ValType)9, (ValType)6,  (ValType)8, (ValType)2, (ValType)3,
-   (ValType)2, (ValType)3, (ValType)9,  (ValType)8, (ValType)4, (ValType)1,  (ValType)5, (ValType)6, (ValType)8
+   VAL_7, VAL_8, VAL_6,  VAL_2, VAL_3, VAL_5,  VAL_9, VAL_1, VAL_4,
+   VAL_1, VAL_5, VAL_4,  VAL_7, VAL_9, VAL_6,  VAL_8, VAL_2, VAL_3,
+   VAL_2, VAL_3, VAL_9,  VAL_8, VAL_4, VAL_1,  VAL_5, VAL_6, VAL_8
 };
 
 PuzzlePtrType puzzles[MAX_NUM_PUZZLE] =

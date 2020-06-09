@@ -1,6 +1,6 @@
 #pragma once
 #include <stdint.h>
-#include "SudokuPuzzle.h"
+#include "SudokuCommonTypes.h"
 
 using namespace Sudoku;
 
