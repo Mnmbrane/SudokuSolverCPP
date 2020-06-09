@@ -34,6 +34,7 @@ LIB:=\
 	../lib/$(OBJ_DIR)/libsudoku.a
 
 SRC:=\
+	SudokuCommonTypesTest.cpp \
 	PuzzleList.cpp \
 	SudokuPuzzleTest.cpp \
 	SudokuCoordTest.cpp

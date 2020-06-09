@@ -46,6 +46,10 @@ TEST_F(SudokuCoordTest, TestValidConstruction)
    // Copy constructor
    coordNoParams2 = coordValidIndex;
    testRowColIndex(coordNoParams2, ROW_6, COL_0, 54);
+
+   // Destructor
+   coordValidRowCol.~SudokuCoord();
+   testRowColIndex(coordValidRowCol, ROW_5, COL_2, 47);
 }
 
 TEST_F(SudokuCoordTest, TestInvalidConstruction)

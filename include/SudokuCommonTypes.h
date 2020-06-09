@@ -1,5 +1,4 @@
 #pragma once
-
 namespace Sudoku
 {
    class SudokuCoord;
@@ -22,6 +21,32 @@ namespace Sudoku
    {
       VAL_UNMARKED, VAL_1, VAL_2, VAL_3, VAL_4, VAL_5, VAL_6, VAL_7, VAL_8, VAL_9, VAL_MAX
    } ValType;
+
+   inline ValType operator++(ValType& val)
+   {
+      val = static_cast<ValType>((static_cast<int>(val) + 1) % (VAL_MAX+1));
+      return val;
+   }
+
+   inline ValType operator++(ValType& val, int)
+   {
+      ValType temp = val;
+      val = static_cast<ValType>((static_cast<int>(val) + 1) % (VAL_MAX+1));
+      return temp;
+   }
+
+   inline ValType operator--(ValType& val)
+   {
+      val==0 ? val = VAL_MAX : val = static_cast<ValType>((static_cast<int>(val) - 1));
+      return val;
+   }
+
+   inline ValType operator--(ValType& val, int)
+   {
+      ValType temp = val;
+      val==0 ? val = VAL_MAX : val = static_cast<ValType>((static_cast<int>(val) - 1));
+      return temp;
+   }
 
    typedef ValType* PuzzlePtrType;
    typedef int SudokuIndex;

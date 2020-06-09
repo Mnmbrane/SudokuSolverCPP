@@ -1,18 +1,22 @@
 #include "RecursiveBacktrack.h"
+#include "SudokuCommonTypes.h"
 #include "SudokuPuzzle.h"
+#include "SudokuCoord.h"
+#include <vector>
 
 using namespace Sudoku;
 
 // Solve using recursive backtracking
 bool RecursiveBacktrack::Solve(Sudoku::SudokuPuzzle& puzzle)
 {
-   uint8_t row = 0, col = 0;
+   std::vector<SudokuCoord> unmarkedCoordList = puzzle.getUnmarkedCoords();
+   size_t unmarkedCoordListSize = unmarkedCoordList.size();
 
-   // Iterate through the entire puzzle
-   for(uint8_t i = 0; i < PUZZLE_MAX_ELEMENTS; i=(row + col))
+   // Iterate through the unmarked coordinates
+   for(unsigned int i = 0; i < unmarkedCoordListSize; i++)
    {
       // brute force all of the values in the puzzle
-      for(uint8_t val = 1; val <= 9; val++)
+      for(ValType val = VAL_1; val <= VAL_9; val++)
       {
          uint8_t puzzleVal = puzzle.getValAt(row, col);
          // Make sure there is nothing on the current coord
