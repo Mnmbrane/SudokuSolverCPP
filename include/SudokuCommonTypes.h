@@ -1,7 +1,5 @@
 #pragma once
 #include <type_traits>
-#include <typeinfo>
-#include <iostream>
 
 namespace Sudoku
 {

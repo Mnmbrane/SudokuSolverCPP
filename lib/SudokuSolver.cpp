@@ -4,6 +4,16 @@
 
 using namespace Sudoku;
 
+Solver::Solver()
+{
+   constructAlgoPipeline();
+}
+
+void Solver::constructAlgoPipeline()
+{
+
+}
+
 bool Solver::Solve(Sudoku::Puzzle& puzzle)
 {
    Iterative algo;
