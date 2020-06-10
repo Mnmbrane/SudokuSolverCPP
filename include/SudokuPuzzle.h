@@ -1,7 +1,7 @@
 #pragma once
 
 #include <stdint.h>
-#include <vector>
+#include <set>
 #include "SudokuCommonTypes.h"
 
 class Sudoku::Puzzle
@@ -9,6 +9,7 @@ class Sudoku::Puzzle
 public:
 
    Puzzle();
+   Puzzle(const Puzzle& puzzle);
    ~Puzzle();
 
    void resetPuzzle();
@@ -16,7 +17,7 @@ public:
    // getters
    ValType getValAt(const Coord& coord) const;
 
-   const std::vector<Coord> getUnmarkedCoords() const;
+   const std::set<Coord> getUnmarkedCoords() const;
 
    bool isPuzzleInit();
 
@@ -43,5 +44,5 @@ private:
    ValType m_puzzle[PUZZLE_MAX_ELEMENTS];
 
    // List of uninitialized positions
-   std::vector<Coord> unmarkedCoordList;
+   std::set<Coord> unmarkedCoordList;
 };

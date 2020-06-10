@@ -2,7 +2,7 @@
 #include "SudokuCoord.h"
 
 #include "string.h"
-#include "stdio.h"
+#include <stdio.h>
 
 using namespace Sudoku;
 
@@ -12,58 +12,35 @@ Puzzle::Puzzle() :
    resetPuzzle();
 }
 
+Puzzle::Puzzle(const Puzzle& puzzle)
+{
+    resetPuzzle();
+    for(Sudoku::Index i = 0; i <= PUZZLE_MAX_INDEX; i++)
+    {
+        // If it's a 0 this means it's unmarked
+        if(puzzle.getValAt(i) == 0)
+        {
+            Coord unmarkedCoord(i);
+
+            // Add to the list
+            unmarkedCoordList.insert(unmarkedCoord);
+            m_puzzle[i] = VAL_UNMARKED;
+        }
+
+        m_puzzle[i] = puzzle.getValAt(i);
+    }
+}
+
 Puzzle::~Puzzle()
 {
-   resetPuzzle();
-   initFlag = false;
+    resetPuzzle();
+    initFlag = false;
 }
 
 void Puzzle::resetPuzzle()
 {
    unmarkedCoordList.clear();
    memset(m_puzzle, 0, sizeof(m_puzzle));
-}
-
-// Getters
-const std::vector<Coord> Puzzle::getUnmarkedCoords() const
-{
-   return unmarkedCoordList;
-}
-
-
-ValType Puzzle::getValAt(const Coord& coord) const
-{
-   if(!initFlag)
-   {
-      return VAL_UNMARKED;
-   }
-
-   return m_puzzle[coord.getIndex()];
-}
-
-bool Puzzle::isPuzzleInit()
-{
-   return initFlag;
-}
-
-// setters
-bool Puzzle::setValAt(const Coord& coord, ValType val)
-{
-   if(!initFlag)
-   {
-      return false;
-   }
-   Index index = coord.getIndex();
-   if(checkAll(m_puzzle, index, val) == false)
-   {
-      m_puzzle[index] = VAL_UNMARKED;
-      return false;
-   }
-   else
-   {
-       m_puzzle[index] = val;
-       return true;
-   }
 }
 
 bool Puzzle::initPuzzle(PuzzlePtrType inPuzzle)
@@ -94,7 +71,7 @@ bool Puzzle::initPuzzle(PuzzlePtrType inPuzzle)
             Coord unmarkedCoord(i);
 
             // Add to the list
-            unmarkedCoordList.push_back(unmarkedCoord);
+            unmarkedCoordList.insert(unmarkedCoord);
             m_puzzle[i] = VAL_UNMARKED;
         }
 
@@ -107,21 +84,74 @@ bool Puzzle::initPuzzle(PuzzlePtrType inPuzzle)
    return true;
 }
 
+
+// Getters
+const std::set<Coord> Puzzle::getUnmarkedCoords() const
+{
+   return unmarkedCoordList;
+}
+
+ValType Puzzle::getValAt(const Coord& coord) const
+{
+   if(!initFlag)
+   {
+      return VAL_UNMARKED;
+   }
+
+   return m_puzzle[coord.getIndex()];
+}
+
+bool Puzzle::isPuzzleInit()
+{
+   return initFlag;
+}
+
+// setters
+bool Puzzle::setValAt(const Coord& coord, ValType val)
+{
+    if(!initFlag)
+    {
+        return false;
+    }
+   else if( val == VAL_UNMARKED &&
+            (unmarkedCoordList.find(coord) != unmarkedCoordList.end()))
+    {
+        m_puzzle[coord.getIndex()] = val;
+        return true;
+    }
+    else if(checkAll(m_puzzle, coord.getIndex(), val) == false)
+    {
+        return false;
+    }
+    else
+    {
+        m_puzzle[coord.getIndex()] = val;
+        return true;
+    }
+}
+
 void Puzzle::printPuzzle()
 {
    for(Sudoku::Index i = 0; i <= PUZZLE_MAX_INDEX; i++)
    {
-       Coord coord(i);
+      Coord coord(i);
 
-       if(coord.getCol()==COL_0)
-       {
-           printf("\n");
-       }
-       else
-       {
-           printf("%d ", m_puzzle[i]);
-       }
+      if(coord.getCol()==COL_0)
+      {
+        printf("\n");
+        if(coord.getRow()==ROW_3 || coord.getRow()==ROW_6)
+        {
+            printf("\n");
+        }
+      }
+      else if(coord.getCol()==COL_3 || coord.getCol()==COL_6)
+      {
+         printf("|");
+      }
+      
+      printf("%d ", m_puzzle[i]);
    }
+   printf("\n\n");
 }
 
 // Private functions //
@@ -129,7 +159,7 @@ void Puzzle::printPuzzle()
 bool Puzzle::initialCheck(Index index, ValType val)
 {
     return (index >= 0 && index <= PUZZLE_MAX_INDEX) &&
-           (val > VAL_UNMARKED && val <= VAL_9);
+           (val >= VAL_UNMARKED && val <= VAL_9);
 }
 
 bool Puzzle::checkCol(const PuzzlePtrType puzzle, Index index, ValType val)
@@ -265,7 +295,7 @@ bool Puzzle::checkGroup(const PuzzlePtrType puzzle, Index index, ValType val)
 
 bool Puzzle::checkAll(const PuzzlePtrType puzzle, Index index, ValType val)
 {
-    if(checkCol(puzzle, index, val) &&
+    if( checkCol(puzzle, index, val) &&
         checkRow(puzzle, index, val) &&
         checkGroup(puzzle, index, val))
     {

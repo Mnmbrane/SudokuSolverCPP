@@ -1,7 +1,6 @@
 #pragma once
 #include "SudokuCommonTypes.h"
 #include "SudokuPuzzle.h"
-#include "RecursiveBacktrack.h"
 
 class Sudoku::Solver
 {

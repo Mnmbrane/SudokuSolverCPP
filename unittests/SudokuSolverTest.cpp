@@ -6,14 +6,15 @@
 
 using namespace Sudoku;
 
-TEST_F(SudokuSolverTest, OperatorOverloadEqTest)
+TEST_F(SudokuSolverTest, SolverIterativeSolveTest)
 {
    // Arrange
-   Puzzle sudokuPuzzle1;
-   PuzzlePtrType unsolvedPuzzle = getPuzzle(PUZZLE_UNSOLVED);
-   sudokuPuzzle1.initPuzzle(unsolvedPuzzle);
-
+   Puzzle unsolvedPuzzle, solvedPuzzle;
+   unsolvedPuzzle.initPuzzle(getPuzzle(PUZZLE_UNSOLVED));
+   solvedPuzzle.initPuzzle(getPuzzle(PUZZLE_SOLVED));
+ 
    Sudoku::Solver solver;
-   sudokuPuzzle1.printPuzzle();
-   solver.Solve(sudokuPuzzle1);
+   solver.Solve(unsolvedPuzzle);
+
+   ASSERT_EQ(true, unsolvedPuzzle==solvedPuzzle);
 }

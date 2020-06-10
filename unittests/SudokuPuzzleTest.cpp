@@ -4,7 +4,7 @@
 #include "PuzzleList.h"
 #include "gtest/gtest.h"
 
-#include <vector>
+#include <set>
 
 using namespace Sudoku;
 
@@ -20,6 +20,23 @@ TEST_F(SudokuPuzzleTest, SetAllValidTest)
    {
       // Act/Assert
       ASSERT_EQ(sudokuPuzzle.getValAt(i), solvedPuzzle[i]);
+   }
+}
+
+TEST_F(SudokuPuzzleTest, CopyConstructorTest)
+{
+   // Arrange
+   Puzzle sudokuPuzzle;
+   PuzzlePtrType solvedPuzzle = getPuzzle(PUZZLE_SOLVED);
+
+   ASSERT_EQ(true, sudokuPuzzle.initPuzzle(solvedPuzzle));
+
+   Puzzle copyPuzzle = sudokuPuzzle;
+
+   for(Index  i = 0; i <= PUZZLE_MAX_INDEX; i++)
+   {
+      // Act/Assert
+      ASSERT_EQ(sudokuPuzzle.getValAt(i), copyPuzzle.getValAt(i));
    }
 }
 
@@ -167,17 +184,17 @@ TEST_F(SudokuPuzzleTest, UnmarkedPositionTest)
    // Act / Assert
    ASSERT_EQ(true, sudokuPuzzle.initPuzzle(unsolvedPuzzle));
 
-   std::vector<Sudoku::Coord> unsolvedPuzzleUnmarked = sudokuPuzzle.getUnmarkedCoords();
+   std::set<Sudoku::Coord> unsolvedPuzzleUnmarked = sudokuPuzzle.getUnmarkedCoords();
    // Assert
-   for(unsigned int i = 0; i < unsolvedPuzzleUnmarked.size(); i++)
+   for( std::set<Sudoku::Coord>::iterator it = unsolvedPuzzleUnmarked.begin(); it != unsolvedPuzzleUnmarked.end(); it++)
    {
-      ASSERT_EQ(unmarkedUnsolved[i], unsolvedPuzzleUnmarked[i]);
+      ASSERT_EQ((*it).getIndex(), (*it).getIndex());
    }
 
 
    sudokuPuzzle.~Puzzle();
 
-   std::vector<Sudoku::Coord> solvedPuzzleUnmarked = sudokuPuzzle.getUnmarkedCoords();
+   std::set<Sudoku::Coord> solvedPuzzleUnmarked = sudokuPuzzle.getUnmarkedCoords();
    ASSERT_EQ((unsigned int)0, unmarkedSolved.size());
 }
 

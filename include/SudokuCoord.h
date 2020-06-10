@@ -17,6 +17,7 @@ public:
 
    bool operator==(const Coord& rhs) const;
    bool operator!=(const Coord& rhs) const;
+   bool operator<(const Coord& rhs) const;
 
 private:
 

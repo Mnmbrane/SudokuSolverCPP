@@ -44,16 +44,16 @@ Coord::Coord(const Coord& rhs)
 
 Index Coord::rowColToIndex(RowType inRow, ColType inCol)
 {
-   return (Index)((inRow * 9) + inCol);
+   return (Index)((inRow * (ROW_8 + 1)) + inCol);
 }
 
 RowType Coord::indexToRow(Index inIndex)
 {
-   return (RowType)(inIndex / 9);
+   return (RowType)(inIndex / (COL_8 + 1));
 }
 ColType Coord::indexToCol(Index inIndex)
 {
-   return (ColType)(inIndex % 9);
+   return (ColType)(inIndex % (COL_8 + 1));
 }
 
 RowType Coord::getRow() const
@@ -78,4 +78,8 @@ bool Coord::operator==(const Sudoku::Coord& rhs) const
 bool Coord::operator!=(const Sudoku::Coord& rhs) const
 {
    return (this->getIndex() != rhs.getIndex());
+}
+bool Coord::operator<(const Sudoku::Coord& rhs) const
+{
+   return (this->getIndex() < rhs.getIndex());
 }

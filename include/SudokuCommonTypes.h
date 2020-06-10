@@ -10,7 +10,7 @@ namespace Sudoku
    class Solver;
 
    class AlgorithmInterface;
-   class RecursiveBacktrack;
+   class Iterative;
 
    static const int PUZZLE_MAX_INDEX = 80;
    static const int PUZZLE_MAX_ELEMENTS = (PUZZLE_MAX_INDEX + 1);
@@ -76,10 +76,10 @@ namespace Sudoku
       return static_cast<unsigned char>(lhs) <= static_cast<unsigned char>(rhs);
    }
 
-   inline ValType operator+(const ValType& lhs, const ValType& rhs)
+   inline ValType operator+(const ValType& lhs, int rhs)
    {
       unsigned char sum =
-         static_cast<unsigned char>(lhs) + static_cast<unsigned char>(rhs) % (static_cast<unsigned char>(VAL_9) + 1);
+         (static_cast<unsigned char>(lhs) + static_cast<unsigned char>(rhs)) % (static_cast<unsigned char>(VAL_9) + 1);
       return static_cast<ValType>(sum);
    }
 
