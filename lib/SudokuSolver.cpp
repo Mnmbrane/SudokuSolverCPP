@@ -4,8 +4,8 @@
 
 using namespace Sudoku;
 
-void Solver::Solve(Sudoku::Puzzle& puzzle)
+bool Solver::Solve(Sudoku::Puzzle& puzzle)
 {
    Iterative algo;
-   algo.Solve(puzzle);
+   return algo.Solve(puzzle);
 }

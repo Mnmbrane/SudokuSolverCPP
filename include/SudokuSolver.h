@@ -6,7 +6,7 @@ class Sudoku::Solver
 {
 public:
    Solver(){};
-   void Solve(Sudoku::Puzzle& puzzle);
+   bool Solve(Sudoku::Puzzle& puzzle);
 
 private:
 
