@@ -29,15 +29,22 @@ class Sudoku::Solver
 {
 public:
    Solver();
+   ~Solver();
 
    bool Solve(Sudoku::Puzzle& puzzle);
+
+   // Adds algo to the end of the pipeline
+   void addToPipeline(AlgorithmInterface* algo);
 
 private:
    void constructAlgoPipeline();
 
+   void resetPipeline();
+
    typedef struct AlgoNode
    {
       struct AlgoNode* next;
+      struct AlgoNode* prev;
       AlgorithmInterface* algo;
    } AlgoNodeType;
 
@@ -45,8 +52,6 @@ private:
    {
       AlgoNodeType* begin;
       AlgoNodeType* end;
-      AlgoNodeType* current;
-
    } AlgoLinkedList;
 
    AlgoLinkedList pipeline;
