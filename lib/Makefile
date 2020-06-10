@@ -17,7 +17,7 @@ SRC:=\
 	SudokuCoord.cpp \
 	SudokuPuzzle.cpp \
 	SudokuSolver.cpp \
-	SolveAlgorithm/Iterative.cpp
+	SolveAlgorithm/IterativeBacktrack.cpp
 
 OBJ:=$(SRC:%.cpp=$(OBJ_DIR)/%.o)
 

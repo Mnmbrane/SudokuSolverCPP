@@ -1,6 +1,6 @@
 #include "SudokuSolver.h"
 #include "SudokuCommonTypes.h"
-#include "Iterative.h"
+#include "IterativeBacktrack.h"
 
 using namespace Sudoku;
 

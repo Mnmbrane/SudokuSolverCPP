@@ -1,4 +1,4 @@
-#include "Iterative.h"
+#include "IterativeBacktrack.h"
 #include "SudokuCommonTypes.h"
 #include "SudokuPuzzle.h"
 #include "SudokuCoord.h"
@@ -33,8 +33,11 @@ bool Iterative::Solve(Sudoku::Puzzle& puzzle)
             {
                return false;
             }
-            it--;
-            break;
+            else
+            {
+               it--;
+               break;
+            }
          }
          else
          {
