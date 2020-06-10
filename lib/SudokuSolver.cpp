@@ -49,7 +49,7 @@ void Solver::constructAlgoPipeline()
 {
    resetPipeline();
    
-   addToPipeline(new Iterative);
+   addToPipeline(new IterativeBacktrack);
 }
 
 void Solver::addToPipeline(AlgorithmInterface* algo)
@@ -85,6 +85,33 @@ void Solver::addToPipeline(AlgorithmInterface* algo)
 
 bool Solver::Solve(Sudoku::Puzzle& puzzle)
 {
-   Iterative algo;
-   return algo.Solve(puzzle);
+   bool retVal = false;
+   AlgoNodeType* walker = pipeline.begin;
+
+   // Walk through the pipeline
+   while(walker != nullptr)
+   {
+      retVal = walker->algo->Solve(puzzle);
+
+      // Don't care about the return value since
+      // we are at the end, just return retVal
+      if(walker == pipeline.end)
+      {
+         return retVal;
+      }
+      // Walk forward if nothing was solved
+      else if(retVal == false)
+      {
+         walker = walker->next;
+      }
+      // We solved something great, go back to
+      // the beginning
+      else
+      {
+         walker = pipeline.begin;
+      }
+      
+   }
+
+   return retVal;
 }

@@ -8,7 +8,7 @@ namespace Sudoku
    class Solver;
 
    class AlgorithmInterface;
-   class Iterative;
+   class IterativeBacktrack;
 
    static const int PUZZLE_MAX_INDEX = 80;
    static const int PUZZLE_MAX_ELEMENTS = (PUZZLE_MAX_INDEX + 1);

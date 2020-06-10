@@ -2,12 +2,13 @@
 #include "SudokuCommonTypes.h"
 #include "SudokuPuzzle.h"
 #include "SudokuCoord.h"
+#include <stdio.h>
 #include <set>
 
 using namespace Sudoku;
 
 // Solve using recursive backtracking
-bool Iterative::Solve(Sudoku::Puzzle& puzzle)
+bool IterativeBacktrack::Solve(Sudoku::Puzzle& puzzle)
 {
    std::set<Coord> unmarkedCoordList = puzzle.getUnmarkedCoords();
    std::set<Coord>::iterator it = unmarkedCoordList.begin();
@@ -31,6 +32,7 @@ bool Iterative::Solve(Sudoku::Puzzle& puzzle)
             // Return false
             if(it == unmarkedCoordList.begin())
             {
+               printf("Iterative::Exiting %s\n", __func__);
                return false;
             }
             else

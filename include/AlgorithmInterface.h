@@ -4,6 +4,6 @@
 
 class Sudoku::AlgorithmInterface
 {
-protected:
+public:
    virtual bool Solve(Sudoku::Puzzle& puzzle) = 0;
 };
