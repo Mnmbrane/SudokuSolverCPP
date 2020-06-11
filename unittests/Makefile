@@ -37,7 +37,7 @@ SRC:=\
 	SudokuCommonTypesTest.cpp \
 	PuzzleList.cpp \
 	SudokuPuzzleTest.cpp \
-	SudokuCoordTest.cpp \
+	SudokuCellTest.cpp \
 	SudokuSolverTest.cpp
 
 MAINOBJ:=$(OBJ_DIR)/main.o

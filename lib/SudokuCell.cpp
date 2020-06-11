@@ -1,15 +1,15 @@
-#include "SudokuCoord.h"
+#include "SudokuCell.h"
 #include "stdio.h"
 using namespace Sudoku;
 
-Coord::Coord() :
+Cell::Cell() :
    m_row(ROW_0),
    m_col(COL_0),
    m_index(0)
 {
 }
 
-Coord::Coord(RowType inRow, ColType inCol) :
+Cell::Cell(RowType inRow, ColType inCol) :
    m_row(inRow),
    m_col(inCol),
    m_index(rowColToIndex(inRow, inCol))
@@ -22,7 +22,7 @@ Coord::Coord(RowType inRow, ColType inCol) :
       m_index = 0;
    }
 }
-Coord::Coord(Index inIndex) :
+Cell::Cell(Index inIndex) :
    m_row(indexToRow(inIndex)),
    m_col(indexToCol(inIndex)),
    m_index(inIndex)
@@ -35,51 +35,51 @@ Coord::Coord(Index inIndex) :
    }
 }
 
-Coord::Coord(const Coord& rhs)
+Cell::Cell(const Cell& rhs)
 {
    m_row    = rhs.m_row;
    m_col    = rhs.m_col;
    m_index  = rhs.m_index;
 }
 
-Index Coord::rowColToIndex(RowType inRow, ColType inCol)
+Index Cell::rowColToIndex(RowType inRow, ColType inCol)
 {
    return (Index)((inRow * (ROW_8 + 1)) + inCol);
 }
 
-RowType Coord::indexToRow(Index inIndex)
+RowType Cell::indexToRow(Index inIndex)
 {
    return (RowType)(inIndex / (COL_8 + 1));
 }
-ColType Coord::indexToCol(Index inIndex)
+ColType Cell::indexToCol(Index inIndex)
 {
    return (ColType)(inIndex % (COL_8 + 1));
 }
 
-RowType Coord::getRow() const
+RowType Cell::getRow() const
 {
    return m_row;
 }
 
-ColType Coord::getCol() const
+ColType Cell::getCol() const
 {
    return m_col;
 }
 
-Index Coord::getIndex() const 
+Index Cell::getIndex() const 
 {
    return m_index;
 }
 
-bool Coord::operator==(const Sudoku::Coord& rhs) const
+bool Cell::operator==(const Sudoku::Cell& rhs) const
 {
    return (this->getIndex() == rhs.getIndex());
 }
-bool Coord::operator!=(const Sudoku::Coord& rhs) const
+bool Cell::operator!=(const Sudoku::Cell& rhs) const
 {
    return (this->getIndex() != rhs.getIndex());
 }
-bool Coord::operator<(const Sudoku::Coord& rhs) const
+bool Cell::operator<(const Sudoku::Cell& rhs) const
 {
    return (this->getIndex() < rhs.getIndex());
 }

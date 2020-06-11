@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdint.h>
+#include <map>
 #include <set>
 #include "SudokuCommonTypes.h"
 
@@ -15,14 +16,18 @@ public:
    void resetPuzzle();
 
    // getters
-   ValType getValAt(const Coord& coord) const;
+   ValType getValAt(const Cell& cell) const;
 
-   const std::set<Coord> getUnmarkedCoords() const;
+   const UnmarkedCellMapType getUnmarkedCells() const;
+
+   //void initAllUnmarkedCells();
 
    bool isPuzzleInit();
 
+   void unmark(const Cell& cell);
+
    // setters
-   bool setValAt(const Coord& coord, ValType val);
+   bool setValAt(const Cell& cell, ValType val);
 
    bool initPuzzle(PuzzlePtrType inPuzzle);
 
@@ -31,6 +36,10 @@ public:
    bool operator==(const Puzzle& rhs);
 
 private:
+
+   bool checkPuzzleValidity(PuzzlePtrType inPuzzle);
+   void setPuzzle(PuzzlePtrType inPuzzle);
+   void initAllUnmarkedCells();
    // Checker
    bool initialCheck(Index index, ValType val);
    bool checkCol(const PuzzlePtrType puzzle, Index index, ValType val);
@@ -43,6 +52,6 @@ private:
    // The puzzle in array format
    ValType m_puzzle[PUZZLE_MAX_ELEMENTS];
 
-   // List of uninitialized positions
-   std::set<Coord> unmarkedCoordList;
+   // List of uninitialized positions and it's possible values
+   UnmarkedCellMapType unmarkedCells;
 };

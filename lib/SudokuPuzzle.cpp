@@ -1,5 +1,5 @@
 #include "SudokuPuzzle.h"
-#include "SudokuCoord.h"
+#include "SudokuCell.h"
 
 #include "string.h"
 #include <stdio.h>
@@ -20,15 +20,13 @@ Puzzle::Puzzle(const Puzzle& puzzle)
         // If it's a 0 this means it's unmarked
         if(puzzle.getValAt(i) == 0)
         {
-            Coord unmarkedCoord(i);
-
-            // Add to the list
-            unmarkedCoordList.insert(unmarkedCoord);
             m_puzzle[i] = VAL_UNMARKED;
         }
 
         m_puzzle[i] = puzzle.getValAt(i);
     }
+    unmarkedCells.clear();
+    unmarkedCells = puzzle.getUnmarkedCells();
 }
 
 Puzzle::~Puzzle()
@@ -39,13 +37,22 @@ Puzzle::~Puzzle()
 
 void Puzzle::resetPuzzle()
 {
-   unmarkedCoordList.clear();
+   unmarkedCells.clear();
    memset(m_puzzle, 0, sizeof(m_puzzle));
 }
 
-bool Puzzle::initPuzzle(PuzzlePtrType inPuzzle)
+void Puzzle::unmark(const Cell& cell)
 {
-   // Check Validity of the puzzle
+    // Delete the set at map[cell]
+    unmarkedCells[cell].clear();
+
+    // Delete the key inside the map
+    unmarkedCells.erase(cell);
+}
+
+bool Puzzle::checkPuzzleValidity(PuzzlePtrType inPuzzle)
+{
+    // Check Validity of the puzzle
    for(Sudoku::Index i = 0; i <= PUZZLE_MAX_INDEX; i++)
    {
       bool checkInPuzzle = checkAll(inPuzzle, i, inPuzzle[i]);
@@ -59,46 +66,80 @@ bool Puzzle::initPuzzle(PuzzlePtrType inPuzzle)
          return false;
       }
    }
+   return true;
+}
 
+void Puzzle::setPuzzle(PuzzlePtrType inPuzzle)
+{
    // Clear everything out
    resetPuzzle();
    // Passes the validity test, set everything up
    for(Sudoku::Index i = 0; i <= PUZZLE_MAX_INDEX; i++)
+   {
+       m_puzzle[i] = inPuzzle[i];
+   }
+}
+
+void Puzzle::initAllUnmarkedCells()
+{
+    for(Sudoku::Index i = 0; i <= PUZZLE_MAX_INDEX; i++)
     {
         // If it's a 0 this means it's unmarked
-        if(inPuzzle[i] == 0)
+        if(m_puzzle[i] == 0)
         {
-            Coord unmarkedCoord(i);
-
-            // Add to the list
-            unmarkedCoordList.insert(unmarkedCoord);
-            m_puzzle[i] = VAL_UNMARKED;
+            Cell cell(i);
+            CandidateSetType candidateSet;
+            for(ValType val = VAL_1; val <= VAL_9; val++)
+            {
+                // Check if everything to make sure it's
+                // actually a good candidate
+                if(checkAll(m_puzzle, i, val))
+                {
+                    candidateSet.insert(val);
+                }
+            } 
+            // Insert all of the candidates that were found
+            // into the map of unmarked cells
+            unmarkedCells.insert(std::make_pair(cell, candidateSet));
         }
+    }
+}
 
-        m_puzzle[i] = inPuzzle[i];
+bool Puzzle::initPuzzle(PuzzlePtrType inPuzzle)
+{
+
+   if(checkPuzzleValidity(inPuzzle) == true)
+   {
+       // Set the puzzle to in Puzzle
+       setPuzzle(inPuzzle);
+       initFlag = true;
+       // Now set the unmarked cells and also find 
+       // all the candidates for a cell
+        initAllUnmarkedCells();
+
+       return true;
    }
-
-
-   initFlag = true;
-
-   return true;
+   else
+   {
+       return false;
+   }
 }
 
 
 // Getters
-const std::set<Coord> Puzzle::getUnmarkedCoords() const
+const UnmarkedCellMapType Puzzle::getUnmarkedCells() const
 {
-   return unmarkedCoordList;
+   return unmarkedCells;
 }
 
-ValType Puzzle::getValAt(const Coord& coord) const
+ValType Puzzle::getValAt(const Cell& cell) const
 {
    if(!initFlag)
    {
       return VAL_UNMARKED;
    }
 
-   return m_puzzle[coord.getIndex()];
+   return m_puzzle[cell.getIndex()];
 }
 
 bool Puzzle::isPuzzleInit()
@@ -107,25 +148,25 @@ bool Puzzle::isPuzzleInit()
 }
 
 // setters
-bool Puzzle::setValAt(const Coord& coord, ValType val)
+bool Puzzle::setValAt(const Cell& cell, ValType val)
 {
     if(!initFlag)
     {
         return false;
     }
    else if( val == VAL_UNMARKED &&
-            (unmarkedCoordList.find(coord) != unmarkedCoordList.end()))
+            (unmarkedCells.find(cell) != unmarkedCells.end()))
     {
-        m_puzzle[coord.getIndex()] = val;
+        m_puzzle[cell.getIndex()] = val;
         return true;
     }
-    else if(checkAll(m_puzzle, coord.getIndex(), val) == false)
+    else if(checkAll(m_puzzle, cell.getIndex(), val) == false)
     {
         return false;
     }
     else
     {
-        m_puzzle[coord.getIndex()] = val;
+        m_puzzle[cell.getIndex()] = val;
         return true;
     }
 }
@@ -134,17 +175,17 @@ void Puzzle::printPuzzle()
 {
    for(Sudoku::Index i = 0; i <= PUZZLE_MAX_INDEX; i++)
    {
-      Coord coord(i);
+      Cell cell(i);
 
-      if(coord.getCol()==COL_0)
+      if(cell.getCol()==COL_0)
       {
         printf("\n");
-        if(coord.getRow()==ROW_3 || coord.getRow()==ROW_6)
+        if(cell.getRow()==ROW_3 || cell.getRow()==ROW_6)
         {
             printf("\n");
         }
       }
-      else if(coord.getCol()==COL_3 || coord.getCol()==COL_6)
+      else if(cell.getCol()==COL_3 || cell.getCol()==COL_6)
       {
          printf("|");
       }

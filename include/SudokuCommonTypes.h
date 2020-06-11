@@ -1,14 +1,17 @@
 #pragma once
 #include <type_traits>
+#include <set>
+#include <map>
 
 namespace Sudoku
 {
-   class Coord;
+   class Cell;
    class Puzzle;
    class Solver;
 
    class AlgorithmInterface;
    class IterativeBacktrack;
+   class NakedOnes;
 
    static const int PUZZLE_MAX_INDEX = 80;
    static const int PUZZLE_MAX_ELEMENTS = (PUZZLE_MAX_INDEX + 1);
@@ -26,7 +29,7 @@ namespace Sudoku
 
    enum ValType : unsigned char
    {
-      VAL_UNMARKED, VAL_1, VAL_2, VAL_3, VAL_4, VAL_5, VAL_6, VAL_7, VAL_8, VAL_9
+      VAL_UNMARKED, VAL_1, VAL_2, VAL_3, VAL_4, VAL_5, VAL_6, VAL_7, VAL_8, VAL_9, VAL_MAX
    };
 
    template< typename T >
@@ -77,36 +80,38 @@ namespace Sudoku
    inline ValType operator+(const ValType& lhs, int rhs)
    {
       unsigned char sum =
-         (static_cast<unsigned char>(lhs) + static_cast<unsigned char>(rhs)) % (static_cast<unsigned char>(VAL_9) + 1);
+         (static_cast<unsigned char>(lhs) + static_cast<unsigned char>(rhs)) % (static_cast<unsigned char>(VAL_MAX) + 1);
       return static_cast<ValType>(sum);
    }
 
    inline ValType operator++(ValType& val)
    {
-      val = static_cast<ValType>((static_cast<int>(val) + 1) % (static_cast<unsigned char>(VAL_9) + 1));
+      val = static_cast<ValType>((static_cast<int>(val) + 1) % (static_cast<unsigned char>(VAL_MAX) + 1));
       return val;
    }
 
    inline ValType operator++(ValType& val, int)
    {
       ValType temp = val;
-      val = static_cast<ValType>((static_cast<int>(val) + 1) % (static_cast<unsigned char>(VAL_9) + 1));
+      val = static_cast<ValType>((static_cast<int>(val) + 1) % (static_cast<unsigned char>(VAL_MAX) + 1));
       return temp;
    }
 
    inline ValType operator--(ValType& val)
    {
-      val = val==0 ? VAL_9 : static_cast<ValType>((static_cast<int>(val) - 1));
+      val = val==0 ? VAL_MAX : static_cast<ValType>((static_cast<int>(val) - 1));
       return val;
    }
 
    inline ValType operator--(ValType& val, int)
    {
       ValType temp = val;
-      val==0 ? val = ValType::VAL_9 : val = static_cast<ValType>((static_cast<int>(val) - 1));
+      val==0 ? val = VAL_MAX : val = static_cast<ValType>((static_cast<int>(val) - 1));
       return temp;
    }
 
    typedef ValType* PuzzlePtrType;
    typedef int Index;
+   typedef std::set<ValType> CandidateSetType;
+   typedef std::map<Cell, CandidateSetType> UnmarkedCellMapType;
 }

@@ -4,20 +4,26 @@ LIBNAME:=sudoku
 
 OBJ_DIR:=obj
 ALGO_OBJ_DIR:=$(OBJ_DIR)/SolveAlgorithm
+ALGODIR:=SolveAlgorithm
 
 LIB:=$(OBJ_DIR)/lib$(LIBNAME).a 
 
 INCLUDES:= \
 	./../include \
-	SolveAlgorithm
+	./../include/SolveAlgorithm
 
 CXXFLAGS+=$(addprefix -I,$(INCLUDES))
 
 SRC:=\
-	SudokuCoord.cpp \
+	SudokuCell.cpp \
 	SudokuPuzzle.cpp \
 	SudokuSolver.cpp \
-	SolveAlgorithm/IterativeBacktrack.cpp
+	$(ALGODIR)/IterativeBacktrack.cpp \
+	$(ALGODIR)/NakedOnes.cpp
+
+COMMON_HEADERS:=\
+	../include/SudokuCommonTypes.h \
+	../include/AlgorithmInterface.h
 
 OBJ:=$(SRC:%.cpp=$(OBJ_DIR)/%.o)
 
@@ -28,7 +34,7 @@ make_lib: $(OBJ_DIR) $(LIB)
 $(LIB): $(OBJ)
 	$(AR) $@ $(OBJ)
 
-$(OBJ): $(OBJ_DIR)/%.o: %.cpp
+$(OBJ): $(OBJ_DIR)/%.o: %.cpp ../include/%.h
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 $(OBJ_DIR):

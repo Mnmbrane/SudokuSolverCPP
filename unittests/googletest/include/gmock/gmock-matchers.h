@@ -3063,7 +3063,7 @@ class GTEST_API_ MatchMatrix {
 
   // Each element is a char interpreted as bool. They are stored as a
   // flattened array in lhs-major order, use 'SpaceIndex()' to translate
-  // a (ilhs, irhs) matrix coordinate into an offset.
+  // a (ilhs, irhs) matrix cellinate into an offset.
   ::std::vector<char> matched_;
 };
 
