@@ -1,7 +1,7 @@
 #include <SudokuCommonTypes.h>
 #include "SudokuPuzzle.h"
 #include "SudokuPuzzleTest.h"
-#include "SudokuCell.h"
+#include "SudokuCoord.h"
 #include "PuzzleList.h"
 #include "gtest/gtest.h"
 
@@ -164,8 +164,8 @@ TEST_F(SudokuPuzzleTest, UnmarkedPositionTest)
    PuzzlePtrType unsolvedPuzzle = getPuzzle(PUZZLE_UNSOLVED);
    PuzzlePtrType solvedPuzzle = getPuzzle(PUZZLE_SOLVED);
 
-   std::vector<Sudoku::Cell> unmarkedUnsolved;
-   std::vector<Sudoku::Cell> unmarkedSolved;
+   std::vector<Sudoku::Coord> unmarkedUnsolved;
+   std::vector<Sudoku::Coord> unmarkedSolved;
 
    for(Index  i = 0; i < PUZZLE_MAX_ELEMENTS; i++)
    {
@@ -183,9 +183,9 @@ TEST_F(SudokuPuzzleTest, UnmarkedPositionTest)
    // Act / Assert
    ASSERT_EQ(true, sudokuPuzzle.initPuzzle(unsolvedPuzzle));
 
-   UnmarkedCellMapType unsolvedPuzzleUnmarked = sudokuPuzzle.getUnmarkedCells();
+   UnmarkedCoordMapType unsolvedPuzzleUnmarked = sudokuPuzzle.getUnmarkedCoords();
    // Assert
-   for( UnmarkedCellMapType::iterator it = unsolvedPuzzleUnmarked.begin(); it != unsolvedPuzzleUnmarked.end(); it++)
+   for( UnmarkedCoordMapType::iterator it = unsolvedPuzzleUnmarked.begin(); it != unsolvedPuzzleUnmarked.end(); it++)
    {
       ASSERT_EQ((it->first).getIndex(), (it->first).getIndex());
    }
@@ -193,7 +193,7 @@ TEST_F(SudokuPuzzleTest, UnmarkedPositionTest)
 
    sudokuPuzzle.~Puzzle();
 
-   UnmarkedCellMapType solvedPuzzleUnmarked = sudokuPuzzle.getUnmarkedCells();
+   UnmarkedCoordMapType solvedPuzzleUnmarked = sudokuPuzzle.getUnmarkedCoords();
    ASSERT_EQ((unsigned int)0, unmarkedSolved.size());
 }
 

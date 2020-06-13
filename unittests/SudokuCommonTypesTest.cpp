@@ -17,6 +17,7 @@ TEST_F(SudokuCommonTypesTest, ValTypeOverloadOp)
    ASSERT_EQ(val++, VAL_7);
    ASSERT_EQ(val++, VAL_8);
    ASSERT_EQ(val++, VAL_9);
+   ASSERT_EQ(val++, VAL_MAX);
    ASSERT_EQ(val, VAL_UNMARKED);
 
    ASSERT_EQ(++val, VAL_1);
@@ -28,9 +29,11 @@ TEST_F(SudokuCommonTypesTest, ValTypeOverloadOp)
    ASSERT_EQ(++val, VAL_7);
    ASSERT_EQ(++val, VAL_8);
    ASSERT_EQ(++val, VAL_9);
+   ASSERT_EQ(++val, VAL_MAX);
    ASSERT_EQ(++val, VAL_UNMARKED);
 
    ASSERT_EQ(val--, VAL_UNMARKED);
+   ASSERT_EQ(val--, VAL_MAX);
    ASSERT_EQ(val--, VAL_9);
    ASSERT_EQ(val--, VAL_8);
    ASSERT_EQ(val--, VAL_7);
@@ -42,6 +45,7 @@ TEST_F(SudokuCommonTypesTest, ValTypeOverloadOp)
    ASSERT_EQ(val--, VAL_1);
    ASSERT_EQ(val, VAL_UNMARKED);
 
+   ASSERT_EQ(--val, VAL_MAX);
    ASSERT_EQ(--val, VAL_9);
    ASSERT_EQ(--val, VAL_8);
    ASSERT_EQ(--val, VAL_7);

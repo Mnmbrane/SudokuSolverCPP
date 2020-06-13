@@ -1,7 +1,7 @@
 #include "IterativeBacktrack.h"
 #include "SudokuCommonTypes.h"
 #include "SudokuPuzzle.h"
-#include "SudokuCell.h"
+#include "SudokuCoord.h"
 #include <stdio.h>
 #include <set>
 
@@ -10,17 +10,17 @@ using namespace Sudoku;
 // Solve using recursive backtracking
 bool IterativeBacktrack::Solve(Sudoku::Puzzle& puzzle)
 {
-   UnmarkedCellMapType unmarkedCellList = puzzle.getUnmarkedCells();
-   UnmarkedCellMapType::iterator it = unmarkedCellList.begin();
+   UnmarkedCoordMapType unmarkedCoordList = puzzle.getUnmarkedCoords();
+   UnmarkedCoordMapType::iterator it = unmarkedCoordList.begin();
 
-   // Iterate through the unmarked cellinates
-   while(it != unmarkedCellList.end())
+   // Iterate through the unmarked coordinates
+   while(it != unmarkedCoordList.end())
    {
-   //    printf("i == [%d]\n", i);
-      // brute force all of the values in the puzzle
-      for(ValType val = ValType((puzzle.getValAt(it->first) + 1) % 10); val <= ValType::VAL_9; ++val)
-      {
 
+      // brute force all of the values in the puzzle
+      for(ValType val = ValType((puzzle.getValAt(it->first) + 1) % 10); val <= ValType::VAL_MAX; ++val)
+      {
+         //printf("val == [%d]\n", val);
          // Overflowed we need to go back to the previous unmarked in the list
          if(val == ValType::VAL_UNMARKED)
          {
@@ -30,9 +30,9 @@ bool IterativeBacktrack::Solve(Sudoku::Puzzle& puzzle)
 
             // Went all the way back to the beginning
             // Return false
-            if(it == unmarkedCellList.begin())
+            if(it == unmarkedCoordList.begin())
             {
-               printf("Iterative::Exiting %s\n", __func__);
+               //printf("Iterative::Exiting %s\n", __func__);
                return false;
             }
             else

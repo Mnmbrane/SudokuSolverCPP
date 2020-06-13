@@ -1,7 +1,7 @@
 #include "NakedOnes.h"
 #include "SudokuCommonTypes.h"
 #include "SudokuPuzzle.h"
-#include "SudokuCell.h"
+#include "SudokuCoord.h"
 #include <stdio.h>
 #include <set>
 

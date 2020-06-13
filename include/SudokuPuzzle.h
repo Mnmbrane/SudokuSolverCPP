@@ -16,18 +16,18 @@ public:
    void resetPuzzle();
 
    // getters
-   ValType getValAt(const Cell& cell) const;
+   ValType getValAt(const Coord& coord) const;
 
-   const UnmarkedCellMapType getUnmarkedCells() const;
+   const UnmarkedCoordMapType getUnmarkedCoords() const;
 
-   //void initAllUnmarkedCells();
+   //void initAllUnmarkedCoords();
 
    bool isPuzzleInit();
 
-   void unmark(const Cell& cell);
+   void unmark(const Coord& coord);
 
    // setters
-   bool setValAt(const Cell& cell, ValType val);
+   bool setValAt(const Coord& coord, ValType val);
 
    bool initPuzzle(PuzzlePtrType inPuzzle);
 
@@ -39,7 +39,7 @@ private:
 
    bool checkPuzzleValidity(PuzzlePtrType inPuzzle);
    void setPuzzle(PuzzlePtrType inPuzzle);
-   void initAllUnmarkedCells();
+   void initAllUnmarkedCoords();
    // Checker
    bool initialCheck(Index index, ValType val);
    bool checkCol(const PuzzlePtrType puzzle, Index index, ValType val);
@@ -53,5 +53,5 @@ private:
    ValType m_puzzle[PUZZLE_MAX_ELEMENTS];
 
    // List of uninitialized positions and it's possible values
-   UnmarkedCellMapType unmarkedCells;
+   UnmarkedCoordMapType unmarkedCoords;
 };

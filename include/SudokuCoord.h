@@ -1,23 +1,23 @@
 #pragma once
 #include "SudokuCommonTypes.h"
 
-class Sudoku::Cell
+class Sudoku::Coord
 {
 public:
-   Cell();
-   Cell(RowType inRow, ColType inCol);
-   Cell(Index inIndex);
-   Cell(const Cell&); // Copy Constructor
+   Coord();
+   Coord(RowType inRow, ColType inCol);
+   Coord(Index inIndex);
+   Coord(const Coord&); // Copy Constructor
 
-   ~Cell(){}
+   ~Coord(){}
 
    RowType getRow() const ;
    ColType getCol() const ;
    Index getIndex() const ;
 
-   bool operator==(const Cell& rhs) const;
-   bool operator!=(const Cell& rhs) const;
-   bool operator<(const Cell& rhs) const;
+   bool operator==(const Coord& rhs) const;
+   bool operator!=(const Coord& rhs) const;
+   bool operator<(const Coord& rhs) const;
 
 private:
 

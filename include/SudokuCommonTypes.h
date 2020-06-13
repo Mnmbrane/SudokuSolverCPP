@@ -5,7 +5,7 @@
 
 namespace Sudoku
 {
-   class Cell;
+   class Coord;
    class Puzzle;
    class Solver;
 
@@ -113,5 +113,5 @@ namespace Sudoku
    typedef ValType* PuzzlePtrType;
    typedef int Index;
    typedef std::set<ValType> CandidateSetType;
-   typedef std::map<Cell, CandidateSetType> UnmarkedCellMapType;
+   typedef std::map<Coord, CandidateSetType> UnmarkedCoordMapType;
 }

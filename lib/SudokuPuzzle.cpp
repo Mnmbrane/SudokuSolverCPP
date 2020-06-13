@@ -1,5 +1,5 @@
 #include "SudokuPuzzle.h"
-#include "SudokuCell.h"
+#include "SudokuCoord.h"
 
 #include "string.h"
 #include <stdio.h>
@@ -25,8 +25,8 @@ Puzzle::Puzzle(const Puzzle& puzzle)
 
         m_puzzle[i] = puzzle.getValAt(i);
     }
-    unmarkedCells.clear();
-    unmarkedCells = puzzle.getUnmarkedCells();
+    unmarkedCoords.clear();
+    unmarkedCoords = puzzle.getUnmarkedCoords();
 }
 
 Puzzle::~Puzzle()
@@ -37,17 +37,17 @@ Puzzle::~Puzzle()
 
 void Puzzle::resetPuzzle()
 {
-   unmarkedCells.clear();
+   unmarkedCoords.clear();
    memset(m_puzzle, 0, sizeof(m_puzzle));
 }
 
-void Puzzle::unmark(const Cell& cell)
+void Puzzle::unmark(const Coord& coord)
 {
-    // Delete the set at map[cell]
-    unmarkedCells[cell].clear();
+    // Delete the set at map[coord]
+    unmarkedCoords[coord].clear();
 
     // Delete the key inside the map
-    unmarkedCells.erase(cell);
+    unmarkedCoords.erase(coord);
 }
 
 bool Puzzle::checkPuzzleValidity(PuzzlePtrType inPuzzle)
@@ -80,14 +80,14 @@ void Puzzle::setPuzzle(PuzzlePtrType inPuzzle)
    }
 }
 
-void Puzzle::initAllUnmarkedCells()
+void Puzzle::initAllUnmarkedCoords()
 {
     for(Sudoku::Index i = 0; i <= PUZZLE_MAX_INDEX; i++)
     {
         // If it's a 0 this means it's unmarked
         if(m_puzzle[i] == 0)
         {
-            Cell cell(i);
+            Coord coord(i);
             CandidateSetType candidateSet;
             for(ValType val = VAL_1; val <= VAL_9; val++)
             {
@@ -99,8 +99,8 @@ void Puzzle::initAllUnmarkedCells()
                 }
             } 
             // Insert all of the candidates that were found
-            // into the map of unmarked cells
-            unmarkedCells.insert(std::make_pair(cell, candidateSet));
+            // into the map of unmarked coords
+            unmarkedCoords.insert(std::make_pair(coord, candidateSet));
         }
     }
 }
@@ -113,9 +113,9 @@ bool Puzzle::initPuzzle(PuzzlePtrType inPuzzle)
        // Set the puzzle to in Puzzle
        setPuzzle(inPuzzle);
        initFlag = true;
-       // Now set the unmarked cells and also find 
-       // all the candidates for a cell
-        initAllUnmarkedCells();
+       // Now set the unmarked coords and also find 
+       // all the candidates for a coord
+        initAllUnmarkedCoords();
 
        return true;
    }
@@ -127,19 +127,19 @@ bool Puzzle::initPuzzle(PuzzlePtrType inPuzzle)
 
 
 // Getters
-const UnmarkedCellMapType Puzzle::getUnmarkedCells() const
+const UnmarkedCoordMapType Puzzle::getUnmarkedCoords() const
 {
-   return unmarkedCells;
+   return unmarkedCoords;
 }
 
-ValType Puzzle::getValAt(const Cell& cell) const
+ValType Puzzle::getValAt(const Coord& coord) const
 {
    if(!initFlag)
    {
       return VAL_UNMARKED;
    }
 
-   return m_puzzle[cell.getIndex()];
+   return m_puzzle[coord.getIndex()];
 }
 
 bool Puzzle::isPuzzleInit()
@@ -148,25 +148,25 @@ bool Puzzle::isPuzzleInit()
 }
 
 // setters
-bool Puzzle::setValAt(const Cell& cell, ValType val)
+bool Puzzle::setValAt(const Coord& coord, ValType val)
 {
     if(!initFlag)
     {
         return false;
     }
    else if( val == VAL_UNMARKED &&
-            (unmarkedCells.find(cell) != unmarkedCells.end()))
+            (unmarkedCoords.find(coord) != unmarkedCoords.end()))
     {
-        m_puzzle[cell.getIndex()] = val;
+        m_puzzle[coord.getIndex()] = val;
         return true;
     }
-    else if(checkAll(m_puzzle, cell.getIndex(), val) == false)
+    else if(checkAll(m_puzzle, coord.getIndex(), val) == false)
     {
         return false;
     }
     else
     {
-        m_puzzle[cell.getIndex()] = val;
+        m_puzzle[coord.getIndex()] = val;
         return true;
     }
 }
@@ -175,17 +175,17 @@ void Puzzle::printPuzzle()
 {
    for(Sudoku::Index i = 0; i <= PUZZLE_MAX_INDEX; i++)
    {
-      Cell cell(i);
+      Coord coord(i);
 
-      if(cell.getCol()==COL_0)
+      if(coord.getCol()==COL_0)
       {
         printf("\n");
-        if(cell.getRow()==ROW_3 || cell.getRow()==ROW_6)
+        if(coord.getRow()==ROW_3 || coord.getRow()==ROW_6)
         {
             printf("\n");
         }
       }
-      else if(cell.getCol()==COL_3 || cell.getCol()==COL_6)
+      else if(coord.getCol()==COL_3 || coord.getCol()==COL_6)
       {
          printf("|");
       }

@@ -1,10 +1,10 @@
 #pragma once
 
 #include "SudokuCommonTypes.h"
-#include "SudokuCell.h"
+#include "SudokuCoord.h"
 #include "gtest/gtest.h"
 
-class SudokuCellTest : public ::testing::Test
+class SudokuCoordTest : public ::testing::Test
 {
 protected:
 
@@ -18,10 +18,10 @@ protected:
 
     }
 
-    void testRowColIndex( Sudoku::Cell cell,
+    void testRowColIndex( Sudoku::Coord coord,
                         Sudoku::RowType row,
                         Sudoku::ColType col,
                         Sudoku::Index index);
 
-    void testCellDefault(Sudoku::Cell cell);
+    void testCoordDefault(Sudoku::Coord coord);
 };
