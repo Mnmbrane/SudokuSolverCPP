@@ -6,6 +6,7 @@
 namespace Sudoku
 {
    class Coord;
+   class Cell;
    class Puzzle;
    class Solver;
 
@@ -110,7 +111,6 @@ namespace Sudoku
       return temp;
    }
 
-   typedef ValType* PuzzlePtrType;
    typedef int Index;
    typedef std::set<ValType> CandidateSetType;
    typedef std::map<Coord, CandidateSetType> UnmarkedCoordMapType;

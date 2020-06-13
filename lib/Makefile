@@ -16,6 +16,7 @@ CXXFLAGS+=$(addprefix -I,$(INCLUDES))
 
 SRC:=\
 	SudokuCoord.cpp \
+	SudokuCell.cpp \
 	SudokuPuzzle.cpp \
 	SudokuSolver.cpp \
 	$(ALGODIR)/IterativeBacktrack.cpp \

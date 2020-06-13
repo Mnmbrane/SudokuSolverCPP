@@ -20,7 +20,7 @@ bool IterativeBacktrack::Solve(Sudoku::Puzzle& puzzle)
       // brute force all of the values in the puzzle
       for(ValType val = ValType((puzzle.getValAt(it->first) + 1) % 10); val <= ValType::VAL_MAX; ++val)
       {
-         //printf("val == [%d]\n", val);
+         printf("val == [%d]\n", val);
          // Overflowed we need to go back to the previous unmarked in the list
          if(val == ValType::VAL_UNMARKED)
          {

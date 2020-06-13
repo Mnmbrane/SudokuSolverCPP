@@ -17,59 +17,54 @@ Puzzle::Puzzle(const Puzzle& puzzle)
     resetPuzzle();
     for(Sudoku::Index i = 0; i <= PUZZLE_MAX_INDEX; i++)
     {
-        // If it's a 0 this means it's unmarked
-        if(puzzle.getValAt(i) == 0)
-        {
-            m_puzzle[i] = VAL_UNMARKED;
-        }
-
-        m_puzzle[i] = puzzle.getValAt(i);
+        m_puzzle[i].setVal(puzzle.getValAt(i));
     }
-    unmarkedCoords.clear();
     unmarkedCoords = puzzle.getUnmarkedCoords();
 }
 
 Puzzle::~Puzzle()
 {
     resetPuzzle();
-    initFlag = false;
 }
 
 void Puzzle::resetPuzzle()
 {
    unmarkedCoords.clear();
-   memset(m_puzzle, 0, sizeof(m_puzzle));
+   for(Sudoku::Index i = 0; i <= PUZZLE_MAX_INDEX; i++)
+   {
+      m_puzzle[i].setVal(VAL_UNMARKED);
+   }
+   initFlag = false;
 }
 
-void Puzzle::unmark(const Coord& coord)
-{
-    // Delete the set at map[coord]
-    unmarkedCoords[coord].clear();
-
-    // Delete the key inside the map
-    unmarkedCoords.erase(coord);
-}
-
-bool Puzzle::checkPuzzleValidity(PuzzlePtrType inPuzzle)
+bool Puzzle::checkPuzzleValidity(Cell* inPuzzle)
 {
     // Check Validity of the puzzle
    for(Sudoku::Index i = 0; i <= PUZZLE_MAX_INDEX; i++)
    {
-      bool checkInPuzzle = checkAll(inPuzzle, i, inPuzzle[i]);
+      bool checkInPuzzle = checkAll(inPuzzle, i, inPuzzle[i].getVal());
 
       //printf("%d %d\n", inPuzzle[i], checkInPuzzle);
       // Ignore 0's since we are init, check the rest
-      if(inPuzzle[i] != 0 && checkInPuzzle == false)
+      if(checkInPuzzle == false)
       {
-         // Don't do anything just return false
-         // Still used the puzzle from before
-         return false;
+         // If we are initializing and the value is 0 then return true
+         if(initFlag == false && inPuzzle[i].getVal() == VAL_UNMARKED)
+         {
+            return true;
+         }
+         else
+         {
+            // Don't do anything just return false
+            // Still used the puzzle from before
+            return false;
+         }
       }
    }
    return true;
 }
 
-void Puzzle::setPuzzle(PuzzlePtrType inPuzzle)
+void Puzzle::setPuzzle(Cell* inPuzzle)
 {
    // Clear everything out
    resetPuzzle();
@@ -85,7 +80,7 @@ void Puzzle::initAllUnmarkedCoords()
     for(Sudoku::Index i = 0; i <= PUZZLE_MAX_INDEX; i++)
     {
         // If it's a 0 this means it's unmarked
-        if(m_puzzle[i] == 0)
+        if(m_puzzle[i].isMarked())
         {
             Coord coord(i);
             CandidateSetType candidateSet;
@@ -93,7 +88,7 @@ void Puzzle::initAllUnmarkedCoords()
             {
                 // Check if everything to make sure it's
                 // actually a good candidate
-                if(checkAll(m_puzzle, i, val))
+                if(checkAll(m_puzzle,i, val))
                 {
                     candidateSet.insert(val);
                 }
@@ -105,9 +100,8 @@ void Puzzle::initAllUnmarkedCoords()
     }
 }
 
-bool Puzzle::initPuzzle(PuzzlePtrType inPuzzle)
+bool Puzzle::initPuzzle(Cell* inPuzzle)
 {
-
    if(checkPuzzleValidity(inPuzzle) == true)
    {
        // Set the puzzle to in Puzzle
@@ -134,12 +128,7 @@ const UnmarkedCoordMapType Puzzle::getUnmarkedCoords() const
 
 ValType Puzzle::getValAt(const Coord& coord) const
 {
-   if(!initFlag)
-   {
-      return VAL_UNMARKED;
-   }
-
-   return m_puzzle[coord.getIndex()];
+   return m_puzzle[coord.getIndex()].getVal();
 }
 
 bool Puzzle::isPuzzleInit()
@@ -190,7 +179,7 @@ void Puzzle::printPuzzle()
          printf("|");
       }
       
-      printf("%d ", m_puzzle[i]);
+      printf("%d ", m_puzzle[i].getVal());
    }
    printf("\n\n");
 }
@@ -200,10 +189,10 @@ void Puzzle::printPuzzle()
 bool Puzzle::initialCheck(Index index, ValType val)
 {
     return (index >= 0 && index <= PUZZLE_MAX_INDEX) &&
-           (val >= VAL_UNMARKED && val <= VAL_9);
+           (val >= VAL_1 && val <= VAL_9);
 }
 
-bool Puzzle::checkCol(const PuzzlePtrType puzzle, Index index, ValType val)
+bool Puzzle::checkCol(Cell* inPuzzle, Index index, ValType val)
 {
     bool retVal = true;
     Index saveIndex = index;
@@ -217,7 +206,7 @@ bool Puzzle::checkCol(const PuzzlePtrType puzzle, Index index, ValType val)
         index -= 9;
         // If  there is a match
         // value is invalid
-        if(val == puzzle[index])
+        if(val == inPuzzle[index].getVal())
         {
             retVal = false;
         }
@@ -231,15 +220,16 @@ bool Puzzle::checkCol(const PuzzlePtrType puzzle, Index index, ValType val)
         index += 9;
         // If  there is a match
         // value is invalid
-        if(val == puzzle[index])
+        if(val == inPuzzle[index].getVal())
         {
             retVal = false;
         }
     }
+
     return retVal;
 }
 
-bool Puzzle::checkRow(const PuzzlePtrType puzzle, Index index, ValType val)
+bool Puzzle::checkRow(Cell* inPuzzle, Index index, ValType val)
 {
     bool retVal = true;
     Index saveIndex = index;
@@ -265,7 +255,7 @@ bool Puzzle::checkRow(const PuzzlePtrType puzzle, Index index, ValType val)
         --index;
         // If  there is a match
         // value is invalid
-        if(val == puzzle[index])
+        if(val == inPuzzle[index].getVal())
         {
             retVal = false;
         }
@@ -280,7 +270,7 @@ bool Puzzle::checkRow(const PuzzlePtrType puzzle, Index index, ValType val)
 
         // If  there is a match
         // value is invalid
-        if(val == puzzle[index])
+        if(val == inPuzzle[index].getVal())
         {
             retVal = false;
         }
@@ -288,7 +278,7 @@ bool Puzzle::checkRow(const PuzzlePtrType puzzle, Index index, ValType val)
     return retVal;
 }
 
-bool Puzzle::checkGroup(const PuzzlePtrType puzzle, Index index, ValType val)
+bool Puzzle::checkGroup(Cell* inPuzzle, Index index, ValType val)
 {
     bool retVal = true;
 
@@ -324,7 +314,7 @@ bool Puzzle::checkGroup(const PuzzlePtrType puzzle, Index index, ValType val)
     {
         for(Index j = i; j < i + 3; j++)
         {
-            if(j != index && puzzle[j] == val)
+            if(j != index && inPuzzle[j].getVal() == val)
             {
                 retVal = false;
                 break;
@@ -334,11 +324,11 @@ bool Puzzle::checkGroup(const PuzzlePtrType puzzle, Index index, ValType val)
     return retVal;
 }
 
-bool Puzzle::checkAll(const PuzzlePtrType puzzle, Index index, ValType val)
+bool Puzzle::checkAll(Cell* inPuzzle, Index index, ValType val)
 {
-    if( checkCol(puzzle, index, val) &&
-        checkRow(puzzle, index, val) &&
-        checkGroup(puzzle, index, val))
+    if( checkCol(inPuzzle, index, val) &&
+        checkRow(inPuzzle, index, val) &&
+        checkGroup(inPuzzle, index, val))
     {
         return true;
     }

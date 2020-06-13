@@ -1,8 +1,6 @@
 #pragma once
 #include <stdint.h>
-#include "SudokuCommonTypes.h"
-
-using namespace Sudoku;
+#include "SudokuCell.h"
 
 enum e_Puzzle
 {
@@ -16,4 +14,4 @@ enum e_Puzzle
 
    MAX_NUM_PUZZLE
 };
-PuzzlePtrType getPuzzle(e_Puzzle puzzleIndex);
+Sudoku::Cell* getPuzzle(e_Puzzle puzzleIndex);

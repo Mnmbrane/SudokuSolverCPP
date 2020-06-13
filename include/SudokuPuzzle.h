@@ -4,6 +4,7 @@
 #include <map>
 #include <set>
 #include "SudokuCommonTypes.h"
+#include "SudokuCell.h"
 
 class Sudoku::Puzzle
 {
@@ -24,12 +25,10 @@ public:
 
    bool isPuzzleInit();
 
-   void unmark(const Coord& coord);
-
    // setters
    bool setValAt(const Coord& coord, ValType val);
 
-   bool initPuzzle(PuzzlePtrType inPuzzle);
+   bool initPuzzle(Cell* inPuzzle);
 
    void printPuzzle();
 
@@ -37,20 +36,20 @@ public:
 
 private:
 
-   bool checkPuzzleValidity(PuzzlePtrType inPuzzle);
-   void setPuzzle(PuzzlePtrType inPuzzle);
+   bool checkPuzzleValidity(Cell* inPuzzle);
+   void setPuzzle(Cell* inPuzzle);
    void initAllUnmarkedCoords();
    // Checker
    bool initialCheck(Index index, ValType val);
-   bool checkCol(const PuzzlePtrType puzzle, Index index, ValType val);
-   bool checkRow(const PuzzlePtrType puzzle, Index index, ValType val);
-   bool checkGroup(const PuzzlePtrType puzzle, Index index, ValType val);
-   bool checkAll(const PuzzlePtrType puzzle, Index index, ValType val);
+   bool checkCol(Cell* puzzle, Index index, ValType val);
+   bool checkRow(Cell* puzzle, Index index, ValType val);
+   bool checkGroup(Cell* puzzle, Index index, ValType val);
+   bool checkAll(Cell* puzzle, Index index, ValType val);
    
    bool initFlag;
    
    // The puzzle in array format
-   ValType m_puzzle[PUZZLE_MAX_ELEMENTS];
+   Cell m_puzzle[PUZZLE_MAX_ELEMENTS];
 
    // List of uninitialized positions and it's possible values
    UnmarkedCoordMapType unmarkedCoords;
