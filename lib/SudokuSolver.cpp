@@ -62,7 +62,10 @@ CandidateSetMapType Solver::getCandidateSetMap(const Sudoku::Puzzle& puzzle)
    for(Index i = 0; i <= PUZZLE_MAX_INDEX; i++)
    {
       Coord coord(i);
-      retSetMap[coord] = puzzle.getCandidateAt(coord);
+      if(!puzzle.isMarkedAt(coord))
+      {
+         retSetMap[coord] = puzzle.getCandidateAt(coord);
+      }
    }
    return retSetMap;
 }
@@ -102,7 +105,7 @@ bool Solver::Solve(Sudoku::Puzzle& puzzle)
 {
    bool retVal = false;
    AlgoNodeType* walker = m_pipeline.begin;
-   CandidateSetMapType candidateSetMap;
+   CandidateSetMapType candidateSetMap = getCandidateSetMap(puzzle);
    // Walk through the m_pipeline
    while(walker != nullptr)
    {

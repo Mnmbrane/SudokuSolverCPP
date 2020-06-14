@@ -102,7 +102,7 @@ bool Puzzle::isPuzzleInit()
    return initFlag;
 }
 
-bool Puzzle::isMarkedAt(const Coord &coord)
+bool Puzzle::isMarkedAt(const Coord &coord) const
 {
    return m_puzzle[coord.getIndex()].isMarked();
 }
@@ -300,6 +300,11 @@ bool Puzzle::checkGroup(Cell *inPuzzle, Index index, ValType val)
 
 bool Puzzle::checkAll(Cell *inPuzzle, Index index, ValType val)
 {
+   if(inPuzzle == nullptr)
+   {
+      inPuzzle = m_puzzle;
+   }
+
    if (checkCol(inPuzzle, index, val) &&
        checkRow(inPuzzle, index, val) &&
        checkGroup(inPuzzle, index, val))

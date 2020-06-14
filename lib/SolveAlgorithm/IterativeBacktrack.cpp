@@ -19,6 +19,7 @@ bool IterativeBacktrack::Solve(Sudoku::Puzzle& puzzle, CandidateSetMapType& unma
 
    // Saves the candidate iterator we are iterating on
    std::map<Coord, CandidateSetType::iterator> saveMap;
+
    // Iterate through the unmarked coordinates
    while( coordMapIt != unmarkedCoordList.end() )
    {
@@ -31,8 +32,6 @@ bool IterativeBacktrack::Solve(Sudoku::Puzzle& puzzle, CandidateSetMapType& unma
    // Iterate through the unmarked coordinates
    while( coordMapIt != unmarkedCoordList.end() )
    {
-      printf("Working on index[%d]\n", coordMapIt->first.getIndex());
-
       Coord coord = coordMapIt->first;
       CandidateSetType& candidateSet = coordMapIt->second;
 
@@ -61,7 +60,6 @@ bool IterativeBacktrack::Solve(Sudoku::Puzzle& puzzle, CandidateSetMapType& unma
       {
          //std::this_thread::sleep_for(1s);
 
-         printf("Working on index=[%d] val [%d]\n", coordMapIt->first.getIndex(), *(saveMap[coord]));
          ++saveMap[coord];
 
          // If we are at the end of the candidate list, but not at the
@@ -69,7 +67,6 @@ bool IterativeBacktrack::Solve(Sudoku::Puzzle& puzzle, CandidateSetMapType& unma
          // unmarked coordinate
          if(saveMap[coord] == candidateSet.end())
          {
-            printf("Save set is at the end\n");
             --coordMapIt;
             saveMap[coord] = candidateSet.begin();
             puzzle.setValAt(coord, VAL_UNMARKED);
@@ -81,7 +78,6 @@ bool IterativeBacktrack::Solve(Sudoku::Puzzle& puzzle, CandidateSetMapType& unma
       // current coordinate
       if(valueSetFlag == true)
       {
-         printf("Setting val =[%d]\n", *(saveMap[coord] ));
          ++coordMapIt;
       }
    }

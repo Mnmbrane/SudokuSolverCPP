@@ -20,7 +20,7 @@ public:
    CandidateSetType getCandidateAt(const Coord& coord) const;
 
    bool isPuzzleInit();
-   bool isMarkedAt(const Coord& coord);
+   bool isMarkedAt(const Coord& coord) const;
 
    // setters
    bool setValAt(const Coord& coord, ValType val);
@@ -30,6 +30,8 @@ public:
    bool initPuzzle(Cell* inPuzzle);
 
    void printPuzzle() const;
+
+   bool checkAll(Cell* puzzle, Index index, ValType val);
 
    bool operator==(const Puzzle& rhs);
 
@@ -42,7 +44,6 @@ private:
    bool checkCol(Cell* puzzle, Index index, ValType val);
    bool checkRow(Cell* puzzle, Index index, ValType val);
    bool checkGroup(Cell* puzzle, Index index, ValType val);
-   bool checkAll(Cell* puzzle, Index index, ValType val);
    
    bool initFlag;
    

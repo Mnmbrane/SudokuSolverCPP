@@ -103,7 +103,7 @@ void Cell::insertAllValues()
 }
 
 // Is marked if we only have 1 candidate remaning
-bool Cell::isMarked()
+bool Cell::isMarked() const
 {
    return (m_candidates.size() == 1);
 }

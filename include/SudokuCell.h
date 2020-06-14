@@ -30,7 +30,7 @@ public:
    void deleteCandidate(ValType val);
 
    // Is marked if we only have 1 candidate remaning
-   bool isMarked();
+   bool isMarked() const;
 
    void insertAllValues();
 
