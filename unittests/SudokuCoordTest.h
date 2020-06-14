@@ -7,21 +7,18 @@
 class SudokuCoordTest : public ::testing::Test
 {
 protected:
+   virtual void SetUp()
+   {
+   }
 
-    virtual void SetUp()
-    {
+   virtual void TearDown()
+   {
+   }
 
-    }
-
-    virtual void TearDown()
-    {
-
-    }
-
-    void testRowColIndex( Sudoku::Coord coord,
+   void testRowColIndex(Sudoku::Coord coord,
                         Sudoku::RowType row,
                         Sudoku::ColType col,
                         Sudoku::Index index);
 
-    void testCoordDefault(Sudoku::Coord coord);
+   void testCoordDefault(Sudoku::Coord coord);
 };

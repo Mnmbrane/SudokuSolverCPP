@@ -4,15 +4,11 @@
 class SudokuCommonTypesTest : public ::testing::Test
 {
 protected:
+   virtual void SetUp()
+   {
+   }
 
-    virtual void SetUp()
-    {
-
-    }
-
-    virtual void TearDown()
-    {
-
-    }
-
+   virtual void TearDown()
+   {
+   }
 };

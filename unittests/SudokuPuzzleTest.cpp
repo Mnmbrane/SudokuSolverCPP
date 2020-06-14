@@ -173,9 +173,8 @@ TEST_F(SudokuPuzzleTest, UnmarkedPositionTest)
    // Assert
    for(Index  i = 0; i <= PUZZLE_MAX_INDEX; i++)
    {
-      printf("Index = %d\n", i);
       Coord coord(i);
-      ASSERT_EQ(sudokuPuzzle.isMarkedAt(i),
+      ASSERT_EQ(!sudokuPuzzle.isMarkedAt(i),
                 unmarkedUnsolved.find(i)!=unmarkedUnsolved.end());
    }
 }
