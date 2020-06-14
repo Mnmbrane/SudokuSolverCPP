@@ -28,8 +28,7 @@ bool NakedOnes::Solve(Sudoku::Puzzle &puzzle, CandidateSetMapType &unmarkedCoord
       {
          // Check if everything to make sure it's
          // actually a good candidate
-         if (!puzzle.isMarkedAt(coord.getIndex()) &&
-             puzzle.checkAll(nullptr, coord.getIndex(), *candidateIt) == false)
+         if (puzzle.checkAll(nullptr, coord.getIndex(), *candidateIt) == false)
          {
             puzzle.deleteCandidateAt(coord.getIndex(), *candidateIt);
 
@@ -56,7 +55,5 @@ bool NakedOnes::Solve(Sudoku::Puzzle &puzzle, CandidateSetMapType &unmarkedCoord
          unmarkedCoordList.insert(*prunedIt);
       }
    }
-
-
    return retVal;
 }
