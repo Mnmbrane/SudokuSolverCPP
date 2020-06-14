@@ -1,8 +1,6 @@
 #pragma once
 
 #include <stdint.h>
-#include <map>
-#include <set>
 #include "SudokuCommonTypes.h"
 #include "SudokuCell.h"
 
@@ -19,14 +17,15 @@ public:
    // getters
    ValType getValAt(const Coord& coord) const;
 
-   const UnmarkedCoordMapType getUnmarkedCoords() const;
-
-   //void initAllUnmarkedCoords();
+   CandidateSetType getCandidateAt(const Coord& coord) const;
 
    bool isPuzzleInit();
+   bool isMarkedAt(const Coord& coord);
 
    // setters
    bool setValAt(const Coord& coord, ValType val);
+
+   void deleteCandidateAt(const Coord& coord, ValType vals);
 
    bool initPuzzle(Cell* inPuzzle);
 
@@ -38,7 +37,6 @@ private:
 
    bool checkPuzzleValidity(Cell* inPuzzle);
    void setPuzzle(Cell* inPuzzle);
-   void initAllUnmarkedCoords();
    // Checker
    bool initialCheck(Index index, ValType val);
    bool checkCol(Cell* puzzle, Index index, ValType val);
@@ -50,7 +48,4 @@ private:
    
    // The puzzle in array format
    Cell m_puzzle[PUZZLE_MAX_ELEMENTS];
-
-   // List of uninitialized positions and it's possible values
-   UnmarkedCoordMapType unmarkedCoords;
 };

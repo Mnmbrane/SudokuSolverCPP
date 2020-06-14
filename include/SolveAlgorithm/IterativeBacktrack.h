@@ -6,7 +6,7 @@ class Sudoku::IterativeBacktrack : public virtual Sudoku::AlgorithmInterface
 {
 public:
    IterativeBacktrack(){};
-   virtual bool Solve(Sudoku::Puzzle& puzzle);
+   virtual bool Solve(Sudoku::Puzzle& puzzle, CandidateSetMapType& unmarkedCoordList);
 
 private:
 

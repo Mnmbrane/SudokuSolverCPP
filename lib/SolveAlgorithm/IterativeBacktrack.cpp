@@ -13,10 +13,9 @@ using namespace Sudoku;
 using namespace std::chrono_literals;
 
 // Solve using recursive backtracking
-bool IterativeBacktrack::Solve(Sudoku::Puzzle& puzzle)
+bool IterativeBacktrack::Solve(Sudoku::Puzzle& puzzle, CandidateSetMapType& unmarkedCoordList)
 {
-   UnmarkedCoordMapType unmarkedCoordList = puzzle.getUnmarkedCoords();
-   UnmarkedCoordMapType::iterator coordMapIt = unmarkedCoordList.begin();
+   CandidateSetMapType::iterator coordMapIt = unmarkedCoordList.begin();
 
    // Saves the candidate iterator we are iterating on
    std::map<Coord, CandidateSetType::iterator> saveMap;

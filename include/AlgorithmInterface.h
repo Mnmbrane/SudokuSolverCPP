@@ -5,5 +5,5 @@
 class Sudoku::AlgorithmInterface
 {
 public:
-   virtual bool Solve(Sudoku::Puzzle& puzzle) = 0;
+   virtual bool Solve(Sudoku::Puzzle& puzzle, CandidateSetMapType& unmarkedCoordList) = 0;
 };

@@ -23,7 +23,6 @@ TEST_F(SudokuPuzzleTest, SetAllValidTest)
       // Act/Assert
       ASSERT_EQ(sudokuPuzzle.getValAt(i), solvedPuzzle[i].getVal());
    }
-   UnmarkedCoordMapType coordMap = sudokuPuzzle.getUnmarkedCoords();
 }
 
 TEST_F(SudokuPuzzleTest, CopyConstructorTest)
@@ -159,36 +158,26 @@ TEST_F(SudokuPuzzleTest, UnmarkedPositionTest)
    // Arrange
    Puzzle sudokuPuzzle;
    Cell* unsolvedPuzzle = getPuzzle(PUZZLE_UNSOLVED);
-   Cell* solvedPuzzle = getPuzzle(PUZZLE_SOLVED);
 
-   std::vector<Sudoku::Coord> unmarkedUnsolved;
-   std::vector<Sudoku::Coord> unmarkedSolved;
-   for(Index  i = 0; i < PUZZLE_MAX_ELEMENTS; i++)
+   std::set<Sudoku::Coord> unmarkedUnsolved;
+   for(Index  i = 0; i <= PUZZLE_MAX_INDEX; i++)
    {
       if(unsolvedPuzzle[i].getVal() == 0)
       {
-         unmarkedUnsolved.push_back(i);
-      }
-
-      if(solvedPuzzle[i].getVal() == 0)
-      {
-         unmarkedSolved.push_back(i);
+         unmarkedUnsolved.insert(i);
       }
    }
    // Act / Assert
    ASSERT_EQ(true, sudokuPuzzle.initPuzzle(unsolvedPuzzle));
 
-   UnmarkedCoordMapType unsolvedPuzzleUnmarked = sudokuPuzzle.getUnmarkedCoords();
    // Assert
-   for( UnmarkedCoordMapType::iterator it = unsolvedPuzzleUnmarked.begin(); it != unsolvedPuzzleUnmarked.end(); it++)
+   for(Index  i = 0; i <= PUZZLE_MAX_INDEX; i++)
    {
-      ASSERT_EQ((it->first).getIndex(), (it->first).getIndex());
+      printf("Index = %d\n", i);
+      Coord coord(i);
+      ASSERT_EQ(sudokuPuzzle.isMarkedAt(i),
+                unmarkedUnsolved.find(i)!=unmarkedUnsolved.end());
    }
-
-   sudokuPuzzle.resetPuzzle();
-
-   UnmarkedCoordMapType solvedPuzzleUnmarked = sudokuPuzzle.getUnmarkedCoords();
-   ASSERT_EQ((unsigned int)0, unmarkedSolved.size());
 }
 
 TEST_F(SudokuPuzzleTest, OperatorOverloadEqTest)

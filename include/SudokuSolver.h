@@ -39,6 +39,8 @@ public:
 private:
    void constructAlgoPipeline();
 
+   CandidateSetMapType getCandidateSetMap(const Sudoku::Puzzle& puzzle);
+
    void resetPipeline();
 
    typedef struct AlgoNode
@@ -54,5 +56,6 @@ private:
       AlgoNodeType* end;
    } AlgoLinkedList;
 
-   AlgoLinkedList pipeline;
+   AlgoLinkedList m_pipeline;
+
 };

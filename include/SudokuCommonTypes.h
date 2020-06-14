@@ -113,5 +113,5 @@ namespace Sudoku
 
    typedef int Index;
    typedef std::set<ValType> CandidateSetType;
-   typedef std::map<Coord, CandidateSetType> UnmarkedCoordMapType;
+   typedef std::map<Coord, CandidateSetType> CandidateSetMapType;
 }
