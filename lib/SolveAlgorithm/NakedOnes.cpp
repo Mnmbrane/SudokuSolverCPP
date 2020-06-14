@@ -22,15 +22,13 @@ bool NakedOnes::Solve(Sudoku::Puzzle &puzzle, CandidateSetMapType &unmarkedCoord
       Coord coord = candidateSetMapIt->first;
       CandidateSetType candidateSet = unmarkedCoordList[coord];
       // Go through the candidate list for the cell
-      for (CandidateSetType::iterator candidateIt = candidateSet.begin();
-           candidateIt != candidateSet.end();
-           ++candidateIt)
+      for (ValType const& candidate : candidateSet)
       {
          // Check if everything to make sure it's
          // actually a good candidate
-         if (puzzle.checkAll(nullptr, coord.getIndex(), *candidateIt) == false)
+         if (puzzle.checkAll(nullptr, coord.getIndex(), candidate) == false)
          {
-            puzzle.deleteCandidateAt(coord.getIndex(), *candidateIt);
+            puzzle.deleteCandidateAt(coord.getIndex(), candidate);
 
             // Something got deleted we want to go through this again
             retVal = true;
@@ -48,11 +46,9 @@ bool NakedOnes::Solve(Sudoku::Puzzle &puzzle, CandidateSetMapType &unmarkedCoord
    if(retVal == true)
    {
       unmarkedCoordList.clear();
-      for(CandidateSetMapType::iterator prunedIt = prunedSetMap.begin();
-          prunedIt != prunedSetMap.end();
-          ++prunedIt)
+      for(auto const& [coord, prunedSet] : prunedSetMap)
       {
-         unmarkedCoordList.insert(*prunedIt);
+         unmarkedCoordList.insert(std::make_pair(coord, prunedSet));
       }
    }
    return retVal;

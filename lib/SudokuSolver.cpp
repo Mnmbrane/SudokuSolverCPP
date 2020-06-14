@@ -111,9 +111,15 @@ bool Solver::Solve(Sudoku::Puzzle& puzzle)
    {
       retVal = walker->algo->Solve(puzzle, candidateSetMap);
 
+      // If the puzzle became invalid we 
+      // need to return false
+      if(puzzle.checkPuzzleValidity() == false)
+      {
+         return false;
+      }
       // Don't care about the return value since
       // we are at the end, just return retVal
-      if(walker == m_pipeline.end)
+      else if(walker == m_pipeline.end)
       {
          return retVal;
       }

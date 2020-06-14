@@ -47,7 +47,6 @@ bool IterativeBacktrack::Solve(Sudoku::Puzzle& puzzle, CandidateSetMapType& unma
          }
          valueSetFlag = true;
       }
-
       // Check if we are at the beginning of the coord map and
       // also at the end of the candidate list, then return false
       if(coordMapIt == unmarkedCoordList.begin() && 
@@ -55,6 +54,7 @@ bool IterativeBacktrack::Solve(Sudoku::Puzzle& puzzle, CandidateSetMapType& unma
       {
          return false;
       }
+
       // Set the value using the save candidate
       while(puzzle.setValAt(coord, *(saveMap[coord])) == false)
       {

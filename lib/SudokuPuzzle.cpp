@@ -6,7 +6,7 @@
 
 using namespace Sudoku;
 
-Puzzle::Puzzle() : initFlag(false)
+Puzzle::Puzzle() : initFlag(true)
 {
    resetPuzzle();
 }
@@ -31,26 +31,22 @@ void Puzzle::resetPuzzle()
    {
       m_puzzle[i].setVal(VAL_UNMARKED);
    }
-   initFlag = false;
+   initFlag = true;
 }
 
 bool Puzzle::checkPuzzleValidity(Cell *inPuzzle)
 {
+   if(inPuzzle == nullptr)
+   {
+      inPuzzle = m_puzzle;
+   }
    // Check Validity of the puzzle
    for (Sudoku::Index i = 0; i <= PUZZLE_MAX_INDEX; i++)
    {
-      bool checkInPuzzle = checkAll(inPuzzle, i, inPuzzle[i].getVal());
-
-      //printf("%d %d\n", inPuzzle[i], checkInPuzzle);
-      // Ignore 0's since we are init, check the rest
-      if (checkInPuzzle == false)
+      // Check only if it's marked
+      if(inPuzzle[i].isMarked())
       {
-         // If we are initializing and the value is 0 then return true
-         if (initFlag == false && inPuzzle[i].getVal() == VAL_UNMARKED)
-         {
-            return true;
-         }
-         else
+         if (checkAll(inPuzzle, i, inPuzzle[i].getVal()) == false)
          {
             // Don't do anything just return false
             // Still used the puzzle from before
@@ -78,7 +74,7 @@ bool Puzzle::initPuzzle(Cell *inPuzzle)
    {
       // Set the puzzle to in Puzzle
       setPuzzle(inPuzzle);
-      initFlag = true;
+      initFlag = false;
       return true;
    }
    else
@@ -99,7 +95,9 @@ CandidateSetType Puzzle::getCandidateAt(const Coord &coord) const
 
 bool Puzzle::isPuzzleInit()
 {
-   return initFlag;
+   // false initFlag means the puzzle is done
+   // initializing
+   return (initFlag == false);
 }
 
 bool Puzzle::isMarkedAt(const Coord &coord) const
@@ -110,7 +108,7 @@ bool Puzzle::isMarkedAt(const Coord &coord) const
 // setters
 bool Puzzle::setValAt(const Coord &coord, ValType val)
 {
-   if (!initFlag)
+   if (initFlag == true)
    {
       return false;
    }

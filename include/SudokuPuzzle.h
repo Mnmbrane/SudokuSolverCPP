@@ -33,11 +33,12 @@ public:
 
    bool checkAll(Cell* puzzle, Index index, ValType val);
 
+   bool checkPuzzleValidity(Cell* inPuzzle = nullptr);
+
    bool operator==(const Puzzle& rhs);
 
 private:
 
-   bool checkPuzzleValidity(Cell* inPuzzle);
    void setPuzzle(Cell* inPuzzle);
    // Checker
    bool initialCheck(Index index, ValType val);
