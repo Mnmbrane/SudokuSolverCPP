@@ -23,7 +23,11 @@ public:
 
    CandidateSetType getCandidates() const;
 
+   void printCandidates();
+
    void setVal(ValType val);
+
+   void deleteCandidate(ValType val);
 
    // Is marked if we only have 1 candidate remaning
    bool isMarked();

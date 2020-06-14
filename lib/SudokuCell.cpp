@@ -1,4 +1,5 @@
 #include "SudokuCell.h"
+#include <stdio.h>
 
 using namespace Sudoku;
 
@@ -68,9 +69,28 @@ void Cell::setVal(ValType val)
 
 }
 
+void Cell::deleteCandidate(ValType val)
+{
+   m_candidates.erase(val);
+}
+
 std::set<ValType> Cell::getCandidates() const
 {
    return m_candidates;
+}
+
+void Cell::printCandidates()
+{
+   if(m_candidates.size() == 1)
+   {
+      printf("0\n");
+      return;
+   }
+   for(CandidateSetType::iterator it = m_candidates.begin(); it != m_candidates.end(); ++it)
+   {
+      printf("%d ", *it);
+   }
+   printf("\n");
 }
 
 void Cell::insertAllValues()

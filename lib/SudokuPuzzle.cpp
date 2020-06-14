@@ -77,25 +77,31 @@ void Puzzle::setPuzzle(Cell* inPuzzle)
 
 void Puzzle::initAllUnmarkedCoords()
 {
-    for(Sudoku::Index i = 0; i <= PUZZLE_MAX_INDEX; i++)
+    bool candidatesHaveChanged = true;
+    while(candidatesHaveChanged == true)
     {
-        // If it's a 0 this means it's unmarked
-        if(m_puzzle[i].isMarked())
+        candidatesHaveChanged = false;
+        for(Sudoku::Index i = 0; i <= PUZZLE_MAX_INDEX; i++)
         {
-            Coord coord(i);
-            CandidateSetType candidateSet;
-            for(ValType val = VAL_1; val <= VAL_9; val++)
+            CandidateSetType candidateSet = m_puzzle[i].getCandidates();
+            for(CandidateSetType::iterator it = candidateSet.begin(); it != candidateSet.end(); ++it)
             {
                 // Check if everything to make sure it's
                 // actually a good candidate
-                if(checkAll(m_puzzle,i, val))
+                if(checkAll(m_puzzle, i, *it) == false)
                 {
-                    candidateSet.insert(val);
+                    m_puzzle[i].deleteCandidate(*it);
+                    candidatesHaveChanged = true;
                 }
-            } 
-            // Insert all of the candidates that were found
-            // into the map of unmarked coords
-            unmarkedCoords.insert(std::make_pair(coord, candidateSet));
+            }
+
+            if(!m_puzzle[i].isMarked() && candidatesHaveChanged == false)
+            {
+                // Insert all of the candidates that were found
+                // into the map of unmarked coords
+                Coord coord(i);
+                unmarkedCoords.insert(std::make_pair(coord, m_puzzle[i].getCandidates()));
+            }
         }
     }
 }
@@ -109,7 +115,7 @@ bool Puzzle::initPuzzle(Cell* inPuzzle)
        initFlag = true;
        // Now set the unmarked coords and also find 
        // all the candidates for a coord
-        initAllUnmarkedCoords();
+       initAllUnmarkedCoords();
 
        return true;
    }
@@ -160,7 +166,7 @@ bool Puzzle::setValAt(const Coord& coord, ValType val)
     }
 }
 
-void Puzzle::printPuzzle()
+void Puzzle::printPuzzle() const
 {
    for(Sudoku::Index i = 0; i <= PUZZLE_MAX_INDEX; i++)
    {

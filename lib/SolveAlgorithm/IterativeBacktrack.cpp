@@ -3,53 +3,87 @@
 #include "SudokuPuzzle.h"
 #include "SudokuCoord.h"
 #include <stdio.h>
-#include <set>
+#include <map>
+
+#include <chrono>
+#include <thread>
 
 using namespace Sudoku;
+
+using namespace std::chrono_literals;
 
 // Solve using recursive backtracking
 bool IterativeBacktrack::Solve(Sudoku::Puzzle& puzzle)
 {
    UnmarkedCoordMapType unmarkedCoordList = puzzle.getUnmarkedCoords();
-   UnmarkedCoordMapType::iterator it = unmarkedCoordList.begin();
+   UnmarkedCoordMapType::iterator coordMapIt = unmarkedCoordList.begin();
 
+   // Saves the candidate iterator we are iterating on
+   std::map<Coord, CandidateSetType::iterator> saveMap;
    // Iterate through the unmarked coordinates
-   while(it != unmarkedCoordList.end())
+   while( coordMapIt != unmarkedCoordList.end() )
    {
+      saveMap.insert(std::make_pair(coordMapIt->first, coordMapIt->second.begin()));
+      ++coordMapIt;
+   }
 
-      // brute force all of the values in the puzzle
-      for(ValType val = ValType((puzzle.getValAt(it->first) + 1) % 10); val <= ValType::VAL_MAX; ++val)
+   bool valueSetFlag = true;
+   coordMapIt = unmarkedCoordList.begin();
+   // Iterate through the unmarked coordinates
+   while( coordMapIt != unmarkedCoordList.end() )
+   {
+      printf("Working on index[%d]\n", coordMapIt->first.getIndex());
+
+      Coord coord = coordMapIt->first;
+      CandidateSetType& candidateSet = coordMapIt->second;
+
+      // this mean we went back
+      if(valueSetFlag == false)
       {
-         printf("val == [%d]\n", val);
-         // Overflowed we need to go back to the previous unmarked in the list
-         if(val == ValType::VAL_UNMARKED)
+         ++saveMap[coord];
+         if(saveMap[coord] == candidateSet.end())
          {
-            // Set current to unmarked
-            puzzle.setValAt(it->first, ValType::VAL_UNMARKED);
-            // Go to previous unmarked index
+            saveMap[coord] = candidateSet.begin();
+            --coordMapIt;
+            continue;
+         }
+         valueSetFlag = true;
+      }
 
-            // Went all the way back to the beginning
-            // Return false
-            if(it == unmarkedCoordList.begin())
-            {
-               //printf("Iterative::Exiting %s\n", __func__);
-               return false;
-            }
-            else
-            {
-               it--;
-               break;
-            }
-         }
-         else
+      // Check if we are at the beginning of the coord map and
+      // also at the end of the candidate list, then return false
+      if(coordMapIt == unmarkedCoordList.begin() && 
+         saveMap[coord] == candidateSet.end())
+      {
+         return false;
+      }
+      // Set the value using the save candidate
+      while(puzzle.setValAt(coord, *(saveMap[coord])) == false)
+      {
+         //std::this_thread::sleep_for(1s);
+
+         printf("Working on index=[%d] val [%d]\n", coordMapIt->first.getIndex(), *(saveMap[coord]));
+         ++saveMap[coord];
+
+         // If we are at the end of the candidate list, but not at the
+         // beginning of the coord list, we need to go back to the previous
+         // unmarked coordinate
+         if(saveMap[coord] == candidateSet.end())
          {
-            if(puzzle.setValAt(it->first, val) == true)
-            {
-               it++;
-               break;
-            }
-            
+            printf("Save set is at the end\n");
+            --coordMapIt;
+            saveMap[coord] = candidateSet.begin();
+            puzzle.setValAt(coord, VAL_UNMARKED);
+            valueSetFlag = false;
+            break;
          }
+      }
+      // Only Move forward if the value has been set for the
+      // current coordinate
+      if(valueSetFlag == true)
+      {
+         printf("Setting val =[%d]\n", *(saveMap[coord] ));
+         ++coordMapIt;
       }
    }
    return true;

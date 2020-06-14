@@ -23,6 +23,7 @@ TEST_F(SudokuPuzzleTest, SetAllValidTest)
       // Act/Assert
       ASSERT_EQ(sudokuPuzzle.getValAt(i), solvedPuzzle[i].getVal());
    }
+   UnmarkedCoordMapType coordMap = sudokuPuzzle.getUnmarkedCoords();
 }
 
 TEST_F(SudokuPuzzleTest, CopyConstructorTest)
@@ -33,10 +34,7 @@ TEST_F(SudokuPuzzleTest, CopyConstructorTest)
 
    ASSERT_EQ(true, sudokuPuzzle.initPuzzle(solvedPuzzle));
 
-   sudokuPuzzle.printPuzzle();
    Puzzle copyPuzzle = sudokuPuzzle;
-
-   copyPuzzle.printPuzzle();
 
    for(Index  i = 0; i <= PUZZLE_MAX_INDEX; i++)
    {
@@ -66,13 +64,9 @@ TEST_F(SudokuPuzzleTest, RegularUnsolvedPuzzleTest)
    Puzzle sudokuPuzzle;
 
    Cell* unsolvedPuzzle = getPuzzle(PUZZLE_UNSOLVED);
+
    // Act/ Assert
    ASSERT_EQ(true, sudokuPuzzle.initPuzzle(unsolvedPuzzle));
-   for(Index  i = 0; i <= PUZZLE_MAX_INDEX; i++)
-   {
-      // Assert
-      ASSERT_EQ(sudokuPuzzle.getValAt(i), unsolvedPuzzle[i].getVal());
-   }
 }
 
 TEST_F(SudokuPuzzleTest, LastIndexInvalidTest)

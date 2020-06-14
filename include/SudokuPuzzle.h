@@ -30,7 +30,7 @@ public:
 
    bool initPuzzle(Cell* inPuzzle);
 
-   void printPuzzle();
+   void printPuzzle() const;
 
    bool operator==(const Puzzle& rhs);
 
