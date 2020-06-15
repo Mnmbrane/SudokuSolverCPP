@@ -20,7 +20,8 @@ SRC:=\
 	SudokuPuzzle.cpp \
 	SudokuSolver.cpp \
 	$(ALGODIR)/IterativeBacktrack.cpp \
-	$(ALGODIR)/NakedOnes.cpp
+	$(ALGODIR)/NakedOnes.cpp \
+	$(ALGODIR)/HiddenOnes.cpp
 
 COMMON_HEADERS:=\
 	../include/SudokuCommonTypes.h \

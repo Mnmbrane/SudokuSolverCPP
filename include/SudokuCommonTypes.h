@@ -13,6 +13,7 @@ namespace Sudoku
    class AlgorithmInterface;
    class IterativeBacktrack;
    class NakedOnes;
+   class HiddenOnes;
 
    static const int PUZZLE_MAX_INDEX = 80;
    static const int PUZZLE_MAX_ELEMENTS = (PUZZLE_MAX_INDEX + 1);
@@ -26,6 +27,11 @@ namespace Sudoku
    enum ColType : unsigned char
    {
       COL_0, COL_1, COL_2, COL_3, COL_4, COL_5, COL_6, COL_7, COL_8
+   };
+
+   enum GroupType : unsigned char
+   {
+      GRP_0, GRP_1, GRP_2, GRP_3, GRP_4, GRP_5, GRP_6, GRP_7, GRP_8
    };
 
    enum ValType : unsigned char

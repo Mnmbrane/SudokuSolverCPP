@@ -18,6 +18,7 @@ protected:
    void testRowColIndex(Sudoku::Coord coord,
                         Sudoku::RowType row,
                         Sudoku::ColType col,
+                        Sudoku::GroupType group,
                         Sudoku::Index index);
 
    void testCoordDefault(Sudoku::Coord coord);
