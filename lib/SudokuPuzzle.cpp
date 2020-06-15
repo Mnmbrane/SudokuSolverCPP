@@ -280,7 +280,9 @@ bool Puzzle::checkGroup(Cell *inPuzzle, Index index, ValType val)
    // (69) - (63 % 27)
    // 69 - 9 = 60
    // TODO: remove magic numbers
-   Index startIndex = (index - (index % 3)) - ((index - (index % 9)) % 27);
+
+   Coord startCoord(index);
+   Index startIndex = startCoord.getIndexFromGroup();
 
    for (Index i = startIndex; i <= (startIndex + 18) && retVal == true; i += 9)
    {

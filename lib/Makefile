@@ -45,4 +45,4 @@ $(OBJ_DIR):
 
 .PHONY: clean
 clean:
-	$(RM) -r *.o $(OBJ_DIR)/*.o $(OBJ_DIR)/*.a
+	$(RM) -r *.o $(OBJ_DIR)/*.o $(OBJ_DIR)/*.a $(ALGO_OBJ_DIR)/*.o
